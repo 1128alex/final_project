@@ -14,6 +14,8 @@ public class User {
 	private String faculty;
 	private String subject;
 	private String profileUrl;
+	private Date createdAt;
+	private Date updatedAt;
 
 	public String getUserId() {
 		return userId;
@@ -119,6 +121,4 @@ public class User {
 		this.updatedAt = updatedAt;
 	}
 
-	private Date createdAt;
-	private Date updatedAt;
 }

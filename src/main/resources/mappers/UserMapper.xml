@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- mapper 설정 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.univ.user.dao.UserDAO">
+	<insert id="insertUser" parameterType="com.univ.user.model.User">
+		INSERT INTO `user`
+		(
+		`userId`
+		,`password`
+		,`studentNum`
+		,`type`
+		,`userName`
+		,`email`
+		,`birth`
+		,`gender`
+		,`profileUrl`
+		)
+		VALUES
+		(
+		#{userId}
+		,#{password}
+		,#{studentNum}
+		,#{type}
+		,#{userName}
+		,#{email}
+		,#{birth}
+		,#{gender}
+		,#{profileUrl}
+		)
+	</insert>
+
+	<select id="selectMaxStudentNum" resultType="int">
+		SELECT
+		MAX(`studentNum`)
+		FROM
+		`user`
+	</select>
+</mapper>

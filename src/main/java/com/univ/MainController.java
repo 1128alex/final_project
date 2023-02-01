@@ -13,4 +13,10 @@ public class MainController {
 		model.addAttribute("view", "main/main");
 		return "template/layout";
 	}
+
+	@GetMapping("/citations")
+	public String showCitations(Model model) {
+		model.addAttribute("view", "main/citation");
+		return "template/layout";
+	}
 }

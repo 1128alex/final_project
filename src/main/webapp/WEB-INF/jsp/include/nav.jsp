@@ -18,6 +18,6 @@
 			<a href="#" class="nav-link text-white">Professors</a>
 		</h4></li>
 	<li class="nav-item"><h4>
-			<a href="#" class="nav-link text-white">Register</a>
+			<a href="#" class="nav-link text-white">Register Class</a>
 		</h4></li>
 </ul>

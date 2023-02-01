@@ -12,13 +12,13 @@ public class UserController {
 	@GetMapping("/sign_in")
 	public String signInView(Model model) {
 		model.addAttribute("view", "user/signIn");
-		return "template/layout";
+		return "template/loginLayout";
 	}
 
-	@GetMapping("sign_up")
+	@GetMapping("/sign_up")
 	public String signUpView(Model model) {
 		model.addAttribute("view", "user/signUp");
-		return "template/layout";
+		return "template/loginLayout";
 	}
 
 }

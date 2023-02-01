@@ -9,8 +9,4 @@
 		</a>
 	</div>
 </div>
-<div class="col-3">
-	<div class="d-flex justify-content-center align-items-center h-100">
-		<a href="/univ/user/sign_in" class="btn loginBtn ml-5">Login</a>
-	</div>
-</div>
+<div class="col-3"></div>

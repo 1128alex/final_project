@@ -24,16 +24,13 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
 	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 	crossorigin="anonymous"></script>
-<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+<link rel="stylesheet" type="text/css" href="/static/css/loginStyle.css">
 </head>
 <body>
 	<div class="wrap">
 		<header class="d-flex">
-			<jsp:include page="../include/header.jsp" />
+			<jsp:include page="../include/loginHeader.jsp" />
 		</header>
-		<nav>
-			<jsp:include page="../include/nav.jsp" />
-		</nav>
 		<section>
 			<jsp:include page="../${view}.jsp" />
 		</section>

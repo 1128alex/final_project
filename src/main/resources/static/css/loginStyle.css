@@ -2,16 +2,12 @@
 
 header {
 	height: 150px;
-	background-color: #E0FFFF;
-}
-
-nav {
-	height: 60px;
 	background-color: #008B8B;
 }
 
 section {
 	height: 600px;
+	background-color: #E0FFFF;
 }
 
 footer {
@@ -20,7 +16,7 @@ footer {
 	color: white;
 }
 
-.loginBtn {
+.button {
 	background-color: #008B8B;
 	border-radius: 0px;
 	color: white;

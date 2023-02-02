@@ -30,6 +30,17 @@
 	$(document)
 			.ready(
 					function() {
+						$('#birthMonth').change(function() {
+							let monthInfo = $(this).val();
+							let monthDays = monthInfo % 100;
+						});
+						$('#birthDay').on('click', function() {
+							if ($('#birthMonth').val() == 0) {
+								alert("Please select your birth Month.");
+								return false;
+							}
+						});
+
 						$('input[name=type]').change(function() {
 							var currentType = $(this).val();
 							if (currentType == 'professor') {

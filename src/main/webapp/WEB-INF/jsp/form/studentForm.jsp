@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<!-- Core -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <div id="studentFormView">
 	<form method="post" id="studentForm" action="/user/sign_up_student">
@@ -31,7 +33,30 @@
 		</div>
 		<div class="mt-2">
 			<h4>Birth Date</h4>
-			<input type="text" id="birth" name="birth" class="form-control">
+			<select name="birthMonth" id="birthMonth" class="form-control">
+				<option id="months" data-max-days="0" value="0">-- Month --</option>
+				<option id="months" data-max-days="31" value="131">January</option>
+				<option id="months" data-max-days="28" value="228">February</option>
+				<option id="months" data-max-days="31" value="331">March</option>
+				<option id="months" data-max-days="30" value="430">April</option>
+				<option id="months" data-max-days="31" value="531">May</option>
+				<option id="months" data-max-days="30" value="630">June</option>
+				<option id="months" data-max-days="31" value="731">July</option>
+				<option id="months" data-max-days="31" value="831">August</option>
+				<option id="months" data-max-days="30" value="930">September</option>
+				<option id="months" data-max-days="31" value="1031">October</option>
+				<option id="months" data-max-days="30" value="1130">November</option>
+				<option id="months" data-max-days="31" value="1231">December</option>
+
+
+			</select> <select name="birthDay" id="birthDay" class="form-control">
+				<option>-- Day --</option>
+				<c:forEach var="i" begin="1" end="28">
+					<option>${i}</option>
+				</c:forEach>
+			</select> <select name="birthYear" id="birthYear" class="form-control">
+				<option></option>
+			</select> <input type="text" id="birth" name="birth" class="form-control">
 		</div>
 		<div class="mt-2">
 			<h4>Gender</h4>

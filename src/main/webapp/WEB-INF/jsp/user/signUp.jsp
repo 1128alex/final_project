@@ -11,9 +11,9 @@
 		</div>
 		<div>
 			<h4>Type</h4>
-			<label><input id="userTypeRadio" type="radio" id="type"
+			<label><input id="userTypeRadioStud" type="radio" id="type"
 				name="type" value="student" class="type" checked="checked">Student</label>
-			<label><input id="userTypeRadio" type="radio" id="type"
+			<label><input id="userTypeRadioProf" type="radio" id="type"
 				name="type" value="professor" class="type">Professor</label>
 		</div>
 
@@ -30,10 +30,74 @@
 	$(document)
 			.ready(
 					function() {
+
+						let validationCount = 0;
+						let typeName = $('input[name=type]').val().trim();
+
+						// Changing account type
+						$('input[name=type]')
+								.on(
+										'click',
+										function() {
+											if (confirm("Are you sure you want to change your account type?\nIt will delete every information that you have written.") == true) {
+												$('.statusUsable').addClass(
+														'd-none');
+												$('.statusUnusable').addClass(
+														'd-none');
+												$('.userId').val('');
+												$('.password').val('');
+												$('.passwordCheck').val('');
+												$('.profileUrl').val('');
+												$('.firstName').val('');
+												$('.lastName').val('');
+												$('.email').val('');
+												$('.birthYear').val('0');
+												$('.birthMonth').val('0');
+												$('.birthDay').val('0');
+												$('.subject').val('0');
+												$('.gender').val('0');
+
+												var currentType = $(this).val();
+												if (currentType == 'professor') {
+													/* $('#userTypeRadioProf')
+															.attr("disabled",
+																	true);
+													$('#userTypeRadioStud')
+															.attr("disabled",
+																	false); */
+													$('#professorFormView')
+															.removeClass(
+																	'd-none');
+													$('#studentFormView')
+															.addClass('d-none');
+													typeName = 'professor';
+												} else {
+													/* $('#userTypeRadioStud')
+															.attr("disabled",
+																	true);
+													$('#userTypeRadioProf')
+															.attr("disabled",
+																	false); */
+													$('#studentFormView')
+															.removeClass(
+																	'd-none');
+													$('#professorFormView')
+															.addClass('d-none');
+													typeName = 'student';
+												}
+												validationCount = 0;
+											} else {
+												return false;
+											}
+										});
+						// Id duplication check
 						$('.duplicateCheckBtn').on(
 								'click',
 								function() {
-									let typeName = $('.type').val().trim();
+									$('.statusUsable').addClass('d-none');
+									$('.statusUnusable').addClass('d-none');
+									$('.passwordStatus').addClass("d-none");
+
 									let userId = '';
 									if (typeName == 'student') {
 										userId = $('#studUserId').val();
@@ -42,9 +106,10 @@
 									}
 									if (userId == '') {
 										alert("Please write your user ID");
-										$('#statusFill').removeClass('d-none');
 										return;
 									}
+									validationCount++;
+
 									$.ajax({
 										url : "/user/duplicate_check",
 										data : {
@@ -52,56 +117,70 @@
 										},
 										success : function(data) {
 											if (data.code == 0) {
-												alert("usable");
-												$('#statusUsable').removeClass(
+												$('.statusUsable').removeClass(
 														'd-none');
 											} else if (data.code == 1) {
-												$('#statusUnusable')
+												$('.statusUnusable')
 														.removeClass('d-none');
 											} else if (data.code == 500) {
 												alert("error");
+											} else {
+												alert("unknown error");
 											}
 										},
 										error : function(e) {
-
+											alert(e);
 										}
 									});
 								});
 
-						$('#birthMonth').change(function() {
+						// Date Settings
+						$('#studBirthMonth').change(function() {
 							let monthInfo = $(this).val();
 							let month = Math.floor(monthInfo / 100);
 							let monthDays = monthInfo % 100;
-							$('#birthDay').val(0);
+							$('#studBirthDay').val(0);
 							if (monthDays == '30') {
-								$('#day31').addClass("d-none");
+								$('#studDay31').addClass("d-none");
 							} else if (monthDays == 28) {
-								$('#day31').addClass("d-none");
-								$('#day30').addClass("d-none");
-								$('#day29').addClass("d-none");
+								$('#studDay31').addClass("d-none");
+								$('#studDay30').addClass("d-none");
+								$('#studDay29').addClass("d-none");
 							} else {
-								$('#day31').removeClass("d-none");
-								$('#day30').removeClass("d-none");
-								$('#day29').removeClass("d-none");
+								$('#studDay31').removeClass("d-none");
+								$('#studDay30').removeClass("d-none");
+								$('#studDay29').removeClass("d-none");
 							}
 						});
-						$('#birthDay').on('click', function() {
-							if ($('#birthMonth').val() == 0) {
-								alert("Please select your birth Month.");
-								return false;
+						$('#profBirthMonth').change(function() {
+							let monthInfo = $(this).val();
+							let month = Math.floor(monthInfo / 100);
+							let monthDays = monthInfo % 100;
+							$('#profBirthDay').val(0);
+							if (monthDays == '30') {
+								$('#profDay31').addClass("d-none");
+							} else if (monthDays == 28) {
+								$('#profDay31').addClass("d-none");
+								$('#profDay30').addClass("d-none");
+								$('#profDay29').addClass("d-none");
+							} else {
+								$('#profDay31').removeClass("d-none");
+								$('#profDay30').removeClass("d-none");
+								$('#profDay29').removeClass("d-none");
 							}
 						});
 
-						$('input[name=type]').change(function() {
-							var currentType = $(this).val();
-							if (currentType == 'professor') {
-								$('#professorFormView').removeClass('d-none');
-								$('#studentFormView').addClass('d-none');
-							} else {
-								$('#studentFormView').removeClass('d-none');
-								$('#professorFormView').addClass('d-none');
-							}
-						});
+						$('.birthDay')
+								.on(
+										'click',
+										function() {
+											if ($('#profBirthMonth').val() == '0'
+													&& $('#studBirthMonth')
+															.val() == '0') {
+												alert("Please select your birth Month.");
+												return false;
+											}
+										});
 
 						$('#studentForm')
 								.on(
@@ -116,10 +195,26 @@
 												return false;
 											}
 
+											if (validationCount == 0) {
+												alert("Please check the validation for your ID");
+												return false;
+											}
+
 											let password = $('#studPassword')
 													.val().trim();
 											if (password == '') {
 												alert("Please input your password");
+												return false;
+											}
+											let passwordCheck = $(
+													'#studPasswordCheck').val()
+													.trim();
+											if (passwordCheck == '') {
+												alert("Please check your password");
+												return false;
+											}
+											if (password != passwordCheck) {
+												alert("Password does not match");
 												return false;
 											}
 
@@ -148,8 +243,8 @@
 												return false;
 											}
 											if (email.includes('@') == false
-													&& email.includes('.') == false) {
-												alert("Please check if this email is a valid email");
+													|| email.includes('.') == false) {
+												alert("Please check if the email is a valid email");
 												return false;
 											}
 
@@ -162,7 +257,7 @@
 											let birthYear = $('#studBirthYear')
 													.val().trim();
 
-											if (birthYear == '-- Year --') {
+											if (birthYear == '0') {
 												alert("Please fill up your birth year");
 												return false;
 											}
@@ -177,8 +272,8 @@
 
 											let gender = $('#studGender').val()
 													.trim();
-											if (gender == '-- Select --') {
-												alert("Please select a proper gender.\nIf you don't want to disclose, please choose the option 'Prefer not to disclose.''");
+											if (gender == '0') {
+												alert("Please select a proper gender.\nIf you don't want to disclose, please choose the option 'Prefer not to disclose.'");
 												return false;
 											}
 
@@ -202,6 +297,7 @@
 																}
 															});
 										});
+
 						$('#professorForm')
 								.on(
 										'submit',
@@ -215,10 +311,27 @@
 												return false;
 											}
 
+											if (validationCount == 0) {
+												alert("Please check the validation for your ID");
+												return false;
+											}
+
 											let password = $('#profPassword')
 													.val().trim();
 											if (password == '') {
 												alert("Please input your password");
+												return false;
+											}
+
+											let passwordCheck = $(
+													'#profPasswordCheck').val()
+													.trim();
+											if (passwordCheck == '') {
+												alert("Please check your password");
+												return false;
+											}
+											if (password != passwordCheck) {
+												alert("Password does not match");
 												return false;
 											}
 
@@ -247,8 +360,8 @@
 												return false;
 											}
 											if (email.includes('@') == false
-													&& email.includes('.') == false) {
-												alert("Please check if this email is a valid email");
+													|| email.includes('.') == false) {
+												alert("Please check if the email is a valid email");
 												return false;
 											}
 
@@ -261,7 +374,7 @@
 											let birthYear = $('#profBirthYear')
 													.val().trim();
 
-											if (birthYear == '-- Year --') {
+											if (birthYear == '0') {
 												alert("Please fill up your birth year");
 												return false;
 											}
@@ -283,7 +396,7 @@
 
 											let gender = $('#profGender').val()
 													.trim();
-											if (gender == '-- Select --') {
+											if (gender == '0') {
 												alert("Please select a proper gender.\nIf you don't want to disclose, please choose the option 'Prefer not to disclose.'");
 												return false;
 											}
@@ -299,7 +412,7 @@
 																	alert("Welcome "
 																			+ firstName
 																			+ "!");
-																	location.href = "/univ";
+																	location.href = "/univ/professor";
 																} else {
 																	alert("error: "
 																			+ data.code

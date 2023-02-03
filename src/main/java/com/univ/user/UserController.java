@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jakarta.servlet.http.HttpSession;
+
 @RequestMapping("/univ/user")
 @Controller
 public class UserController {
@@ -25,6 +27,15 @@ public class UserController {
 		model.addAttribute("year", now);
 
 		return "template/loginLayout";
+	}
+
+	@GetMapping("/log_out")
+	public String logOut(HttpSession session) {
+
+		session.removeAttribute("userId");
+		session.removeAttribute("user");
+
+		return "redirect:/univ/user/sign_in";
 	}
 
 }

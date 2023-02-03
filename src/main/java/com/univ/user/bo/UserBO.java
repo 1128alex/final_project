@@ -11,11 +11,14 @@ public class UserBO {
 	@Autowired
 	private UserDAO userDAO;
 
-	
+	public User getUserByIdPassword(String userId, String email, String password) {
+		return userDAO.selectUserByIdPassword(userId, email, password);
+	}
+
 	public int checkDuplicate(String userId) {
 		return userDAO.checkDuplicate(userId);
 	}
-	
+
 	public int addUser(User user) {
 		return userDAO.insertUser(user);
 	}

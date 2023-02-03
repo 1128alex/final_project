@@ -4,9 +4,34 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.univ.user.dao.UserDAO">
 
-
-
-
+	<select id="selectUserByIdPassword" parameterType="map"
+		resultType="com.univ.user.model.User">
+		SELECT
+		`userId`
+		,`studentNum`
+		,`type`
+		,`userName`
+		,`email`
+		,`birth`
+		,`gender`
+		,`subject`
+		,`profileUrl`
+		FROM
+		`user`
+		WHERE
+		<choose>
+			<when test="userId != null">
+				`userId` =
+				#{userId}
+			</when>
+			<when test="email != null">
+				`email` =
+				#{email}
+			</when>
+		</choose>
+		AND
+		`password` = #{password}
+	</select>
 
 	<select id="checkDuplicate" parameterType="string"
 		resultType="int">
@@ -29,6 +54,7 @@
 		,`email`
 		,`birth`
 		,`gender`
+		,`subject`
 		,`profileUrl`
 		)
 		VALUES
@@ -41,6 +67,7 @@
 		,#{email}
 		,#{birth}
 		,#{gender}
+		,#{subject}
 		,#{profileUrl}
 		)
 	</insert>

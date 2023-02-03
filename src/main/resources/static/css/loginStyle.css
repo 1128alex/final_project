@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+body {
+	font-family: 'Times New Roman';
+}
+
 header {
 	height: 150px;
 	background-color: #008B8B;

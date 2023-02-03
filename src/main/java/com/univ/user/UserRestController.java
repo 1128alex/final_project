@@ -16,6 +16,9 @@ import com.univ.common.EncryptUtils;
 import com.univ.user.bo.UserBO;
 import com.univ.user.model.User;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 @RequestMapping("/user")
 @RestController
 public class UserRestController {
@@ -23,12 +26,35 @@ public class UserRestController {
 	private UserBO userBO;
 
 	@PostMapping("/sign_in")
-	public Map<String, Object> signIn(@RequestParam("loginId") String loginId,
-			@RequestParam("password") String password) {
+	public Map<String, Object> signIn(@RequestParam("userId") String userId, @RequestParam("password") String password,
+			HttpServletRequest request) {
+
+		Map<String, Object> result = new HashMap<>();
+
+		String email = null;
+		if (userId.contains("@") && userId.contains(".")) {
+			email = userId;
+			userId = null;
+		}
 
 		String hashedPassword = EncryptUtils.md5(password);
 
-		Map<String, Object> result = new HashMap<>();
+		// get user information from database
+		User user = userBO.getUserByIdPassword(userId, email, hashedPassword);
+
+		if (user != null) {
+			String type = user.getType();
+			result.put("code", 1);
+			result.put("type", type);
+
+			HttpSession session = request.getSession();
+			session.setAttribute("user", user);
+			session.setAttribute("userId", user.getUserId());
+		} else if (user == null) {
+			result.put("code", 500);
+			result.put("errorMessage", "Wrong ID or password. Please check again.");
+		}
+
 		return result;
 	}
 
@@ -52,7 +78,8 @@ public class UserRestController {
 	@PostMapping("/sign_up_student")
 	public Map<String, Object> signUpStud(@ModelAttribute User user, @RequestParam("firstName") String firstName,
 			@RequestParam("lastName") String lastName, @RequestParam("birthYear") int birthYear,
-			@RequestParam("birthMonth") int birthMonthInfo, @RequestParam("birthDay") int birthDay) {
+			@RequestParam("birthMonth") int birthMonthInfo, @RequestParam("birthDay") int birthDay,
+			HttpServletRequest request) {
 
 		// Creating Student Number
 		// Current Year
@@ -93,6 +120,10 @@ public class UserRestController {
 
 		if (rowCount > 0) {
 			result.put("code", 1);
+
+			HttpSession session = request.getSession();
+			session.setAttribute("user", user);
+			session.setAttribute("userId", user.getUserId());
 		} else {
 			result.put("code", 500);
 			result.put("errormessage", "failed to sign up");
@@ -104,7 +135,8 @@ public class UserRestController {
 	@PostMapping("/sign_up_professor")
 	public Map<String, Object> signUpProf(@ModelAttribute User user, @RequestParam("firstName") String firstName,
 			@RequestParam("lastName") String lastName, @RequestParam("birthYear") int birthYear,
-			@RequestParam("birthMonth") int birthMonthInfo, @RequestParam("birthDay") int birthDay) {
+			@RequestParam("birthMonth") int birthMonthInfo, @RequestParam("birthDay") int birthDay,
+			HttpServletRequest request) {
 
 		// Combining Birth Information
 		int birthMonth = birthMonthInfo / 100;
@@ -127,6 +159,10 @@ public class UserRestController {
 
 		if (rowCount > 0) {
 			result.put("code", 1);
+
+			HttpSession session = request.getSession();
+			session.setAttribute("user", user);
+			session.setAttribute("userId", user.getUserId());
 		} else {
 			result.put("code", 500);
 			result.put("errormessage", "failed to sign up");

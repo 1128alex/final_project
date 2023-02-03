@@ -31,9 +31,14 @@
 			<h4>Email</h4>
 			<input type="text" id="email" name="email" class="form-control">
 		</div>
-		<div class="mt-2">
-			<h4>Birth Date</h4>
-			<select name="birthMonth" id="birthMonth" class="form-control">
+		<h4 class="mt-2">Birth Date</h4>
+		<div class="d-flex justify-content-between">
+			<select name="birthYear" id="birthYear" class="form-control col-3">
+				<option>-- Year --</option>
+				<c:forEach var="j" begin="1900" end="${year}">
+					<option id="year">${j}</option>
+				</c:forEach>
+			</select> <select name="birthMonth" id="birthMonth" class="form-control col-4">
 				<option id="months" data-max-days="0" value="0">-- Month --</option>
 				<option id="months" data-max-days="31" value="131">January</option>
 				<option id="months" data-max-days="28" value="228">February</option>
@@ -47,16 +52,12 @@
 				<option id="months" data-max-days="31" value="1031">October</option>
 				<option id="months" data-max-days="30" value="1130">November</option>
 				<option id="months" data-max-days="31" value="1231">December</option>
-
-
-			</select> <select name="birthDay" id="birthDay" class="form-control">
+			</select> <select name="birthDay" id="birthDay" class="form-control col-3">
 				<option>-- Day --</option>
-				<c:forEach var="i" begin="1" end="28">
-					<option>${i}</option>
+				<c:forEach var="i" begin="1" end="31">
+					<option id="day${i}">${i}</option>
 				</c:forEach>
-			</select> <select name="birthYear" id="birthYear" class="form-control">
-				<option></option>
-			</select> <input type="text" id="birth" name="birth" class="form-control">
+			</select>
 		</div>
 		<div class="mt-2">
 			<h4>Gender</h4>

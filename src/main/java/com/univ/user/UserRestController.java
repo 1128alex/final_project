@@ -33,13 +33,19 @@ public class UserRestController {
 
 	@PostMapping("/sign_up_student")
 	public Map<String, Object> signUp(@ModelAttribute User user, @RequestParam("firstName") String firstName,
-			@RequestParam("lastName") String lastName) {
+			@RequestParam("lastName") String lastName, @RequestParam("birthYear") int birthYear,
+			@RequestParam("birthMonth") int birthMonth, @RequestParam("birthDay") int birthDay) {
 
 		user.setType("student");
 
-		String now = LocalDate.now().toString();
-		Integer studentNumYear = Integer.parseInt(now.substring(2, 4));
+		// Creating Student Number
+		// Current Year
+		Integer studentNumYear = Integer.parseInt(LocalDate.now().toString().substring(2, 4));
+
+		// Faculty Number(Random number)
 		int facultyNum = 1;
+
+		// Checking
 		Integer maxStudentNum = userBO.getMaxStudentNum();
 
 		if (maxStudentNum == null) {
@@ -48,10 +54,57 @@ public class UserRestController {
 			maxStudentNum = maxStudentNum + 1;
 		}
 
-		user.setStudentNum(maxStudentNum);
-		user.setUserName(firstName + " " + lastName);
+		// Combining Birth Information
+		String monthString = "";
+		switch (birthMonth) {
+		case 1:
+			monthString = "January";
+			break;
+		case 2:
+			monthString = "February";
+			break;
+		case 3:
+			monthString = "March";
+			break;
+		case 4:
+			monthString = "April";
+			break;
+		case 5:
+			monthString = "May";
+			break;
+		case 6:
+			monthString = "June";
+			break;
+		case 7:
+			monthString = "July";
+			break;
+		case 8:
+			monthString = "August";
+			break;
+		case 9:
+			monthString = "September";
+			break;
+		case 10:
+			monthString = "October";
+			break;
+		case 11:
+			monthString = "November";
+			break;
+		case 12:
+			monthString = "December";
+			break;
+		default:
+			monthString = "Invalid month";
+			break;
+		}
+
+		String birth = birthDay + " / " + monthString + " / " + birthYear;
 
 		String hashedPassword = EncryptUtils.md5(user.getPassword());
+
+		user.setStudentNum(maxStudentNum);
+		user.setUserName(firstName + " " + lastName);
+		user.setBirth(birth);
 		user.setPassword(hashedPassword);
 
 		int rowCount = userBO.addUser(user);
@@ -67,4 +120,5 @@ public class UserRestController {
 
 		return result;
 	}
+
 }

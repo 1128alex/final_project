@@ -32,7 +32,15 @@
 					function() {
 						$('#birthMonth').change(function() {
 							let monthInfo = $(this).val();
+							let month = Math.floor(monthInfo / 100);
 							let monthDays = monthInfo % 100;
+							if (monthDays == '30') {
+								$('#day31').addClass("d-none");
+							} else if (monthDays == 28) {
+								$('#day31').addClass("d-none");
+								$('#day30').addClass("d-none");
+								$('#day29').addClass("d-none");
+							}
 						});
 						$('#birthDay').on('click', function() {
 							if ($('#birthMonth').val() == 0) {
@@ -96,10 +104,14 @@
 												return false;
 											}
 
-											let birth = $('#birth').val()
-													.trim();
-											if (birth == '') {
-												alert("Please input your birth");
+											let birthDay = $('#birthDay').val();
+											let birthMonth = month;
+											let birthYear = $('#birthYear')
+													.val().trim();
+											if (birthDay == '-- Day --'
+													|| birthMonth == '-- Month --'
+													|| birthYear == '-- Year --') {
+												alert("Please fill up your birth date");
 												return false;
 											}
 

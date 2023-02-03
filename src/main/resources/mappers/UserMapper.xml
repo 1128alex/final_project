@@ -3,6 +3,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.univ.user.dao.UserDAO">
+
+
+
+
+
+	<select id="checkDuplicate" parameterType="string"
+		resultType="int">
+		SELECT
+		COUNT(*)
+		FROM
+		`user`
+		WHERE
+		`userId` = #{userId}
+	</select>
+
 	<insert id="insertUser" parameterType="com.univ.user.model.User">
 		INSERT INTO `user`
 		(

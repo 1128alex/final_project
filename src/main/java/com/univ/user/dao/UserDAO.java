@@ -6,6 +6,9 @@ import com.univ.user.model.User;
 
 @Repository
 public interface UserDAO {
+
+	public int checkDuplicate(String userId);
+
 	public int insertUser(User user);
 
 	public Integer selectMaxStudentNum();

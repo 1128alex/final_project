@@ -11,6 +11,11 @@ public class UserBO {
 	@Autowired
 	private UserDAO userDAO;
 
+	
+	public int checkDuplicate(String userId) {
+		return userDAO.checkDuplicate(userId);
+	}
+	
 	public int addUser(User user) {
 		return userDAO.insertUser(user);
 	}

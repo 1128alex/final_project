@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,12 +32,27 @@ public class UserRestController {
 		return result;
 	}
 
-	@PostMapping("/sign_up_student")
-	public Map<String, Object> signUp(@ModelAttribute User user, @RequestParam("firstName") String firstName,
-			@RequestParam("lastName") String lastName, @RequestParam("birthYear") int birthYear,
-			@RequestParam("birthMonth") int birthMonth, @RequestParam("birthDay") int birthDay) {
+	@GetMapping("/duplicate_check")
+	public Map<String, Object> idDuplicateCheck(@RequestParam("userId") String userId) {
+		Map<String, Object> result = new HashMap<>();
 
-		user.setType("student");
+		int rowCount = userBO.checkDuplicate(userId);
+
+		if (rowCount >= 1) {
+			result.put("code", 1);
+		} else if (rowCount == 0) {
+			result.put("code", 0);
+		} else {
+			result.put("code", 500);
+		}
+
+		return result;
+	}
+
+	@PostMapping("/sign_up_student")
+	public Map<String, Object> signUpStud(@ModelAttribute User user, @RequestParam("firstName") String firstName,
+			@RequestParam("lastName") String lastName, @RequestParam("birthYear") int birthYear,
+			@RequestParam("birthMonth") int birthMonthInfo, @RequestParam("birthDay") int birthDay) {
 
 		// Creating Student Number
 		// Current Year
@@ -45,9 +61,10 @@ public class UserRestController {
 		// Faculty Number(Random number)
 		int facultyNum = 1;
 
-		// Checking
+		// Checking the last Student Number
 		Integer maxStudentNum = userBO.getMaxStudentNum();
 
+		// Making a Student number
 		if (maxStudentNum == null) {
 			maxStudentNum = (studentNumYear * 1000000) + (facultyNum * 10000) + 1;
 		} else {
@@ -55,58 +72,21 @@ public class UserRestController {
 		}
 
 		// Combining Birth Information
-		String monthString = "";
-		switch (birthMonth) {
-		case 1:
-			monthString = "January";
-			break;
-		case 2:
-			monthString = "February";
-			break;
-		case 3:
-			monthString = "March";
-			break;
-		case 4:
-			monthString = "April";
-			break;
-		case 5:
-			monthString = "May";
-			break;
-		case 6:
-			monthString = "June";
-			break;
-		case 7:
-			monthString = "July";
-			break;
-		case 8:
-			monthString = "August";
-			break;
-		case 9:
-			monthString = "September";
-			break;
-		case 10:
-			monthString = "October";
-			break;
-		case 11:
-			monthString = "November";
-			break;
-		case 12:
-			monthString = "December";
-			break;
-		default:
-			monthString = "Invalid month";
-			break;
-		}
-
+		int birthMonth = birthMonthInfo / 100;
+		String monthString = changeMonthName(birthMonth);
 		String birth = birthDay + " / " + monthString + " / " + birthYear;
 
+		// Hash password
 		String hashedPassword = EncryptUtils.md5(user.getPassword());
 
+		// Set the model values
+		user.setType("student");
 		user.setStudentNum(maxStudentNum);
 		user.setUserName(firstName + " " + lastName);
 		user.setBirth(birth);
 		user.setPassword(hashedPassword);
 
+		// Add the information to Database
 		int rowCount = userBO.addUser(user);
 
 		Map<String, Object> result = new HashMap<>();
@@ -119,6 +99,71 @@ public class UserRestController {
 		}
 
 		return result;
+	}
+
+	@PostMapping("/sign_up_professor")
+	public Map<String, Object> signUpProf(@ModelAttribute User user, @RequestParam("firstName") String firstName,
+			@RequestParam("lastName") String lastName, @RequestParam("birthYear") int birthYear,
+			@RequestParam("birthMonth") int birthMonthInfo, @RequestParam("birthDay") int birthDay) {
+
+		// Combining Birth Information
+		int birthMonth = birthMonthInfo / 100;
+		String monthString = changeMonthName(birthMonth);
+		String birth = birthDay + " / " + monthString + " / " + birthYear;
+
+		// Hash password
+		String hashedPassword = EncryptUtils.md5(user.getPassword());
+
+		// Set the model values
+		user.setType("professor");
+		user.setUserName(firstName + " " + lastName);
+		user.setBirth(birth);
+		user.setPassword(hashedPassword);
+
+		// Add the information to Database
+		int rowCount = userBO.addUser(user);
+
+		Map<String, Object> result = new HashMap<>();
+
+		if (rowCount > 0) {
+			result.put("code", 1);
+		} else {
+			result.put("code", 500);
+			result.put("errormessage", "failed to sign up");
+		}
+
+		return result;
+	}
+
+	public String changeMonthName(int birthMonth) {
+		switch (birthMonth) {
+		case 1:
+			return "January";
+		case 2:
+			return "February";
+		case 3:
+			return "March";
+		case 4:
+			return "April";
+		case 5:
+			return "May";
+		case 6:
+			return "June";
+		case 7:
+			return "July";
+		case 8:
+			return "August";
+		case 9:
+			return "September";
+		case 10:
+			return "October";
+		case 11:
+			return "November";
+		case 12:
+			return "December";
+		default:
+			return "Invalid month";
+		}
 	}
 
 }

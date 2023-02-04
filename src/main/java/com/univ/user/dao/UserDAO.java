@@ -7,12 +7,12 @@ import com.univ.user.model.User;
 
 @Repository
 public interface UserDAO {
-	public User selectUserByIdPassword(@Param("userId") String userId, @Param("email") String email,
+	public User selectUserByIdPassword(@Param("studentNum") String studentNum, @Param("email") String email,
 			@Param("password") String password);
 
-	public int checkDuplicate(String userId);
+	public int checkDuplicate(String email);
 
 	public int insertUser(User user);
 
-	public Integer selectMaxStudentNum();
+	public String selectStudentNum(@Param("year") Integer year, @Param("faculty") String faculty);
 }

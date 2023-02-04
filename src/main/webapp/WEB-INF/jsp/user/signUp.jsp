@@ -30,27 +30,18 @@
 	$(document)
 			.ready(
 					function() {
-
-						let validationCount = 0;
-						let typeName = $('input[name=type]').val().trim();
-
 						// Changing account type
 						$('input[name=type]')
 								.on(
 										'click',
 										function() {
 											if (confirm("Are you sure you want to change your account type?\nIt will delete every information that you have written.") == true) {
-												$('.statusUsable').addClass(
-														'd-none');
-												$('.statusUnusable').addClass(
-														'd-none');
-												$('.userId').val('');
+												$('.email').val('');
 												$('.password').val('');
 												$('.passwordCheck').val('');
 												$('.profileUrl').val('');
 												$('.firstName').val('');
 												$('.lastName').val('');
-												$('.email').val('');
 												$('.birthYear').val('0');
 												$('.birthMonth').val('0');
 												$('.birthDay').val('0');
@@ -59,80 +50,22 @@
 
 												var currentType = $(this).val();
 												if (currentType == 'professor') {
-													/* $('#userTypeRadioProf')
-															.attr("disabled",
-																	true);
-													$('#userTypeRadioStud')
-															.attr("disabled",
-																	false); */
 													$('#professorFormView')
 															.removeClass(
 																	'd-none');
 													$('#studentFormView')
 															.addClass('d-none');
-													typeName = 'professor';
 												} else {
-													/* $('#userTypeRadioStud')
-															.attr("disabled",
-																	true);
-													$('#userTypeRadioProf')
-															.attr("disabled",
-																	false); */
 													$('#studentFormView')
 															.removeClass(
 																	'd-none');
 													$('#professorFormView')
 															.addClass('d-none');
-													typeName = 'student';
 												}
-												validationCount = 0;
 											} else {
 												return false;
 											}
 										});
-						// Id duplication check
-						$('.duplicateCheckBtn').on(
-								'click',
-								function() {
-									$('.statusUsable').addClass('d-none');
-									$('.statusUnusable').addClass('d-none');
-									$('.passwordStatus').addClass("d-none");
-
-									let userId = '';
-									if (typeName == 'student') {
-										userId = $('#studUserId').val();
-									} else if (typeName == 'professor') {
-										userId = $('#profUserId').val();
-									}
-									if (userId == '') {
-										alert("Please write your user ID");
-										return;
-									}
-									validationCount++;
-
-									$.ajax({
-										url : "/user/duplicate_check",
-										data : {
-											"userId" : userId
-										},
-										success : function(data) {
-											if (data.code == 0) {
-												$('.statusUsable').removeClass(
-														'd-none');
-											} else if (data.code == 1) {
-												$('.statusUnusable')
-														.removeClass('d-none');
-											} else if (data.code == 500) {
-												alert("error");
-											} else {
-												alert("unknown error");
-											}
-										},
-										error : function(e) {
-											alert(e);
-										}
-									});
-								});
 
 						// Date Settings
 						$('#studBirthMonth').change(function() {
@@ -188,15 +121,15 @@
 										function(e) {
 											e.preventDefault();
 
-											let userId = $('#studUserId').val()
+											let email = $('#studEmail').val()
 													.trim();
-											if (userId == '') {
-												alert("Please input your user ID");
+											if (email == '') {
+												alert("Please input your email");
 												return false;
 											}
-
-											if (validationCount == 0) {
-												alert("Please check the validation for your ID");
+											if (email.includes('@') == false
+													|| email.includes('.') == false) {
+												alert("Please check if the email is a valid email");
 												return false;
 											}
 
@@ -233,18 +166,6 @@
 													.val().trim();
 											if (lastName == '') {
 												alert("Please input your last name");
-												return false;
-											}
-
-											let email = $('#studEmail').val()
-													.trim();
-											if (email == '') {
-												alert("Please input your email");
-												return false;
-											}
-											if (email.includes('@') == false
-													|| email.includes('.') == false) {
-												alert("Please check if the email is a valid email");
 												return false;
 											}
 
@@ -304,17 +225,37 @@
 										function(e) {
 											e.preventDefault();
 
-											let userId = $('#profUserId').val()
+											let email = $('#profEmail').val()
 													.trim();
-											if (userId == '') {
-												alert("Please input your user ID");
+											if (email == '') {
+												alert("Please input your email");
 												return false;
 											}
+											if (email.includes('@') == false
+													|| email.includes('.') == false) {
+												alert("Please check if the email is a valid email");
+												return false;
+											}
+											$
+													.ajax({
+														type : "get",
+														url : "/user/duplicate_check",
+														data : {
+															"email" : email
+														},
+														success : function(data) {
+															if (data.code == 1) {
+																alert("An account created with this email already exists.");
+																return false;
+															} else if (data.code == 500) {
+																alert("error in email duplication check");
+															}
+														},
+														error : function(e) {
+															alert(e);
+														}
 
-											if (validationCount == 0) {
-												alert("Please check the validation for your ID");
-												return false;
-											}
+													});
 
 											let password = $('#profPassword')
 													.val().trim();
@@ -350,18 +291,6 @@
 													.val().trim();
 											if (lastName == '') {
 												alert("Please input your last name");
-												return false;
-											}
-
-											let email = $('#profEmail').val()
-													.trim();
-											if (email == '') {
-												alert("Please input your email");
-												return false;
-											}
-											if (email.includes('@') == false
-													|| email.includes('.') == false) {
-												alert("Please check if the email is a valid email");
 												return false;
 											}
 

@@ -11,19 +11,19 @@ public class UserBO {
 	@Autowired
 	private UserDAO userDAO;
 
-	public User getUserByIdPassword(String userId, String email, String password) {
-		return userDAO.selectUserByIdPassword(userId, email, password);
+	public User getUserByIdPassword(String studentNum, String email, String password) {
+		return userDAO.selectUserByIdPassword(studentNum, email, password);
 	}
 
-	public int checkDuplicate(String userId) {
-		return userDAO.checkDuplicate(userId);
+	public int checkDuplicate(String email) {
+		return userDAO.checkDuplicate(email);
 	}
 
 	public int addUser(User user) {
 		return userDAO.insertUser(user);
 	}
 
-	public Integer getMaxStudentNum() {
-		return userDAO.selectMaxStudentNum();
+	public String getStudentNum(Integer year, String faculty) {
+		return userDAO.selectStudentNum(year, faculty);
 	}
 }

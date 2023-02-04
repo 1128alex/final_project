@@ -3,8 +3,7 @@
 <!DOCTYPE html>
 <div class="d-flex h-100">
 	<div class="col-6 bg-info">
-		<h1>${user.userId}</h1>
-		<h1>${userId}</h1>
+		<h1>${user.email}</h1>
 		<h1>${user.type}</h1>
 		<h1>${user.studentNum}</h1>
 	</div>

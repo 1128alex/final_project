@@ -17,14 +17,12 @@ public class MainController {
 		model.addAttribute("view", "main/main");
 
 		User user = (User) session.getAttribute("user");
-		String userId = (String) session.getAttribute("userId");
 
-		if (userId == null) {
+		if (user == null) {
 			return "redirect:/univ/user/sign_in";
 		}
 
 		model.addAttribute("user", user);
-		model.addAttribute("userId", userId);
 
 		return "template/layout";
 	}

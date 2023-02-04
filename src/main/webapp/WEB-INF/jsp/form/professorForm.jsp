@@ -6,15 +6,9 @@
 <div id="professorFormView" class="d-none">
 	<form method="post" id="professorForm" action="/user/sign_up_professor">
 		<div class="mt-3">
-			<h4>ID</h4>
-			<div class="d-flex">
-				<input type="text" id="profUserId" name="userId"
-					class="form-control userId">
-				<button type="button" class="duplicateCheckBtn btn button">Check</button>
-			</div>
-			<small class="text-success d-none statusUsable">Available ID</small>
-			<small class="text-danger d-none statusUnusable">Already in
-				use</small>
+			<h4>Email</h4>
+			<input type="text" id="profEmail" name="email"
+				class="form-control email" placeholder="example@univ.com">
 		</div>
 		<div class="mt-3">
 			<h4>Password</h4>
@@ -32,22 +26,19 @@
 				class="profileUrl">
 		</div>
 
-		<div class="mt-3">
-			<h4>First Name</h4>
-			<input type="text" id="profFirstName" name="firstName"
-				class="form-control firstName">
-		</div>
-		<div class="mt-3">
-			<h4>Last Name/Given Name</h4>
-			<input type="text" id="profLastName" name="lastName"
-				class="form-control lastName">
+		<div class="d-flex justify-content-between mt-3">
+			<div class="mt-3">
+				<h4>First Name</h4>
+				<input type="text" id="profFirstName" name="firstName"
+					class="form-control firstName">
+			</div>
+			<div class="mt-3">
+				<h4>Last Name/Given Name</h4>
+				<input type="text" id="profLastName" name="lastName"
+					class="form-control lastName">
+			</div>
 		</div>
 
-		<div class="mt-3">
-			<h4>Email</h4>
-			<input type="text" id="profEmail" name="email"
-				class="form-control email">
-		</div>
 		<h4 class="mt-3">Birth Date</h4>
 		<div class="d-flex justify-content-between">
 			<select name="birthYear" id="profBirthYear"
@@ -58,19 +49,19 @@
 				</c:forEach>
 			</select> <select name="birthMonth" id="profBirthMonth"
 				class="form-control col-4 birthMonth">
-				<option id="months" value="0">-- Month --</option>
-				<option id="months" value="131">January</option>
-				<option id="months" value="228">February</option>
-				<option id="months" value="331">March</option>
-				<option id="months" value="430">April</option>
-				<option id="months" value="531">May</option>
-				<option id="months" value="630">June</option>
-				<option id="months" value="731">July</option>
-				<option id="months" value="831">August</option>
-				<option id="months" value="930">September</option>
-				<option id="months" value="1031">October</option>
-				<option id="months" value="1130">November</option>
-				<option id="months" value="1231">December</option>
+				<option value="0">-- Month --</option>
+				<option value="131">January</option>
+				<option value="228">February</option>
+				<option value="331">March</option>
+				<option value="430">April</option>
+				<option value="531">May</option>
+				<option value="630">June</option>
+				<option value="731">July</option>
+				<option value="831">August</option>
+				<option value="930">September</option>
+				<option value="1031">October</option>
+				<option value="1130">November</option>
+				<option value="1231">December</option>
 			</select> <select name="birthDay" id="profBirthDay"
 				class="form-control col-3 birthDay">
 				<option value="0">-- Day --</option>

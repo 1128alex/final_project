@@ -6,15 +6,9 @@
 <div id="studentFormView">
 	<form method="post" id="studentForm" action="/user/sign_up_student">
 		<div class="mt-3">
-			<h4>ID</h4>
-			<div class="d-flex">
-				<input type="text" id="studUserId" name="userId"
-					class="form-control userId">
-				<button type="button" class="duplicateCheckBtn btn button">Check</button>
-			</div>
-			<small class="text-success d-none statusUsable">Available ID</small>
-			<small class="text-danger d-none statusUnusable">Already in
-				use</small>
+			<h4>Email</h4>
+			<input type="text" id="studEmail" name="email"
+				class="form-control email" placeholder="example@univ.com">
 		</div>
 		<div class="mt-3">
 			<h4>Password</h4>
@@ -45,11 +39,6 @@
 			</div>
 		</div>
 
-		<div class="mt-3">
-			<h4>Email</h4>
-			<input type="text" id="studEmail" name="email"
-				class="form-control email">
-		</div>
 		<h4 class="mt-3">Birth Date</h4>
 		<div class="d-flex justify-content-between">
 			<select name="birthYear" id="studBirthYear"
@@ -60,19 +49,19 @@
 				</c:forEach>
 			</select> <select id="studBirthMonth" name="birthMonth"
 				class="form-control col-4 birthMonth">
-				<option id="months" value="0">-- Month --</option>
-				<option id="months" value="131">January</option>
-				<option id="months" value="228">February</option>
-				<option id="months" value="331">March</option>
-				<option id="months" value="430">April</option>
-				<option id="months" value="531">May</option>
-				<option id="months" value="630">June</option>
-				<option id="months" value="731">July</option>
-				<option id="months" value="831">August</option>
-				<option id="months" value="930">September</option>
-				<option id="months" value="1031">October</option>
-				<option id="months" value="1130">November</option>
-				<option id="months" value="1231">December</option>
+				<option value="0">-- Month --</option>
+				<option value="131">January</option>
+				<option value="228">February</option>
+				<option value="331">March</option>
+				<option value="430">April</option>
+				<option value="531">May</option>
+				<option value="630">June</option>
+				<option value="731">July</option>
+				<option value="831">August</option>
+				<option value="930">September</option>
+				<option value="1031">October</option>
+				<option value="1130">November</option>
+				<option value="1231">December</option>
 			</select> <select id="studBirthDay" name="birthDay"
 				class="form-control col-3 birthDay">
 				<option value="0">-- Day --</option>

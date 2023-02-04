@@ -3,13 +3,13 @@ package com.univ.user.model;
 import java.util.Date;
 
 public class User {
-	private String userId;
-	private String password;
-	private int studentNum;
-	private String type;
-	private String userName;
 	private String email;
-	private String birth;
+	private String password;
+	private String studentNum;
+	private String type;
+	private String firstName;
+	private String lastName;
+	private Date birth;
 	private String gender;
 	private String faculty;
 	private String subject;
@@ -17,12 +17,12 @@ public class User {
 	private Date createdAt;
 	private Date updatedAt;
 
-	public String getUserId() {
-		return userId;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {
@@ -33,11 +33,11 @@ public class User {
 		this.password = password;
 	}
 
-	public int getStudentNum() {
+	public String getStudentNum() {
 		return studentNum;
 	}
 
-	public void setStudentNum(int studentNum) {
+	public void setStudentNum(String studentNum) {
 		this.studentNum = studentNum;
 	}
 
@@ -49,27 +49,27 @@ public class User {
 		this.type = type;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
-	public String getBirth() {
+	public Date getBirth() {
 		return birth;
 	}
 
-	public void setBirth(String birth) {
+	public void setBirth(Date birth) {
 		this.birth = birth;
 	}
 

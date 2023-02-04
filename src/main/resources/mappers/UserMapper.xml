@@ -7,11 +7,11 @@
 	<select id="selectUserByIdPassword" parameterType="map"
 		resultType="com.univ.user.model.User">
 		SELECT
-		`userId`
+		`email`
 		,`studentNum`
 		,`type`
-		,`userName`
-		,`email`
+		,`firstName`
+		,`lastName`
 		,`birth`
 		,`gender`
 		,`subject`
@@ -20,9 +20,9 @@
 		`user`
 		WHERE
 		<choose>
-			<when test="userId != null">
-				`userId` =
-				#{userId}
+			<when test="studentNum != null">
+				`studentNum` =
+				#{studentNum}
 			</when>
 			<when test="email != null">
 				`email` =
@@ -40,18 +40,18 @@
 		FROM
 		`user`
 		WHERE
-		`userId` = #{userId}
+		`email` = #{email}
 	</select>
 
 	<insert id="insertUser" parameterType="com.univ.user.model.User">
 		INSERT INTO `user`
 		(
-		`userId`
+		`email`
 		,`password`
 		,`studentNum`
 		,`type`
-		,`userName`
-		,`email`
+		,`firstName`
+		,`lastName`
 		,`birth`
 		,`gender`
 		,`subject`
@@ -59,12 +59,12 @@
 		)
 		VALUES
 		(
-		#{userId}
+		#{email}
 		,#{password}
 		,#{studentNum}
 		,#{type}
-		,#{userName}
-		,#{email}
+		,#{firstName}
+		,#{lastName}
 		,#{birth}
 		,#{gender}
 		,#{subject}
@@ -72,10 +72,15 @@
 		)
 	</insert>
 
-	<select id="selectMaxStudentNum" resultType="int">
+	<select id="selectStudentNum" resultType="string"
+		parameterType="map">
 		SELECT
-		MAX(`studentNum`)
+		lpad(convert(CONVERT(IFNULL(MAX(`studentNum`),
+		CONCAT(#{year},
+		#{faculty}, '0000')), unsigned)+1,char),8,'0')
 		FROM
 		`user`
+		WHERE
+		`studentNum` like CONCAT(#{year}, #{faculty}, '%');
 	</select>
 </mapper>

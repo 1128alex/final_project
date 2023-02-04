@@ -6,8 +6,9 @@
 		<h2 class="mt-4 font-weight-bold">Login</h2>
 		<form id="signInForm" method="post" action="/user/sign_in">
 			<div class="mt-3">
-				<label>ID / Email Adress</label> <input type="text" name="userId"
-					id="userId" class="form-control" placeholder="Input your Id/Email">
+				<label>Student Number / Email Adress</label> <input type="text"
+					name="userId" id="userId" class="form-control"
+					placeholder="Input your Id/Email">
 			</div>
 			<div class="mt-2">
 				<label>Password</label> <input type="password" name="password"

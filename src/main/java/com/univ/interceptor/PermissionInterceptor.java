@@ -16,30 +16,30 @@ import jakarta.servlet.http.HttpSession;
 public class PermissionInterceptor implements HandlerInterceptor {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-//	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-//			throws IOException {
-//		// 요청 url을 가져온다.
-//		String uri = request.getRequestURI(); // /post/post_list_view
-//		logger.info("[####### preHandle]: uri:{}", uri);
-//
-//		// 로그인 세션이 있는지 확인 => 있으면 로그인
-//		HttpSession session = request.getSession();
-//		Integer userId = (Integer) session.getAttribute("userId");
-//
-//		// 비로그인 && /post로 온 경우 => 로그인 페이지로 리다이렉트 return false
-//		if (userId == null && uri.startsWith("/post")) {
-//			response.sendRedirect("/user/sign_in_view");
-//			return false;
-//		}
-//
-//		// 로그인 && /user로 온 경우 => 글 목록 페이지로 리다이렉트 return false
-//		if (userId != null && uri.startsWith("/user")) {
-//			response.sendRedirect("/post/post_list_view");
-//			return false;
-//		}
-//
-//		return true;
-//	}
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+			throws IOException {
+		// 요청 url을 가져온다.
+		String uri = request.getRequestURI(); // /post/post_list_view
+		logger.info("[####### preHandle]: uri:{}", uri);
+
+		// 로그인 세션이 있는지 확인 => 있으면 로그인
+		HttpSession session = request.getSession();
+		Integer userId = (Integer) session.getAttribute("userId");
+
+		// 비로그인 && /post로 온 경우 => 로그인 페이지로 리다이렉트 return false
+		if (userId == null && uri.startsWith("/post")) {
+			response.sendRedirect("/user/sign_in_view");
+			return false;
+		}
+
+		// 로그인 && /user로 온 경우 => 글 목록 페이지로 리다이렉트 return false
+		if (userId != null && uri.startsWith("/user")) {
+			response.sendRedirect("/post/post_list_view");
+			return false;
+		}
+
+		return true;
+	}
 
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView mav) {

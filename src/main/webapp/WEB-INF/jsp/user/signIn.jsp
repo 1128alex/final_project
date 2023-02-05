@@ -17,11 +17,16 @@
 			</div>
 			<div class="d-flex justify-content-between">
 				<div class="mt-2">
-					Don't have an Id? <a href="/univ/user/sign_up">Sign Up</a>
+					<a href="/univ/user/find_password">Forgot password?</a>
 				</div>
 				<button type="submit" class="btn button mt-3" id="loginBtn">Login</button>
 			</div>
 		</form>
+		<hr>
+		<div class="mt-2 d-flex justify-content-center">
+			Don't have an Id?<a href="/univ/user/sign_up" class="ml-2">Sign
+				Up</a>
+		</div>
 	</div>
 </div>
 
@@ -50,11 +55,7 @@
 				},
 				success : function(data) {
 					if (data.code == 1) {
-						if (data.type == 'professor') {
-							location.href = "/univ/professor";
-						} else if (data.type = "student") {
-							location.href = "/univ";
-						}
+						location.href = "/univ";
 					} else if (data.code == 500) {
 						alert(data.errorMessage);
 					}

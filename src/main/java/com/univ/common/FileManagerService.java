@@ -16,7 +16,7 @@ public class FileManagerService {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	// 실제 이미지가 저장될 경로(서버)
-	public static final String FILE_UPLOAD_PATH = "D:\\이지원\\6_project(선생님)\\memo\\workspace\\Images/";
+	public static final String FILE_UPLOAD_PATH = "C:\\Users\\이지원\\Documents\\CS\\Final_Project\\Univ_Project\\workspace\\images/";
 
 	public String saveFile(String userLoginId, MultipartFile file) {
 		String directoryName = userLoginId + "_" + System.currentTimeMillis() + "/";
@@ -51,7 +51,7 @@ public class FileManagerService {
 				Files.delete(path);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				logger.error("[이미지 삭제] 이미지 삭제 실패. imagePath:{}", imagePath);
+				logger.error("[Image delete] Failed to delete image. imagePath:{}", imagePath);
 			} // 이미지 삭제
 				// 디렉토리(폴더) 삭제
 			path = path.getParent();
@@ -60,7 +60,7 @@ public class FileManagerService {
 					Files.delete(path);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
-					logger.error("[이미지 삭제] 디렉토리 삭제 실패. imagePath:{}", imagePath);
+					logger.error("[Image delete] Failed to delete directory folder. imagePath:{}", imagePath);
 				}
 			}
 		}

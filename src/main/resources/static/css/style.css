@@ -30,3 +30,12 @@ footer {
 	color: white;
 	font-weight: bold;
 }
+
+#profileImgBox {
+	height: 100px;
+	min-width: 100px;
+	max-width: 100px;
+	object-fit: cover;
+	border-radius: 50%;
+	max-width: 100px;
+}

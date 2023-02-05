@@ -38,4 +38,10 @@ public class UserController {
 		return "redirect:/univ/user/sign_in";
 	}
 
+	@GetMapping("/find_password")
+	public String findPassword(Model model) {
+
+		model.addAttribute("view", "user/userVerification");
+		return "template/loginLayout";
+	}
 }

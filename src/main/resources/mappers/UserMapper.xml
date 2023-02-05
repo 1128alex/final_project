@@ -15,6 +15,8 @@
 		,`birth`
 		,`gender`
 		,`subject`
+		,`verifyQuestion`
+		,`verifyAnswer`
 		,`profileUrl`
 		FROM
 		`user`
@@ -55,7 +57,11 @@
 		,`birth`
 		,`gender`
 		,`subject`
+		,`verifyQuestion`
+		,`verifyAnswer`
 		,`profileUrl`
+		,`createdAt`
+		,`updatedAt`
 		)
 		VALUES
 		(
@@ -68,14 +74,18 @@
 		,#{birth}
 		,#{gender}
 		,#{subject}
+		,#{verifyQuestion}
+		,#{verifyAnswer}
 		,#{profileUrl}
+		,NOW()
+		,NOW()
 		)
 	</insert>
 
 	<select id="selectStudentNum" resultType="string"
 		parameterType="map">
 		SELECT
-		lpad(convert(CONVERT(IFNULL(MAX(`studentNum`),
+		lpad(CONVERT(CONVERT(IFNULL(MAX(`studentNum`),
 		CONCAT(#{year},
 		#{faculty}, '0000')), unsigned)+1,char),8,'0')
 		FROM

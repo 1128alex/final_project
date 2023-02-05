@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.univ.common.EncryptUtils;
+import com.univ.common.FileManagerService;
 import com.univ.user.bo.UserBO;
 import com.univ.user.model.User;
 
@@ -28,11 +30,12 @@ public class UserRestController {
 	@Autowired
 	private UserBO userBO;
 
+	@Autowired
+	FileManagerService fileManagerService;
+
 	@PostMapping("/sign_in")
 	public Map<String, Object> signIn(@RequestParam("userId") String userId, @RequestParam("password") String password,
 			HttpServletRequest request) {
-
-		Map<String, Object> result = new HashMap<>();
 
 		String email = null;
 		if (userId.contains("@") && userId.contains(".")) {
@@ -41,6 +44,8 @@ public class UserRestController {
 		}
 
 		String hashedPassword = EncryptUtils.md5(password);
+
+		Map<String, Object> result = new HashMap<>();
 
 		// get user information from database
 		User user = userBO.getUserByIdPassword(userId, email, hashedPassword);
@@ -64,54 +69,55 @@ public class UserRestController {
 	public Map<String, Object> idDuplicateCheck(@RequestParam("email") String email) {
 		Map<String, Object> result = new HashMap<>();
 
-		int rowCount = userBO.checkDuplicate(email);
-
-		if (rowCount == 0) {
-			result.put("code", 0);
-		} else if (rowCount >= 1) {
-			result.put("code", 1);
-		} else {
-			result.put("code", 500);
-		}
-
 		return result;
 	}
 
-	@PostMapping("/sign_up_student")
-	public Map<String, Object> signUpStud(@ModelAttribute User user, @RequestParam("birthYear") int birthYear,
+	@PostMapping("/sign_up")
+	public Map<String, Object> signUp(@ModelAttribute User user, @RequestParam("birthYear") int birthYear,
 			@RequestParam("birthMonth") int birthMonthInfo, @RequestParam("birthDay") int birthDay,
+			@RequestParam(value = "profileFile", required = false) MultipartFile profileFile,
 			HttpServletRequest request) throws ParseException {
 
-		// Creating Student Number
-		// Current Year
-		Integer studentNumYear = Integer.parseInt(LocalDate.now().toString().substring(2, 4));
+		Map<String, Object> result = new HashMap<>();
 
-		// Faculty Number(Random number)
-		String facultyNum = "01";
+		if (user.getType().equals("student")) {
+			// Creating Student Number
+			// Current Year
+			Integer studentNumYear = Integer.parseInt(LocalDate.now().toString().substring(2, 4));
 
-		// Making a studentNumber
-		String studentNum = userBO.getStudentNum(studentNumYear, facultyNum);
+			// Faculty Number(Random number)
+			String facultyNum = "01";
+
+			// Making a studentNumber
+			String studentNum = userBO.getStudentNum(studentNumYear, facultyNum);
+			user.setStudentNum(studentNum);
+		}
 
 		// Combining Birth Information
-		int birthMonth = birthMonthInfo / 100;
-		String birthStr = birthDay + "/" + birthMonth + "/" + birthYear;
-
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		Date birth = sdf.parse(birthStr);
+		Date birth = toDate(birthDay, birthMonthInfo, birthYear);
 
 		// Hash password
 		String hashedPassword = EncryptUtils.md5(user.getPassword());
 
+		String profileUrl = null;
+		if (profileFile != null) {
+			profileUrl = fileManagerService.saveFile(user.getEmail(), profileFile);
+		}
+
+		int emailRowCount = userBO.checkDuplicate(user.getEmail());
+
+		if (emailRowCount >= 1) {
+			result.put("code", 2);
+			return result;
+		}
+
 		// Set the model values
-		user.setType("student");
-		user.setStudentNum(studentNum);
 		user.setBirth(birth);
 		user.setPassword(hashedPassword);
+		user.setProfileUrl(profileUrl);
 
 		// Add the information to Database
 		int rowCount = userBO.addUser(user);
-
-		Map<String, Object> result = new HashMap<>();
 
 		if (rowCount > 0) {
 			result.put("code", 1);
@@ -126,42 +132,10 @@ public class UserRestController {
 		return result;
 	}
 
-	@PostMapping("/sign_up_professor")
-	public Map<String, Object> signUpProf(@ModelAttribute User user, @RequestParam("birthYear") int birthYear,
-			@RequestParam("birthMonth") int birthMonthInfo, @RequestParam("birthDay") int birthDay,
-			HttpServletRequest request) throws ParseException {
-
-		// Combining Birth Information
-		int birthMonth = birthMonthInfo / 100;
+	public Date toDate(int birthDay, int birthMonth, int birthYear) throws ParseException {
 		String birthStr = birthDay + "/" + birthMonth + "/" + birthYear;
 
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		Date birth = sdf.parse(birthStr);
-
-		// Hash password
-		String hashedPassword = EncryptUtils.md5(user.getPassword());
-
-		// Set the model values
-		user.setType("professor");
-		user.setBirth(birth);
-		user.setPassword(hashedPassword);
-
-		// Add the information to Database
-		int rowCount = userBO.addUser(user);
-
-		Map<String, Object> result = new HashMap<>();
-
-		if (rowCount > 0) {
-			result.put("code", 1);
-
-			HttpSession session = request.getSession();
-			session.setAttribute("user", user);
-		} else {
-			result.put("code", 500);
-			result.put("errormessage", "failed to sign up");
-		}
-
-		return result;
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
+		return sdf.parse(birthStr);
 	}
-
 }

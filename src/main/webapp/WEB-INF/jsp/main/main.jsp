@@ -6,13 +6,8 @@
 		<h1>${user.email}</h1>
 		<h1>${user.type}</h1>
 		<h1>${user.studentNum}</h1>
+		<h1>${user.profileUrl}</h1>
+		<img alt="profileImg" src="${user.profileUrl}" id="profileImgBox">
 	</div>
 	<div class="col-6 bg-primary"></div>
 </div>
-
-<script>
-	window.history.forward();
-	function noBack() {
-		window.history.forward();
-	}
-</script>

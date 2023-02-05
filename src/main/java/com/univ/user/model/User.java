@@ -14,6 +14,8 @@ public class User {
 	private String faculty;
 	private String subject;
 	private String profileUrl;
+	private String verifyQuestion;
+	private String verifyAnswer;
 	private Date createdAt;
 	private Date updatedAt;
 
@@ -103,6 +105,22 @@ public class User {
 
 	public void setProfileUrl(String profileUrl) {
 		this.profileUrl = profileUrl;
+	}
+
+	public String getVerifyQuestion() {
+		return verifyQuestion;
+	}
+
+	public void setVerifyQuestion(String verifyQuestion) {
+		this.verifyQuestion = verifyQuestion;
+	}
+
+	public String getVerifyAnswer() {
+		return verifyAnswer;
+	}
+
+	public void setVerifyAnswer(String verifyAnswer) {
+		this.verifyAnswer = verifyAnswer;
 	}
 
 	public Date getCreatedAt() {

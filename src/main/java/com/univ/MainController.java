@@ -14,12 +14,17 @@ import jakarta.servlet.http.HttpSession;
 public class MainController {
 	@GetMapping()
 	public String showMain(Model model, HttpSession session) {
-		model.addAttribute("view", "main/main");
 
 		User user = (User) session.getAttribute("user");
 
 		if (user == null) {
 			return "redirect:/univ/user/sign_in";
+		}
+
+		if (user.getType().equals("student")) {
+			model.addAttribute("view", "main/main");
+		} else if (user.getType().equals("professor")) {
+			model.addAttribute("view", "main/profMain");
 		}
 
 		model.addAttribute("user", user);

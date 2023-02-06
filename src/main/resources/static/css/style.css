@@ -15,7 +15,7 @@ nav {
 }
 
 section {
-	height: 600px;
+	min-height: 700px;
 }
 
 footer {

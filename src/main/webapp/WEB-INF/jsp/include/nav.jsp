@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<!-- Core -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <ul class="nav nav-fill pt-2">
 	<li class="nav-item"><h4>
@@ -18,7 +20,15 @@
 			<a href="#" class="nav-link text-white font-weight-bold">Professors</a>
 		</h4></li>
 	<li class="nav-item"><h4>
-			<a href="#" class="nav-link text-white font-weight-bold">Register
-				Class</a>
+			<c:choose>
+				<c:when test="${user.type eq 'student'}">
+					<a href="#" class="nav-link text-white font-weight-bold">Register
+						Class</a>
+				</c:when>
+				<c:when test="${user.type eq 'professor'}">
+					<a href="/univ/course/create_course"
+						class="nav-link text-white font-weight-bold">Create Class</a>
+				</c:when>
+			</c:choose>
 		</h4></li>
 </ul>

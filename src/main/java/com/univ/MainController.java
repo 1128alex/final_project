@@ -37,4 +37,5 @@ public class MainController {
 		model.addAttribute("view", "main/citation");
 		return "template/layout";
 	}
+
 }

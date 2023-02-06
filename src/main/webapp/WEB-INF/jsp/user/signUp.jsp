@@ -11,9 +11,9 @@
 		</div>
 		<div>
 			<h4>Type</h4>
-			<label><input id="userTypeRadioStud" type="radio" id="type"
+			<label><input id="userTypeRadioStud type" type="radio"
 				name="type" value="student" class="type" checked="checked">Student</label>
-			<label><input id="userTypeRadioProf" type="radio" id="type"
+			<label><input id="userTypeRadioProf type" type="radio"
 				name="type" value="professor" class="type">Professor</label>
 		</div>
 
@@ -58,7 +58,9 @@
 							$('#birthDay').val('0');
 							if (monthDays == '30') {
 								$('#day31').addClass("d-none");
-							} else if (monthDays == 28) {
+								$('#day30').removeClass("d-none");
+								$('#day29').removeClass("d-none");
+							} else if (monthDays == '28') {
 								$('#day31').addClass("d-none");
 								$('#day30').addClass("d-none");
 								$('#day29').addClass("d-none");
@@ -69,7 +71,7 @@
 							}
 						});
 
-						$('.birthDay').on('click', function() {
+						$('#birthDay').on('click', function() {
 							if ($('#birthMonth').val() == '0') {
 								alert("Please select your birth Month.");
 								return false;

@@ -3,7 +3,7 @@
 <!-- Core -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<div id="formView">
+<div>
 	<form method="post" id="form" action="/user/sign_up">
 		<div class="mt-3">
 			<h4>Email</h4>

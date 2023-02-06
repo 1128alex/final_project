@@ -16,7 +16,11 @@ public class FileManagerService {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	// 실제 이미지가 저장될 경로(서버)
-	public static final String FILE_UPLOAD_PATH = "C:\\Users\\이지원\\Documents\\CS\\Final_Project\\Univ_Project\\workspace\\images/";
+	// 집
+	// public static final String FILE_UPLOAD_PATH =
+	// "C:\\Users\\이지원\\Documents\\CS\\Final_Project\\Univ_Project\\workspace\\images/";
+	// 학원
+	public static final String FILE_UPLOAD_PATH = "D:\\이지원\\7_final_project\\UnivProject\\workspace\\images/";
 
 	public String saveFile(String userLoginId, MultipartFile file) {
 		String directoryName = userLoginId + "_" + System.currentTimeMillis() + "/";

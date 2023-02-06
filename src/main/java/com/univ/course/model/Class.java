@@ -8,9 +8,9 @@ public class Class {
 	private int maxNum;
 	private Date registerDueDate;
 	private Date monStartTime;
-	private Date tuesStartTime;
-	private Date wednesStartTime;
-	private Date thursStartTime;
+	private Date tueStartTime;
+	private Date wedsStartTime;
+	private Date thuStartTime;
 	private Date friStartTime;
 	private Date createdAt;
 	private Date updatedAt;
@@ -55,28 +55,28 @@ public class Class {
 		this.monStartTime = monStartTime;
 	}
 
-	public Date getTuesStartTime() {
-		return tuesStartTime;
+	public Date getTueStartTime() {
+		return tueStartTime;
 	}
 
-	public void setTuesStartTime(Date tuesStartTime) {
-		this.tuesStartTime = tuesStartTime;
+	public void setTueStartTime(Date tueStartTime) {
+		this.tueStartTime = tueStartTime;
 	}
 
-	public Date getWednesStartTime() {
-		return wednesStartTime;
+	public Date getWedsStartTime() {
+		return wedsStartTime;
 	}
 
-	public void setWednesStartTime(Date wednesStartTime) {
-		this.wednesStartTime = wednesStartTime;
+	public void setWedsStartTime(Date wedsStartTime) {
+		this.wedsStartTime = wedsStartTime;
 	}
 
-	public Date getThursStartTime() {
-		return thursStartTime;
+	public Date getThuStartTime() {
+		return thuStartTime;
 	}
 
-	public void setThursStartTime(Date thursStartTime) {
-		this.thursStartTime = thursStartTime;
+	public void setThuStartTime(Date thuStartTime) {
+		this.thuStartTime = thuStartTime;
 	}
 
 	public Date getFriStartTime() {

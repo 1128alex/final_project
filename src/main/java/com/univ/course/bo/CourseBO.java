@@ -18,4 +18,8 @@ public class CourseBO {
 		return courseDAO.selectCourseList();
 	}
 
+	public List<Course> getCourseListBySubjectCode(String subjectCode) {
+		return courseDAO.selectCourseListBySubjectCode(subjectCode);
+	}
+
 }

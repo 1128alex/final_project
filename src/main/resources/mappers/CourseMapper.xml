@@ -14,6 +14,30 @@
 		,`updatedAt`
 		FROM
 		`course`
+		ORDER BY
+		`courseCode`
+		ASC
+	</select>
+
+	<select id="selectCourseListBySubjectCode"
+		parameterType="string" resultType="com.univ.course.model.Course">
+		SELECT
+		`courseCode`
+		,`courseName`
+		,`description`
+		,`price`
+		,`createdAt`
+		,`updatedAt`
+		FROM
+		`course`
+		WHERE
+		<if test='subjectCode != "0"'>
+			`courseCode` LIKE
+			CONCAT(#{subjectCode},'%')
+		</if>
+		ORDER BY
+		`courseCode`
+		ASC
 	</select>
 
 </mapper>

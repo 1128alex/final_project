@@ -11,4 +11,6 @@ public interface CourseDAO {
 
 	public List<Course> selectCourseList();
 
+	public List<Course> selectCourseListBySubjectCode(String subjectCode);
+
 }

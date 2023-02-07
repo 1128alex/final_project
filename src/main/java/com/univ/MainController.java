@@ -12,14 +12,15 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/univ")
 @Controller
 public class MainController {
+
 	@GetMapping()
-	public String showMain(Model model, HttpSession session) {
+	public String showMainView(Model model, HttpSession session) {
 
 		User user = (User) session.getAttribute("user");
 
-		if (user == null) {
-			return "redirect:/univ/user/sign_in";
-		}
+//		if (user == null) {
+//			return "redirect:/univ/user/sign_in";
+//		}
 
 		if (user.getType().equals("student")) {
 			model.addAttribute("view", "main/main");
@@ -33,7 +34,7 @@ public class MainController {
 	}
 
 	@GetMapping("/citations")
-	public String showCitations(Model model) {
+	public String showCitationsView(Model model) {
 		model.addAttribute("view", "main/citation");
 		return "template/layout";
 	}

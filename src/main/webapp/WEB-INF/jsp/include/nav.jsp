@@ -5,7 +5,8 @@
 <!DOCTYPE html>
 <ul class="nav nav-fill pt-2">
 	<li class="nav-item"><h4>
-			<a href="#" class="nav-link text-white font-weight-bold">My Class</a>
+			<a href="/univ/course/class_list"
+				class="nav-link text-white font-weight-bold">My Classes</a>
 		</h4></li>
 	<li class="nav-item"><h4>
 			<a href="#" class="nav-link text-white font-weight-bold">Grade</a>

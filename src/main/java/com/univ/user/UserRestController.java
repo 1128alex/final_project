@@ -35,7 +35,7 @@ public class UserRestController {
 
 	@PostMapping("/sign_in")
 	public Map<String, Object> signIn(@RequestParam("userId") String userId, @RequestParam("password") String password,
-			HttpServletRequest request) {
+			HttpSession session) {
 
 		String email = null;
 		if (userId.contains("@") && userId.contains(".")) {
@@ -55,7 +55,6 @@ public class UserRestController {
 			result.put("code", 1);
 			result.put("type", type);
 
-			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
 		} else if (user == null) {
 			result.put("code", 500);

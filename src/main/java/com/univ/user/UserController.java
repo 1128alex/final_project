@@ -39,7 +39,7 @@ public class UserController {
 	}
 
 	@GetMapping("/find_password")
-	public String findPassword(Model model) {
+	public String findPasswordView(Model model) {
 
 		model.addAttribute("view", "user/userVerification");
 		return "template/loginLayout";

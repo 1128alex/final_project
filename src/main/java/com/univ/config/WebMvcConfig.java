@@ -23,6 +23,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(interceptor).addPathPatterns("/**").excludePathPatterns("/favicon.ico", "/error",
-				"/static/**");
+				"/static/**", "/univ/user/sign_out", "/univ/user/sign_in");
 	}
 }

@@ -30,12 +30,12 @@ create table `class`(
 	,`courseCode` varchar(16)
 	,`profEmail` varchar(150) not null
 	,`maxNum` int not null
-	,`registerDueDate` timestamp not null
-	,`monStartTime` timestamp
-	,`tueStartTime` timestamp
-	,`wedStartTime` timestamp
-	,`thuStartTime` timestamp
-	,`friStartTime` timestamp
+	,`registerDueDate` date not null
+	,`monStartTime` time
+	,`tueStartTime` time
+	,`wedStartTime` time
+	,`thuStartTime` time
+	,`friStartTime` time
 	,`createdAt` timestamp DEFAULT CURRENT_TIMESTAMP
     ,`updatedAt` timestamp DEFAULT CURRENT_TIMESTAMP
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

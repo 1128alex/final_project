@@ -37,9 +37,26 @@ footer {
 	max-width: 100px;
 	object-fit: cover;
 	border-radius: 50%;
-	max-width: 100px;
 }
 
 .dayOfWeek {
 	text-align: center;
+}
+
+.classBox {
+	height: 320px;
+	width: 320px;
+	border-radius: 5px;
+	background-color: black;
+}
+
+.box {
+	flex-wrap: wrap;
+}
+
+.classAside {
+	height: 600px;
+	width: 320px;
+	border-radius: 5px;
+	background-color: black;
 }

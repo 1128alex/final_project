@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.univ.course.dao.CourseDAO;
 import com.univ.course.model.Course;
 
+import com.univ.course.model.Class;
+
 @Service
 public class CourseBO {
 
@@ -20,6 +22,10 @@ public class CourseBO {
 
 	public List<Course> getCourseListBySubjectCode(String subjectCode) {
 		return courseDAO.selectCourseListBySubjectCode(subjectCode);
+	}
+
+	public int checkDuplicatedClass(String courseCode, String profEmail) {
+		return courseDAO.selectDuplicated(courseCode, profEmail);
 	}
 
 	public int addClass(Class newClass) {

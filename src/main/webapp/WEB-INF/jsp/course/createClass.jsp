@@ -51,9 +51,9 @@
 					<div class="text-center">
 						<h4>Registration Due Date</h4>
 						<div class="d-flex justify-content-center">
-							<!-- <input type="text" id="registerDueDate" name="registerDueDate"
-								class="form-control col-11"> -->
-							<div id="registerDueDate"></div>
+							<input type="text" id="registerDueDate" name="registerDueDate"
+								class="form-control col-11">
+							<!-- <div id="registerDueDate"></div> -->
 						</div>
 					</div>
 				</div>
@@ -101,7 +101,7 @@
 									class="form-control">
 										<option value="0">No Class</option>
 										<c:forEach var="j" begin="6" end="20">
-											<option val="${j}">${j}:00</option>
+											<option value="${j}">${j}:00</option>
 										</c:forEach>
 								</select></td>
 							</c:forEach>
@@ -177,6 +177,8 @@
 												alert("Please select the course that you are going to teach.");
 												return false;
 											}
+											let courseCode = courseName
+													.split(' - ')[0];
 
 											let maxNum = $('#maxNum').val();
 											if (maxNum == '') {
@@ -186,29 +188,35 @@
 
 											let registerDueDate = $(
 													'#registerDueDate').val();
-											if (registerDueDate == "0") {
+											if (registerDueDate == '') {
 												alert("Please select the register due date of this class.");
 												return false;
 											}
+											alert(registerDueDate);
 
 											let timeCount = 0;
-											let monStartTime = $('#dayOfWeek1').val;
+											let monStartTime = $('#dayOfWeek1')
+													.val();
 											if (monStartTime != "0") {
 												timeCount++;
 											}
-											let tueStartTime = $('#dayOfWeek2').val;
+											let tueStartTime = $('#dayOfWeek2')
+													.val();
 											if (tueStartTime != "0") {
 												timeCount++;
 											}
-											let wedStartTime = $('#dayOfWeek3').val;
+											let wedStartTime = $('#dayOfWeek3')
+													.val();
 											if (wedStartTime != "0") {
 												timeCount++;
 											}
-											let thuStartTime = $('#dayOfWeek4').val;
+											let thuStartTime = $('#dayOfWeek4')
+													.val();
 											if (thuStartTime != "0") {
 												timeCount++;
 											}
-											let friStartTime = $('#dayOfWeek5').val;
+											let friStartTime = $('#dayOfWeek5')
+													.val();
 											if (friStartTime != "0") {
 												timeCount++;
 											}
@@ -218,39 +226,21 @@
 											}
 
 											let url = $(this).attr("action");
-											let data = new formData();
-											data.append("courseName",
-													courseName);
-											data.append("maxNum", maxNum);
-											data.append("courseName",
-													courseName);
-											data.append("registerDueDate",
-													registerDueDate);
-											if (monStartTime != "0") {
-												data.append("monStartTime",
-														monStartTime);
-											}
-											if (tueStartTime != "0") {
-												data.append("tueStartTime",
-														tueStartTime);
-											}
-											if (wedStartTime != "0") {
-												data.append("wedStartTime",
-														wedStartTime);
-											}
-											if (thuStartTime != "0") {
-												data.append("thuStartTime",
-														thuStartTime);
-											}
-											if (friStartTime != "0") {
-												data.append("friStartTime",
-														friStartTime);
-											}
 											$
 													.ajax({
 														type : "PUT",
 														url : url,
-														data : data,
+														data : {
+															"courseCode" : courseCode,
+															"maxNum" : maxNum,
+															"courseName" : courseName,
+															"registerDueDateString" : registerDueDate,
+															"monStartTime" : monStartTime,
+															"tueStartTime" : tueStartTime,
+															"wedStartTime" : wedStartTime,
+															"thuStartTime" : thuStartTime,
+															"friStartTime" : friStartTime,
+														},
 														success : function(data) {
 															if (data.code == 1) {
 																alert("success");

@@ -40,4 +40,49 @@
 		ASC
 	</select>
 
+	<select id="selectDuplicated" parameterType="map"
+		resultType="int">
+		SELECT
+		COUNT(*)
+		FROM
+		`class`
+		WHERE
+		`courseCode` = #{courseCode}
+		AND
+		`profEmail` =
+		#{profEmail}
+		LIMIT 1;
+	</select>
+
+	<insert id="insertClass"
+		parameterType="com.univ.course.model.Class">
+		INSERT INTO`class`
+		(
+		`courseCode`
+		,`profEmail`
+		,`maxNum`
+		,`registerDueDate`
+		,`monStartTime`
+		,`tueStartTime`
+		,`wedStartTime`
+		,`thuStartTime`
+		,`friStartTime`
+		,`createdAt`
+		,`updatedAt`
+		)
+		VALUES
+		(
+		#{courseCode}
+		,#{profEmail}
+		,#{maxNum}
+		,#{registerDueDate}
+		,#{monStartTime}
+		,#{tueStartTime}
+		,#{wedStartTime}
+		,#{thuStartTime}
+		,#{friStartTime}
+		,NOW()
+		,NOW()
+		)
+	</insert>
 </mapper>

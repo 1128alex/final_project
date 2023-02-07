@@ -2,19 +2,16 @@ package com.univ.course.model;
 
 import java.util.Date;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 public class Class {
 	private String courseCode;
 	private String profEmail;
 	private int maxNum;
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private Date registerDueDate;
-	private Date monStartTime;
-	private Date tueStartTime;
-	private Date wedStartTime;
-	private Date thuStartTime;
-	private Date friStartTime;
+	private int monStartTime;
+	private int tueStartTime;
+	private int wedStartTime;
+	private int thuStartTime;
+	private int friStartTime;
 	private Date createdAt;
 	private Date updatedAt;
 
@@ -50,43 +47,43 @@ public class Class {
 		this.registerDueDate = registerDueDate;
 	}
 
-	public Date getMonStartTime() {
+	public int getMonStartTime() {
 		return monStartTime;
 	}
 
-	public void setMonStartTime(Date monStartTime) {
+	public void setMonStartTime(int monStartTime) {
 		this.monStartTime = monStartTime;
 	}
 
-	public Date getTueStartTime() {
+	public int getTueStartTime() {
 		return tueStartTime;
 	}
 
-	public void setTueStartTime(Date tueStartTime) {
+	public void setTueStartTime(int tueStartTime) {
 		this.tueStartTime = tueStartTime;
 	}
 
-	public Date getWedStartTime() {
+	public int getWedStartTime() {
 		return wedStartTime;
 	}
 
-	public void setWedStartTime(Date wedStartTime) {
+	public void setWedStartTime(int wedStartTime) {
 		this.wedStartTime = wedStartTime;
 	}
 
-	public Date getThuStartTime() {
+	public int getThuStartTime() {
 		return thuStartTime;
 	}
 
-	public void setThuStartTime(Date thuStartTime) {
+	public void setThuStartTime(int thuStartTime) {
 		this.thuStartTime = thuStartTime;
 	}
 
-	public Date getFriStartTime() {
+	public int getFriStartTime() {
 		return friStartTime;
 	}
 
-	public void setFriStartTime(Date friStartTime) {
+	public void setFriStartTime(int friStartTime) {
 		this.friStartTime = friStartTime;
 	}
 

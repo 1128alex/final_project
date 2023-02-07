@@ -9,21 +9,23 @@
 	<div class="col-4">
 		<h2 class="mt-3 font-weight-bold">Add Class</h2>
 		<div>
-			<h4>Class</h4>
-			<div class="d-flex">
-				<select id="subjectCode" name="subjectCode"
-					class="form-control col-6">
-					<option value="0">-- Subject --</option>
-					<option value="CS">Computer Science</option>
-					<option value="ECON">Economics</option>
-					<option value="MATH">Math</option>
-				</select> <select id="subjectLevel" name="subjectLevel"
-					class="form-control col-6">
-					<option value="0">-- Level --</option>
-					<c:forEach var="i" begin="1" end="4">
-						<option>${i}</option>
-					</c:forEach>
-				</select>
+			<div class="mt-3">
+				<h4>Class</h4>
+				<div class="d-flex">
+					<select id="subjectCode" name="subjectCode"
+						class="form-control col-6">
+						<option value="0">-- Subject --</option>
+						<option value="CS">Computer Science</option>
+						<option value="ECON">Economics</option>
+						<option value="MATH">Math</option>
+					</select> <select id="subjectLevel" name="subjectLevel"
+						class="form-control col-6">
+						<option value="0">-- Level --</option>
+						<c:forEach var="i" begin="1" end="4">
+							<option>${i}</option>
+						</c:forEach>
+					</select>
+				</div>
 			</div>
 			<div hidden="hidden" id="endValue" data-end-value="${length}"></div>
 			<select id="subjectName" name="subjectName"
@@ -35,15 +37,31 @@
 						${course.courseCode += " - " += course.courseName}</option>
 				</c:forEach>
 			</select>
-			<h4>Description</h4>
-			<textarea id="description" name="description" class="form-control"
-				placeholder="" rows="6"></textarea>
-
+			<div class="mt-3">
+				<div class="d-flex">
+					<div>
+						<h4>Maximum Students</h4>
+						<input type="number" id="maxNum" name="maxNum"
+							class="form-control col-8">
+					</div>
+					<div>
+						<h4>Registration Due Date</h4>
+						<input type="text" id="registerDueDate" name="registerDueDate"
+							class="form-control col-11">
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
 <script>
 	$(document).ready(function() {
+		$('#subjectLevel').on('click', function() {
+			if ($('#subjectCode').val() == "0") {
+				alert("Please select the subject code.");
+				return;
+			}
+		});
 		$('#subjectCode, #subjectLevel').on('change', function() {
 			$('#subjectName').val('0');
 
@@ -65,5 +83,6 @@
 				}
 			}
 		});
+		$('#registerDueDate').datepicker();
 	});
 </script>

@@ -13,4 +13,5 @@ public interface CourseDAO {
 
 	public List<Course> selectCourseListBySubjectCode(String subjectCode);
 
+	public int insertClass(Class newClass);
 }

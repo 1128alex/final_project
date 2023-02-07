@@ -22,4 +22,8 @@ public class CourseBO {
 		return courseDAO.selectCourseListBySubjectCode(subjectCode);
 	}
 
+	public int addClass(Class newClass) {
+		return courseDAO.insertClass(newClass);
+	}
+
 }

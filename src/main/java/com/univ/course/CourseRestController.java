@@ -6,6 +6,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +21,7 @@ import jakarta.servlet.http.HttpSession;
 public class CourseRestController {
 	@Autowired
 	private CourseBO courseBO;
+	
 
 	@GetMapping("/find_subject_classes")
 	public Map<String, Object> findSubjectClasses(Model model) {
@@ -37,4 +40,11 @@ public class CourseRestController {
 
 		return result;
 	}
+
+	// https://gilmatnote.tistory.com/11
+	@PutMapping("/create_class")
+	public Map<String, Object> createClass(@ModelAttribute Class newClass) {
+		courseBO.addClass(newClass);
+	}
+
 }

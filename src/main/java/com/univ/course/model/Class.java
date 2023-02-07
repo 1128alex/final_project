@@ -2,14 +2,17 @@ package com.univ.course.model;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Class {
 	private String courseCode;
 	private String profEmail;
 	private int maxNum;
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private Date registerDueDate;
 	private Date monStartTime;
 	private Date tueStartTime;
-	private Date wedsStartTime;
+	private Date wedStartTime;
 	private Date thuStartTime;
 	private Date friStartTime;
 	private Date createdAt;
@@ -63,12 +66,12 @@ public class Class {
 		this.tueStartTime = tueStartTime;
 	}
 
-	public Date getWedsStartTime() {
-		return wedsStartTime;
+	public Date getWedStartTime() {
+		return wedStartTime;
 	}
 
-	public void setWedsStartTime(Date wedsStartTime) {
-		this.wedsStartTime = wedsStartTime;
+	public void setWedStartTime(Date wedStartTime) {
+		this.wedStartTime = wedStartTime;
 	}
 
 	public Date getThuStartTime() {

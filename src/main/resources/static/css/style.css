@@ -24,7 +24,7 @@ footer {
 	color: white;
 }
 
-.loginBtn {
+.button {
 	background-color: #008B8B;
 	border-radius: 0px;
 	color: white;
@@ -38,4 +38,8 @@ footer {
 	object-fit: cover;
 	border-radius: 50%;
 	max-width: 100px;
+}
+
+.dayOfWeek {
+	text-align: center;
 }

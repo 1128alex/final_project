@@ -192,7 +192,6 @@
 												alert("Please select the register due date of this class.");
 												return false;
 											}
-											alert(registerDueDate);
 
 											let timeCount = 0;
 											let monStartTime = $('#dayOfWeek1')
@@ -225,6 +224,10 @@
 												return false;
 											}
 
+											if (!confirm("Are you sure you want to create the class with these information?")) {
+												return false;
+											}
+
 											let url = $(this).attr("action");
 											$
 													.ajax({
@@ -244,7 +247,7 @@
 														success : function(data) {
 															if (data.code == 1) {
 																alert("success");
-																location.href = "/univ/course/courseList";
+																location.href = "/univ/course/class_list";
 															} else {
 																alert("error: "
 																		+ data.errorMessage);

@@ -24,12 +24,24 @@ public class CourseBO {
 		return courseDAO.selectCourseListBySubjectCode(subjectCode);
 	}
 
+	public Course getCourseByCourseCode(String courseCode) {
+		return courseDAO.selectCourseByCourseCode(courseCode);
+	}
+
 	public int checkDuplicatedClass(String courseCode, String profEmail) {
 		return courseDAO.selectDuplicated(courseCode, profEmail);
 	}
 
 	public int addClass(Class newClass) {
 		return courseDAO.insertClass(newClass);
+	}
+
+	public List<Class> getClassList(String email) {
+		return courseDAO.selectClassList(email);
+	}
+
+	public Class getClassById(int id) {
+		return courseDAO.selectClassById(id);
 	}
 
 }

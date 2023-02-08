@@ -3,6 +3,7 @@ package com.univ.course.model;
 import java.util.Date;
 
 public class Class {
+	private int id;
 	private String courseCode;
 	private String profEmail;
 	private int maxNum;
@@ -14,6 +15,14 @@ public class Class {
 	private int friStartTime;
 	private Date createdAt;
 	private Date updatedAt;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getCourseCode() {
 		return courseCode;

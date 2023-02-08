@@ -15,7 +15,13 @@ public interface CourseDAO {
 
 	public List<Course> selectCourseListBySubjectCode(String subjectCode);
 
+	public Course selectCourseByCourseCode(String courseCode);
+
 	public int selectDuplicated(@Param("courseCode") String courseCode, @Param("profEmail") String profEmail);
 
 	public int insertClass(Class newClass);
+
+	public List<Class> selectClassList(String email);
+
+	public Class selectClassById(int id);
 }

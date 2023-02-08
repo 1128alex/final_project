@@ -40,6 +40,21 @@
 		ASC
 	</select>
 
+	<select id="selectCourseByCourseCode" parameterType="string"
+		resultType="com.univ.course.model.Course">
+		SELECT
+		`courseCode`
+		,`courseName`
+		,`description`
+		,`price`
+		,`createdAt`
+		,`updatedAt`
+		FROM
+		`course`
+		WHERE
+		`courseCode` = #{courseCode}
+	</select>
+
 	<select id="selectDuplicated" parameterType="map"
 		resultType="int">
 		SELECT
@@ -85,4 +100,48 @@
 		,NOW()
 		)
 	</insert>
+
+	<select id="selectClassList" parameterType="string"
+		resultType="com.univ.course.model.Class">
+		SELECT
+		`id`
+		,`courseCode`
+		,`profEmail`
+		,`maxNum`
+		,`registerDueDate`
+		,`monStartTime`
+		,`tueStartTime`
+		,`wedStartTime`
+		,`thuStartTime`
+		,`friStartTime`
+		,`createdAt`
+		,`updatedAt`
+		FROM
+		`class`
+		WHERE
+		`profEmail` =
+		#{email}
+		ORDER BY `createdAt` DESC;
+	</select>
+
+	<select id="selectClassById" parameterType="int"
+		resultType="com.univ.course.model.Class">
+		SELECT
+		`id`
+		,`courseCode`
+		,`profEmail`
+		,`maxNum`
+		,`registerDueDate`
+		,`monStartTime`
+		,`tueStartTime`
+		,`wedStartTime`
+		,`thuStartTime`
+		,`friStartTime`
+		,`createdAt`
+		,`updatedAt`
+		FROM
+		`class`
+		WHERE
+		`id` = #{id}
+	</select>
 </mapper>

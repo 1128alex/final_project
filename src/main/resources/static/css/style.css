@@ -16,7 +16,6 @@ nav {
 
 section {
 	min-height: 700px;
-	background-color: #E0FFFF;
 }
 
 footer {
@@ -25,8 +24,19 @@ footer {
 	color: white;
 }
 
+a:hover {
+	text-decoration-color: white;
+}
+
 .button {
 	background-color: #008B8B;
+	border-radius: 0px;
+	color: white;
+	font-weight: bold;
+}
+
+.button:hover {
+	background-color: #006666;
 	border-radius: 0px;
 	color: white;
 	font-weight: bold;
@@ -56,9 +66,15 @@ footer {
 	flex-wrap: wrap;
 }
 
+.classAsideArea {
+	border-left: 1px solid grey;
+	background-color: #f1f3f4;
+	min-height: 700px;
+}
+
 .classAside {
-	height: 600px;
-	width: 320px;
+	height: 350px;
+	width: 400px;
 	border-radius: 5px;
 	background-color: white;
 	border: 2px solid #008B8B;

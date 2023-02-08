@@ -31,11 +31,11 @@ create table `class`(
 	,`profEmail` varchar(150) not null
 	,`maxNum` int not null
 	,`registerDueDate` date not null
-	,`monStartTime` time
-	,`tueStartTime` time
-	,`wedStartTime` time
-	,`thuStartTime` time
-	,`friStartTime` time
+	,`monStartTime` int
+	,`tueStartTime` int
+	,`wedStartTime` int
+	,`thuStartTime` int
+	,`friStartTime` int
 	,`createdAt` timestamp DEFAULT CURRENT_TIMESTAMP
     ,`updatedAt` timestamp DEFAULT CURRENT_TIMESTAMP
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

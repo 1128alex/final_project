@@ -16,6 +16,7 @@ nav {
 
 section {
 	min-height: 700px;
+	background-color: #E0FFFF;
 }
 
 footer {
@@ -44,10 +45,11 @@ footer {
 }
 
 .classBox {
-	height: 320px;
+	height: 280px;
 	width: 320px;
 	border-radius: 5px;
-	background-color: black;
+	background-color: white;
+	border: 2px solid #008B8B;
 }
 
 .box {
@@ -58,5 +60,11 @@ footer {
 	height: 600px;
 	width: 320px;
 	border-radius: 5px;
-	background-color: black;
+	background-color: white;
+	border: 2px solid #008B8B;
+}
+
+.classBoxTitle {
+	height: 110px;
+	background-color: #008B8B;
 }

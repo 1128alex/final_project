@@ -22,7 +22,7 @@ public class CourseController {
 	@Autowired
 	private CourseBO courseBO;
 
-	@GetMapping("/create_course")
+	@GetMapping("/create_class")
 	public String showCreateClassView(Model model) {
 
 		model.addAttribute("view", "course/createClass");

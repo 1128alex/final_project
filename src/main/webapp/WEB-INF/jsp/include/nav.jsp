@@ -27,7 +27,7 @@
 						Class</a>
 				</c:when>
 				<c:when test="${user.type eq 'professor'}">
-					<a href="/univ/course/create_course"
+					<a href="/univ/course/create_class"
 						class="nav-link text-white font-weight-bold">Create Class</a>
 				</c:when>
 			</c:choose>

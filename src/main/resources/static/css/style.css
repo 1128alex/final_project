@@ -28,6 +28,10 @@ a:hover {
 	text-decoration-color: white;
 }
 
+textarea {
+	resize: none;
+}
+
 .button {
 	background-color: #008B8B;
 	border-radius: 0px;
@@ -88,4 +92,18 @@ a:hover {
 #classTable {
 	table-layout: fixed;
 	width: 100%;
+}
+
+.noDecoA {
+	text-decoration: none;
+	color: black;
+}
+
+.noDecoA:hover {
+	text-decoration: underline;
+	color: black;
+}
+
+.asmntA, .asmntA:hover {
+	text-decoration: underline;
 }

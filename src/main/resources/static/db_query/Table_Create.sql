@@ -1,42 +1,56 @@
-create table `user`(
-	`email`	varchar(150) primary key	
-	,`password`	varchar(120) not null
-	,`studentNum` varchar(8)
-	,`type` varchar(9) not null
-	,`firstName` varchar(50) not null
-	,`lastName` varchar(50) not null 
-	,`birth` date not null
-	,`gender`  varchar(50)
-	,`faculty` varchar(120)
-	,`subject` varchar(150)
-    ,`verifyQuestion` varchar(200)
-    ,`verifyAnswer` varchar(100)
-	,`profileUrl` varchar(160)
-    , `createdAt` timestamp DEFAULT CURRENT_TIMESTAMP
-    , `updatedAt` timestamp DEFAULT CURRENT_TIMESTAMP 
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `user` (
+    `email` VARCHAR(150) PRIMARY KEY,
+    `password` VARCHAR(120) NOT NULL,
+    `studentNum` VARCHAR(8),
+    `type` VARCHAR(9) NOT NULL,
+    `firstName` VARCHAR(50) NOT NULL,
+    `lastName` VARCHAR(50) NOT NULL,
+    `birth` DATE NOT NULL,
+    `gender` VARCHAR(50),
+    `faculty` VARCHAR(120),
+    `subject` VARCHAR(150),
+    `verifyQuestion` VARCHAR(200),
+    `verifyAnswer` VARCHAR(100),
+    `profileUrl` VARCHAR(200),
+    `createdAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updatedAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4;
 
-create table `course`(
-	`courseCode` varchar(16) primary key
-	,`courseName` varchar(150) not null
-	,`description` text
-	,`price` int not null
-	,`createdAt` timestamp DEFAULT CURRENT_TIMESTAMP
-    ,`updatedAt` timestamp DEFAULT CURRENT_TIMESTAMP
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `course` (
+    `courseCode` VARCHAR(16) PRIMARY KEY,
+    `courseName` VARCHAR(150) NOT NULL,
+    `description` TEXT,
+    `price` INT NOT NULL,
+    `createdAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updatedAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4;
 
-create table `class`(
-	`id` int auto_increment primary key
-	,`courseCode` varchar(16)
-	,`profEmail` varchar(150) not null
-	,`maxNum` int not null
-	,`registerDueDate` date not null
-	,`monStartTime` int
-	,`tueStartTime` int
-	,`wedStartTime` int
-	,`thuStartTime` int
-	,`friStartTime` int
-	,`createdAt` timestamp DEFAULT CURRENT_TIMESTAMP
-    ,`updatedAt` timestamp DEFAULT CURRENT_TIMESTAMP
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `class` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `courseCode` VARCHAR(16),
+    `profEmail` VARCHAR(150) NOT NULL,
+    `maxNum` INT NOT NULL,
+    `registerDueDate` DATE NOT NULL,
+    `monStartTime` INT,
+    `tueStartTime` INT,
+    `wedStartTime` INT,
+    `thuStartTime` INT,
+    `friStartTime` INT,
+    `createdAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updatedAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4;
+
+CREATE TABLE `assignment` (
+    `classId` INT,
+    `asgmtId` INT,
+    `asgmtType` VARCHAR(20),
+    `asgmtName` VARCHAR(200),
+    `content` text,
+    `filePath` VARCHAR(200),
+    `maxScore` INT,
+    `dueDate` DATE,
+    `createdAt` TIMESTAMP,
+    `updatedAt` TIMESTAMP
+)  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4;
+
 

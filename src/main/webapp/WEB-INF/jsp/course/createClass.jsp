@@ -1,5 +1,3 @@
-<%@page import="com.univ.course.model.Course"%>
-<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!-- Core -->
@@ -53,7 +51,6 @@
 						<div class="d-flex justify-content-center">
 							<input type="text" id="registerDueDate" name="registerDueDate"
 								class="form-control col-11">
-							<!-- <div id="registerDueDate"></div> -->
 						</div>
 					</div>
 				</div>
@@ -162,7 +159,8 @@
 											}
 										});
 						$('#registerDueDate').datepicker({
-							dateFormat : 'yy/mm/dd'
+							dateFormat : 'yy/mm/dd',
+							minDate : 0
 						});
 
 						$('#addClassForm')
@@ -186,6 +184,7 @@
 												return false;
 											}
 
+											g
 											let registerDueDate = $(
 													'#registerDueDate').val();
 											if (registerDueDate == '') {

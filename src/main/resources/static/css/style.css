@@ -74,7 +74,7 @@ a:hover {
 
 .classAside {
 	height: 350px;
-	width: 400px;
+	width: 90%;
 	border-radius: 5px;
 	background-color: white;
 	border: 2px solid #008B8B;
@@ -83,4 +83,9 @@ a:hover {
 .classBoxTitle {
 	height: 110px;
 	background-color: #008B8B;
+}
+
+#classTable {
+	table-layout: fixed;
+	width: 100%;
 }

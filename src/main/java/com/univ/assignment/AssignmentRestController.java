@@ -4,10 +4,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,8 +32,7 @@ public class AssignmentRestController {
 
 	@PutMapping("/add_assignment")
 	public Map<String, Object> addAssignment(@ModelAttribute Assignment assignment,
-			@RequestParam("maxScoreString") String maxScoreString,
-			@RequestParam(value = "file", required = false) MultipartFile[] files,
+			@RequestParam("maxScoreString") String maxScoreString, @RequestParam("files") List<MultipartFile> files,
 			@RequestParam(value = "dueDateString", required = false) String dueDateString, HttpSession session)
 			throws ParseException {
 		Map<String, Object> result = new HashMap<>();
@@ -45,12 +44,14 @@ public class AssignmentRestController {
 
 		if (files != null) {
 			// saving and adding files to database
-			String[] filePaths = new String[files.length];
+			String[] filePaths = new String[files.size()];
 			User user = (User) session.getAttribute("user");
 			String email = user.getEmail();
-			for (int i = 0; i < files.length; i++) {
-				filePaths[i] = fileManagerService.saveFile(email, files[i]);
+			int index = 0;
+			for (MultipartFile file : files) {
+				filePaths[index++] = fileManagerService.saveFile(email, file);
 			}
+
 			String filePath = null;
 			for (int i = 0; i < filePaths.length; i++) {
 				filePath = filePaths[i] + " ";

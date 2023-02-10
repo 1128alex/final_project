@@ -49,7 +49,6 @@
 		</form>
 		<div class="tempDataStorage" hidden="hidden"
 			data-class-id="${classId}"></div>
-		<a href="myw3schoolsimage.jpg" download="">a</a>
 	</div>
 </div>
 
@@ -80,6 +79,7 @@
 										function(e) {
 											e.preventDefault();
 
+
 											let classId = $('.tempDataStorage')
 													.data("class-id");
 
@@ -99,8 +99,11 @@
 
 											let content = $('#content').val();
 
-											let filePath = $('#filePath').val();
-											let files = $('#filePath')[0].files;
+											let inputFileList = new Array();
+											for (let i = 0; i < $('#filePath')[0].files.length; i++) {
+												inputFileList
+														.push($('#filePath')[0].files[i]);
+											}
 
 											let maxScore = $('#maxScore').val();
 											if ((asgmtType == 'Graded Assignment' || asgmtType == 'Test')
@@ -123,7 +126,9 @@
 											formData.append("asgmtName",
 													asgmtName);
 											formData.append("content", content);
-											formData.append("file", files);
+											for (let i = 0; i < inputFileList.length; i++) {
+											　　　　formData.append("files", inputFileList[i]);
+											}
 											formData.append("maxScoreString",
 													maxScore);
 											if (dueDate == "") {
@@ -136,12 +141,12 @@
 											}
 											$
 													.ajax({
-														type : "put",
+														type : "PUT",
 														url : url,
 														enctype : "multipart/form-data",
+														data : formData,
 														processData : false,
 														contentType : false,
-														data : formData,
 														success : function(data) {
 															if (data.code == 1) {
 																alert("Assignment "

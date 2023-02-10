@@ -17,10 +17,10 @@ public class FileManagerService {
 
 	// Where the files will be saved
 	// Home
-	public static final String FILE_UPLOAD_PATH = "C:\\Users\\이지원\\Documents\\CS\\Final_Project\\Univ_Project\\workspace\\images/";
-	// Camp
 	// public static final String FILE_UPLOAD_PATH =
-	// "D:\\이지원\\7_final_project\\UnivProject\\workspace\\images/";
+	// "C:\\Users\\이지원\\Documents\\CS\\Final_Project\\Univ_Project\\workspace\\images/";
+	// Camp
+	public static final String FILE_UPLOAD_PATH = "D:\\이지원\\7_final_project\\UnivProject\\workspace\\images/";
 
 	public String saveFile(String email, MultipartFile file) {
 		String directoryName = email + "_" + System.currentTimeMillis() + "/";
@@ -45,14 +45,14 @@ public class FileManagerService {
 		return "/images/" + directoryName + file.getOriginalFilename();
 	}
 
-	public void deleteFile(String imagePath) { // imagePath
-		Path path = Paths.get(FILE_UPLOAD_PATH + imagePath.replace("/images/", ""));
+	public void deleteFile(String filePath) { // filePath
+		Path path = Paths.get(FILE_UPLOAD_PATH + filePath.replace("/images/", ""));
 		if (Files.exists(path)) {
-			// delete image
+			// delete file
 			try {
 				Files.delete(path);
 			} catch (IOException e) {
-				logger.error("[Image delete] Failed to delete image. imagePath:{}", imagePath);
+				logger.error("[Image delete] Failed to delete image. imagePath:{}", filePath);
 			}
 			// delete directory folder
 			path = path.getParent();
@@ -60,7 +60,7 @@ public class FileManagerService {
 				try {
 					Files.delete(path);
 				} catch (IOException e) {
-					logger.error("[Image delete] Failed to delete directory folder. imagePath:{}", imagePath);
+					logger.error("[Image delete] Failed to delete directory folder. imagePath:{}", filePath);
 				}
 			}
 		}

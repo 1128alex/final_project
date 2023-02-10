@@ -41,16 +41,14 @@ CREATE TABLE `class` (
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4;
 
 CREATE TABLE `assignment` (
-    `classId` INT,
-    `asgmtId` INT,
-    `asgmtType` VARCHAR(20),
-    `asgmtName` VARCHAR(200),
-    `content` text,
+    `classId` INT NOT NULL,
+    `asgmtId` INT NOT NULL,
+    `asgmtType` VARCHAR(20) NOT NULL,
+    `asgmtName` VARCHAR(200) NOT NULL,
+    `content` TEXT,
     `filePath` VARCHAR(200),
     `maxScore` INT,
     `dueDate` DATE,
-    `createdAt` TIMESTAMP,
-    `updatedAt` TIMESTAMP
-)  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4;
-
-
+    `createdAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updatedAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)ENGINE=INNODB DEFAULT CHARSET=UTF8MB4;

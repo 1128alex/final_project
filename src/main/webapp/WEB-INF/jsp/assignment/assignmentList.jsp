@@ -6,7 +6,7 @@
 	<div class="col-6">
 		<h1 class="mt-4">Assignments</h1>
 		<div class="d-flex justify-content-end">
-			<a href="/univ/assignment/add_assignemnt"
+			<a href="/univ/assignment/add_assignemnt?classId=${classId}"
 				class="btn button text-white">Add Assignment</a>
 		</div>
 

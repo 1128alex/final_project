@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- mapper 설정 -->
+<!-- mapper -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.univ.course.dao.CourseDAO">
 	<select id="selectCourseList"
 		resultType="com.univ.course.model.Course">
 		SELECT
-		`courseCode`
-		,`courseName`
-		,`description`
-		,`price`
-		,`createdAt`
-		,`updatedAt`
+		`courseCode`,
+		`courseName`,
+		`description`,
+		`price`,
+		`createdAt`,
+		`updatedAt`
 		FROM
 		`course`
 		ORDER BY
@@ -22,12 +22,12 @@
 	<select id="selectCourseListBySubjectCode"
 		parameterType="string" resultType="com.univ.course.model.Course">
 		SELECT
-		`courseCode`
-		,`courseName`
-		,`description`
-		,`price`
-		,`createdAt`
-		,`updatedAt`
+		`courseCode`,
+		`courseName`,
+		`description`,
+		`price`,
+		`createdAt`,
+		`updatedAt`
 		FROM
 		`course`
 		WHERE
@@ -43,12 +43,12 @@
 	<select id="selectCourseByCourseCode" parameterType="string"
 		resultType="com.univ.course.model.Course">
 		SELECT
-		`courseCode`
-		,`courseName`
-		,`description`
-		,`price`
-		,`createdAt`
-		,`updatedAt`
+		`courseCode`,
+		`courseName`,
+		`description`,
+		`price`,
+		`createdAt`,
+		`updatedAt`
 		FROM
 		`course`
 		WHERE
@@ -73,17 +73,17 @@
 		parameterType="com.univ.course.model.Class">
 		INSERT INTO`class`
 		(
-		`courseCode`
-		,`profEmail`
-		,`maxNum`
-		,`registerDueDate`
-		,`monStartTime`
-		,`tueStartTime`
-		,`wedStartTime`
-		,`thuStartTime`
-		,`friStartTime`
-		,`createdAt`
-		,`updatedAt`
+		`courseCode`,
+		`profEmail`,
+		`maxNum`,
+		`registerDueDate`,
+		`monStartTime`,
+		`tueStartTime`,
+		`wedStartTime`,
+		`thuStartTime`,
+		`friStartTime`,
+		`createdAt`,
+		`updatedAt`
 		)
 		VALUES
 		(
@@ -104,18 +104,18 @@
 	<select id="selectClassList" parameterType="string"
 		resultType="com.univ.course.model.Class">
 		SELECT
-		`id`
-		,`courseCode`
-		,`profEmail`
-		,`maxNum`
-		,`registerDueDate`
-		,`monStartTime`
-		,`tueStartTime`
-		,`wedStartTime`
-		,`thuStartTime`
-		,`friStartTime`
-		,`createdAt`
-		,`updatedAt`
+		`id`,
+		`courseCode`,
+		`profEmail`,
+		`maxNum`,
+		`registerDueDate`,
+		`monStartTime`,
+		`tueStartTime`,
+		`wedStartTime`,
+		`thuStartTime`,
+		`friStartTime`,
+		`createdAt`,
+		`updatedAt`
 		FROM
 		`class`
 		WHERE
@@ -127,18 +127,18 @@
 	<select id="selectClassById" parameterType="int"
 		resultType="com.univ.course.model.Class">
 		SELECT
-		`id`
-		,`courseCode`
-		,`profEmail`
-		,`maxNum`
-		,`registerDueDate`
-		,`monStartTime`
-		,`tueStartTime`
-		,`wedStartTime`
-		,`thuStartTime`
-		,`friStartTime`
-		,`createdAt`
-		,`updatedAt`
+		`id`,
+		`courseCode`,
+		`profEmail`,
+		`maxNum`,
+		`registerDueDate`,
+		`monStartTime`,
+		`tueStartTime`,
+		`wedStartTime`,
+		`thuStartTime`,
+		`friStartTime`,
+		`createdAt`,
+		`updatedAt`
 		FROM
 		`class`
 		WHERE

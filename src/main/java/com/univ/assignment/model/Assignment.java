@@ -3,8 +3,8 @@ package com.univ.assignment.model;
 import java.util.Date;
 
 public class Assignment {
-	private String classId;
-	private int asgmtId;
+	private int classId;
+	private Integer asgmtId;
 	private String asgmtType;
 	private String asgmtName;
 	private String content;
@@ -14,19 +14,19 @@ public class Assignment {
 	private Date createdAt;
 	private Date updatedAt;
 
-	public String getClassId() {
+	public int getClassId() {
 		return classId;
 	}
 
-	public void setClassId(String classId) {
+	public void setClassId(int classId) {
 		this.classId = classId;
 	}
 
-	public int getAsgmtId() {
+	public Integer getAsgmtId() {
 		return asgmtId;
 	}
 
-	public void setAsgmtId(int asgmtId) {
+	public void setAsgmtId(Integer asgmtId) {
 		this.asgmtId = asgmtId;
 	}
 

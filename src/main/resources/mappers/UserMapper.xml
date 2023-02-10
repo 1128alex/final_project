@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- mapper 설정 -->
+<!-- mapper -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.univ.user.dao.UserDAO">
@@ -7,17 +7,17 @@
 	<select id="selectUserByIdPassword" parameterType="map"
 		resultType="com.univ.user.model.User">
 		SELECT
-		`email`
-		,`studentNum`
-		,`type`
-		,`firstName`
-		,`lastName`
-		,`birth`
-		,`gender`
-		,`subject`
-		,`verifyQuestion`
-		,`verifyAnswer`
-		,`profileUrl`
+		`email`,
+		`studentNum`,
+		`type`,
+		`firstName`,
+		`lastName`,
+		`birth`,
+		`gender`,
+		`subject`,
+		`verifyQuestion`,
+		`verifyAnswer`,
+		`profileUrl`
 		FROM
 		`user`
 		WHERE
@@ -48,20 +48,19 @@
 	<insert id="insertUser" parameterType="com.univ.user.model.User">
 		INSERT INTO `user`
 		(
-		`email`
-		,`password`
-		,`studentNum`
-		,`type`
-		,`firstName`
-		,`lastName`
-		,`birth`
-		,`gender`
-		,`subject`
-		,`verifyQuestion`
-		,`verifyAnswer`
-		,`profileUrl`
-		,`createdAt`
-		,`updatedAt`
+		`email`,
+		`studentNum`,
+		`type`,
+		`firstName`,
+		`lastName`,
+		`birth`,
+		`gender`,
+		`subject`,
+		`verifyQuestion`,
+		`verifyAnswer`,
+		`profileUrl`,
+		`createdAt`,
+		`updatedAt`
 		)
 		VALUES
 		(

@@ -34,7 +34,7 @@
 				<textarea rows="4" id="content" name="content" class="form-control"></textarea>
 			</div>
 			<div class="d-flex justify-content-end mt-2">
-				<input type="file" id="filePath" name="filePath">
+				<input type="file" id="filePath" name="filePath" multiple="multiple">
 			</div>
 
 			<div class="mt-3">
@@ -47,7 +47,9 @@
 					Assignment</button>
 			</div>
 		</form>
-
+		<div class="tempDataStorage" hidden="hidden"
+			data-class-id="${classId}"></div>
+		<a href="myw3schoolsimage.jpg" download="">a</a>
 	</div>
 </div>
 
@@ -78,6 +80,9 @@
 										function(e) {
 											e.preventDefault();
 
+											let classId = $('.tempDataStorage')
+													.data("class-id");
+
 											let asgmtName = $('#asgmtName')
 													.val();
 											if (asgmtName == '') {
@@ -95,6 +100,7 @@
 											let content = $('#content').val();
 
 											let filePath = $('#filePath').val();
+											let files = $('#filePath')[0].files;
 
 											let maxScore = $('#maxScore').val();
 											if ((asgmtType == 'Graded Assignment' || asgmtType == 'Test')
@@ -105,7 +111,29 @@
 
 											let dueDate = $('#dueDate').val();
 
+											if (!confirm("Do you want to create an assignment with these information?")) {
+												return false;
+											}
+
 											let url = $(this).attr('action');
+											let formData = new FormData();
+											formData.append("classId", classId);
+											formData.append("asgmtType",
+													asgmtType);
+											formData.append("asgmtName",
+													asgmtName);
+											formData.append("content", content);
+											formData.append("file", files);
+											formData.append("maxScoreString",
+													maxScore);
+											if (dueDate == "") {
+												formData.append(
+														"dueDateString", null);
+											} else {
+												formData.append(
+														"dueDateString",
+														dueDate);
+											}
 											$
 													.ajax({
 														type : "put",
@@ -113,17 +141,17 @@
 														enctype : "multipart/form-data",
 														processData : false,
 														contentType : false,
-														data : {
-															"asgmtType" : asgmtType,
-															"asgmtName" : asgmtName,
-															"content" : content,
-															"filePath" : filePath,
-															"maxScore" : maxScore,
-															"dueDateString" : dueDate
-														},
+														data : formData,
 														success : function(data) {
 															if (data.code == 1) {
-
+																alert("Assignment "
+																		+ asgmtName
+																		+ " created!");
+																location.href = "/univ/assignment/assignment_list?classId="
+																		+ classId;
+															}
+															if (data.code == 500) {
+																alert("error: Error while adding the assignment.");
 															}
 														},
 														error : function(e) {

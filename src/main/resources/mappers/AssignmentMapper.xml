@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- mapper -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.univ.assignment.dao.AssignmentDAO">
+	<insert id="insertAssignment"
+		parameterType="com.univ.assignment.model.Assignment">
+
+		<!-- INSERT INTO `assignmenta` ( `classId`, `asgmtType`, `asgmtName`, `content`, 
+			`filePath`, `maxScore`, `dueDate`, `createdAt`, `updatedAt` ) VALUES ( #{classId}, 
+			#{asgmtType}, #{asgmtName}, #{content}, #{filePath}, #{maxScore}, #{dueDate}, 
+			NOW(), NOW() ) -->
+
+		<!-- INSERT INTO `assignmentb` ( `classId`, `asgmtId`, `asgmtType`, `asgmtName`, 
+			`content`, `filePath`, `maxScore`, `dueDate`, `createdAt`, `updatedAt` ) 
+			VALUES ( #{classId}, MAX(`asgmtId`)+1, #{asgmtType}, #{asgmtName}, #{content}, 
+			#{filePath}, #{maxScore}, #{dueDate}, NOW(), NOW() ) -->
+		INSERT INTO `assignment`
+		(
+		`classId`,
+		`asgmtId`,
+		`asgmtType`,
+		`asgmtName`,
+		`content`,
+		`filePath`,
+		`maxScore`,
+		`dueDate`,
+		`createdAt`,
+		`updatedAt`
+		)
+		VALUES
+		(
+		#{classId},
+		ifnull(((select asgmtId from (SELECT MAX(`asgmtId`)
+		asgmtId FROM `assignment` where `classId` =#{classId} LIMIT 1) tmp)
+		+1),1),
+		#{asgmtType},
+		#{asgmtName},
+		#{content},
+		#{filePath},
+		#{maxScore},
+		#{dueDate},
+		NOW(),
+		NOW()
+		)
+	</insert>
+
+</mapper>

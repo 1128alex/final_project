@@ -93,7 +93,9 @@
 			</div>
 			<div class="col-6 border-left">
 				<h1>
-					<a href="/univ/assignment/assignment_list" class="noDecoA">Assignments</a>
+					<a
+						href="/univ/assignment/assignment_list?classId=${currentClass.id}"
+						class="noDecoA">Assignments</a>
 				</h1>
 				<table class="table">
 					<thead>

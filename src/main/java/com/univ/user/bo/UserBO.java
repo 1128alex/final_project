@@ -26,4 +26,9 @@ public class UserBO {
 	public String getStudentNum(Integer year, String faculty) {
 		return userDAO.selectStudentNum(year, faculty);
 	}
+
+	public User getUserByEmail(String email) {
+		return userDAO.selectUserByEmail(email);
+	}
+
 }

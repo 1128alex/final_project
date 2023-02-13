@@ -1,5 +1,7 @@
 package com.univ.assignment.bo;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +13,15 @@ public class AssignmentBO {
 	@Autowired
 	private AssignmentDAO assignmentDAO;
 
+	public List<Assignment> getAsgmtListByClassId(int classId) {
+		return assignmentDAO.selectAsgmtListByClassId(classId);
+	}
+
 	public int addAssignment(Assignment assignment) {
 		return assignmentDAO.insertAssignment(assignment);
+	}
+
+	public Assignment getAsgmtByClassIdAsgmtId(int classId, int asgmtId) {
+		return assignmentDAO.selectAsgmtByClassIdAsgmtId(classId, asgmtId);
 	}
 }

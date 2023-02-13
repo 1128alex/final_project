@@ -40,8 +40,8 @@ public class CourseBO {
 		return courseDAO.selectClassList(email);
 	}
 
-	public Class getClassById(int id) {
-		return courseDAO.selectClassById(id);
+	public Class getClassById(int classId) {
+		return courseDAO.selectClassByClassId(classId);
 	}
 
 }

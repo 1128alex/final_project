@@ -32,7 +32,8 @@ public class AssignmentRestController {
 
 	@PutMapping("/add_assignment")
 	public Map<String, Object> addAssignment(@ModelAttribute Assignment assignment,
-			@RequestParam("maxScoreString") String maxScoreString, @RequestParam("files") List<MultipartFile> files,
+			@RequestParam("maxScoreString") String maxScoreString,
+			@RequestParam(value = "files", required = false) List<MultipartFile> files,
 			@RequestParam(value = "dueDateString", required = false) String dueDateString, HttpSession session)
 			throws ParseException {
 		Map<String, Object> result = new HashMap<>();
@@ -54,14 +55,18 @@ public class AssignmentRestController {
 
 			String filePath = null;
 			for (int i = 0; i < filePaths.length; i++) {
-				filePath = filePaths[i] + " ";
+				if (i == 0) {
+					filePath = filePaths[i] + " ";
+				} else {
+					filePath += filePaths[i] + " ";
+				}
 			}
 			assignment.setFilePath(filePath);
 		}
 
-		if (dueDateString.equals("")) {
+		if (dueDateString != null) {
 			// setting due date
-			SimpleDateFormat sdf = new SimpleDateFormat(dueDateString);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 			Date dueDate = sdf.parse(dueDateString);
 			assignment.setDueDate(dueDate);
 		}

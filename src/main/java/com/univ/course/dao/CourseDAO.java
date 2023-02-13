@@ -23,5 +23,5 @@ public interface CourseDAO {
 
 	public List<Class> selectClassList(String email);
 
-	public Class selectClassById(int id);
+	public Class selectClassByClassId(int classId);
 }

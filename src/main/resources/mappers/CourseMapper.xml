@@ -124,7 +124,7 @@
 		ORDER BY `createdAt` DESC;
 	</select>
 
-	<select id="selectClassById" parameterType="int"
+	<select id="selectClassByClassId" parameterType="int"
 		resultType="com.univ.course.model.Class">
 		SELECT
 		`id`,
@@ -142,6 +142,6 @@
 		FROM
 		`class`
 		WHERE
-		`id` = #{id}
+		`id` = #{classId}
 	</select>
 </mapper>

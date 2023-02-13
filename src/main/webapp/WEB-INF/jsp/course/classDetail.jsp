@@ -105,10 +105,14 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td><a href="" class="asmntA">Assignmnet1</a></td>
-							<td></td>
-						</tr>
+						<c:forEach var="assignment" items="${assignments}">
+							<tr>
+								<td><a
+									href="/univ/assignment/assignment_detail?classId=${currentClass.id}&asgmtId=${assignment.asgmtId}"
+									class="asmntA">${assignment.asgmtName}</a></td>
+								<td></td>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 			</div>

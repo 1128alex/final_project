@@ -15,4 +15,6 @@ public interface UserDAO {
 	public int insertUser(User user);
 
 	public String selectStudentNum(@Param("year") Integer year, @Param("faculty") String faculty);
+
+	public User selectUserByEmail(String email);
 }

@@ -46,9 +46,9 @@ CREATE TABLE `assignment` (
     `asgmtType` VARCHAR(20) NOT NULL,
     `asgmtName` VARCHAR(200) NOT NULL,
     `content` TEXT,
-    `filePath` VARCHAR(200),
+    `filePath` TEXT,
     `maxScore` INT,
     `dueDate` DATE,
     `createdAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updatedAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-)ENGINE=INNODB DEFAULT CHARSET=UTF8MB4;
+)  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4;

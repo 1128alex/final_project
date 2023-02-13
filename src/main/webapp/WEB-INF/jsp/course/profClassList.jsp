@@ -11,7 +11,7 @@
 			</div>
 			<div class="box d-flex">
 				<c:forEach var="_class" items="${classes}" varStatus="status">
-					<a href="/univ/course/class_detail?id=${_class.id}"
+					<a href="/univ/course/class_detail?classId=${_class.id}"
 						id="classBox${status.count}" class="classBox mx-3 mt-4 mb-2"
 						data-id="${_class.id}">
 						<div class="classBoxTitle">

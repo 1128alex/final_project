@@ -92,4 +92,24 @@
 		WHERE
 		`studentNum` like CONCAT(#{year}, #{faculty}, '%');
 	</select>
+
+	<select id="selectUserByEmail"
+		resultType="com.univ.user.model.User" parameterType="string">
+		SELECT
+		`email`,
+		`studentNum`,
+		`type`,
+		`firstName`,
+		`lastName`,
+		`birth`,
+		`gender`,
+		`subject`,
+		`verifyQuestion`,
+		`verifyAnswer`,
+		`profileUrl`
+		FROM
+		`user`
+		WHERE
+		`email` = #{email}
+	</select>
 </mapper>

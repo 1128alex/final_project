@@ -48,7 +48,7 @@ public class AssignmentController {
 		return "template/layout";
 	}
 
-	@GetMapping("/add_assignemnt")
+	@GetMapping("/add_assignment")
 	public String addAssignmentView(@RequestParam("classId") int classId, Model model) {
 		model.addAttribute("view", "assignment/addAssignment");
 		model.addAttribute("classId", classId);
@@ -67,4 +67,5 @@ public class AssignmentController {
 
 		return "template/layout";
 	}
+
 }

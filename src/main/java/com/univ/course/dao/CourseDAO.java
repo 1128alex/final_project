@@ -21,6 +21,8 @@ public interface CourseDAO {
 
 	public int insertClass(Class newClass);
 
+	public int updateClass(Class newClass);
+
 	public List<Class> selectClassList(String email);
 
 	public Class selectClassByClassId(int classId);

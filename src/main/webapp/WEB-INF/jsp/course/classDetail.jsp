@@ -6,11 +6,18 @@
 <div class="d-flex">
 	<div class="col-3"></div>
 	<div class="col-6">
-		<h1 class="text-center mt-3">${currentClass.courseCode += " - " += currentCourse.courseName}</h1>
+		<div class="d-flex justify-content-between align-items-end">
+			<h1 class="text-center mt-3">${currentClass.courseCode += " - " += currentCourse.courseName}</h1>
+			<c:if test="${profEmail eq currentClass.profEmail}">
+				<div class="mr-3">
+					<a href="/univ/course/edit_class?classId=${currentClass.id}"
+						class="btn button text-white">Edit</a>
+				</div>
+			</c:if>
+		</div>
 		<h2 class="mt-3">Description</h2>
 		<div class="d-flex justify-content-between">
-			<span>${currentCourse.description}</span><br> <a href=""
-				class="btn button text-white">Student List</a>
+			<span>${currentCourse.description}</span><br>
 		</div>
 		<h2 class="mt-3">Class Time</h2>
 		<div class="w-75">
@@ -80,44 +87,45 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="d-flex">
-			<div class="col-6 border-right">
-				<h1>
-					<a href="" class="noDecoA">Class Board</a>
-				</h1>
-				<table class="table table-bordered">
+		<div class="mt-4">
+			<h1>
+				<a href="" class="noDecoA">Class Board</a>
+			</h1>
+			<table class="table table-bordered">
+				<tr>
+					<th>Posts</th>
+				</tr>
+			</table>
+		</div>
+		<div class="mt-4">
+			<h1>
+				<a
+					href="/univ/assignment/assignment_list?classId=${currentClass.id}"
+					class="noDecoA">Assignments</a>
+			</h1>
+			<table class="table">
+				<thead>
 					<tr>
-						<th>Posts</th>
+						<th>Assignment name</th>
+						<th>Status</th>
 					</tr>
-				</table>
-			</div>
-			<div class="col-6 border-left">
-				<h1>
-					<a
-						href="/univ/assignment/assignment_list?classId=${currentClass.id}"
-						class="noDecoA">Assignments</a>
-				</h1>
-				<table class="table">
-					<thead>
+				</thead>
+				<tbody>
+					<c:forEach var="assignment" items="${assignments}">
 						<tr>
-							<th>Assignment name</th>
-							<th>Status</th>
+							<td><a
+								href="/univ/assignment/assignment_detail?classId=${currentClass.id}&asgmtId=${assignment.asgmtId}"
+								class="asmntA">${assignment.asgmtName}</a></td>
+							<td></td>
 						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="assignment" items="${assignments}">
-							<tr>
-								<td><a
-									href="/univ/assignment/assignment_detail?classId=${currentClass.id}&asgmtId=${assignment.asgmtId}"
-									class="asmntA">${assignment.asgmtName}</a></td>
-								<td></td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
+					</c:forEach>
+				</tbody>
+			</table>
 		</div>
 	</div>
-	<div class="col-3"></div>
+	<div class="col-3 classAsideArea">
+		<h1 class="mt-3">Students</h1>
+		<div class="classAside"></div>
+	</div>
 
 </div>

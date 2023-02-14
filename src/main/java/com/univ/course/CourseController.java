@@ -58,16 +58,42 @@ public class CourseController {
 	}
 
 	@GetMapping("/class_detail")
-	public String showClassDetailView(@RequestParam("classId") int classId, Model model) {
+	public String showClassDetailView(@RequestParam("classId") int classId, Model model, HttpSession session) {
 
 		Class currentClass = courseBO.getClassById(classId);
 		Course currentCourse = courseBO.getCourseByCourseCode(currentClass.getCourseCode());
 		List<Assignment> assignment = assignmentBO.getAsgmtListByClassId(classId);
 
+		User user = (User) session.getAttribute("user");
+		String profEmail = user.getEmail();
+
+		model.addAttribute("profEmail", profEmail);
+
 		model.addAttribute("currentClass", currentClass);
 		model.addAttribute("currentCourse", currentCourse);
 		model.addAttribute("assignments", assignment);
 		model.addAttribute("view", "course/classDetail");
+
+		return "template/layout";
+	}
+
+	@GetMapping("/edit_class")
+	public String showEditClassView(@RequestParam("classId") int classId, Model model, HttpSession session) {
+
+		Class classInfo = courseBO.getClassById(classId);
+
+		List<Course> courseList = courseBO.getCourseList();
+		model.addAttribute("courseList", courseList);
+		model.addAttribute("length", courseList.size());
+
+		for (Course course : courseList) {
+			if (course.getCourseCode().equals(classInfo.getCourseCode())) {
+				model.addAttribute("courseName", course.getCourseCode() + " - " + course.getCourseName());
+			}
+		}
+
+		model.addAttribute("classInfo", classInfo);
+		model.addAttribute("view", "course/editClass");
 
 		return "template/layout";
 	}

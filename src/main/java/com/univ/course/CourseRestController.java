@@ -79,4 +79,43 @@ public class CourseRestController {
 		return result;
 	}
 
+	@PutMapping("/edit_class")
+	public Map<String, Object> editClass(@RequestParam("classId") int classId,
+			@RequestParam("prevCourseCode") String prevCourseCode, @ModelAttribute Class newClass,
+			@RequestParam("registerDueDateString") String registerDueDateString, HttpSession session)
+			throws ParseException {
+		Map<String, Object> result = new HashMap<>();
+
+		newClass.setId(classId);
+
+		User user = (User) session.getAttribute("user");
+		String profEmail = user.getEmail();
+		newClass.setProfEmail(profEmail);
+
+		Date registerDueDate = new SimpleDateFormat("yyyy/MM/dd").parse(registerDueDateString);
+		newClass.setRegisterDueDate(registerDueDate);
+
+		int dupCount = 0;
+		if (prevCourseCode.equals(newClass.getCourseCode()) == false) {
+			dupCount = courseBO.checkDuplicatedClass(newClass.getCourseCode(), profEmail);
+		}
+
+		if (dupCount == 1) {
+			result.put("code", 2);
+			result.put("errorMessage", "Your class with this ID already exists.");
+			return result;
+		}
+
+		int rowCount = courseBO.updateClass(newClass);
+
+		if (rowCount > 0) {
+			result.put("code", 1);
+		} else {
+			result.put("code", 500);
+			result.put("errorMessage", "Error while creating new class.");
+		}
+
+		return result;
+	}
+
 }

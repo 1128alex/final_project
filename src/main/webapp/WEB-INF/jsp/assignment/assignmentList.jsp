@@ -11,7 +11,7 @@
 		<h1 class="mt-4">Assignments for</h1>
 		<h1>${courseName }</h1>
 		<div class="d-flex justify-content-end">
-			<a href="/univ/assignment/add_assignemnt?classId=${classId}"
+			<a href="/univ/assignment/add_assignment?classId=${classId}"
 				class="btn button text-white">Add Assignment</a>
 		</div>
 

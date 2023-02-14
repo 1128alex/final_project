@@ -36,6 +36,10 @@ public class CourseBO {
 		return courseDAO.insertClass(newClass);
 	}
 
+	public int updateClass(Class newClass) {
+		return courseDAO.updateClass(newClass);
+	}
+
 	public List<Class> getClassList(String email) {
 		return courseDAO.selectClassList(email);
 	}

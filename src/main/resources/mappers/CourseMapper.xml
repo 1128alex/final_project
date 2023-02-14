@@ -101,6 +101,37 @@
 		)
 	</insert>
 
+	<update id="updateClass"
+		parameterType="com.univ.course.model.Class">
+		UPDATE `class`
+		SET
+		`courseCode` = #{courseCode},
+		`maxNum` = #{maxNum},
+		<if test="registerDueDate != null">
+			`registerDueDate` = #{registerDueDate},
+		</if>
+		<if test="monStartTime != null">
+			`monStartTime` = #{monStartTime},
+		</if>
+		<if test="tueStartTime != null">
+			`tueStartTime` = #{tueStartTime},
+		</if>
+		<if test="wedStartTime != null">
+			`wedStartTime` = #{wedStartTime},
+		</if>
+		<if test="thuStartTime != null">
+			`thuStartTime` = #{thuStartTime},
+		</if>
+		<if test="friStartTime != null">
+			`friStartTime` = #{friStartTime},
+		</if>
+		`updatedAt` = NOW()
+		WHERE
+		`id` = #{id} AND
+		`profEmail` =
+		#{profEmail};
+	</update>
+
 	<select id="selectClassList" parameterType="string"
 		resultType="com.univ.course.model.Class">
 		SELECT

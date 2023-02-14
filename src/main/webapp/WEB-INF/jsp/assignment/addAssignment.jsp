@@ -131,10 +131,7 @@
 											}
 											formData.append("maxScoreString",
 													maxScore);
-											if (dueDate == "") {
-												formData.append(
-														"dueDateString", null);
-											} else {
+											if (dueDate != "") {
 												formData.append(
 														"dueDateString",
 														dueDate);

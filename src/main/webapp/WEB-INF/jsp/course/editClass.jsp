@@ -2,11 +2,13 @@
 	pageEncoding="UTF-8"%>
 <!-- Core -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!--Formatting-->
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <div class="d-flex justify-content-center">
 	<div class="col-4">
-		<h2 class="mt-3 font-weight-bold">Add Class</h2>
-		<form id="addClassForm" action="/course/create_class" method="get">
+		<h2 class="mt-3 font-weight-bold">Edit Class</h2>
+		<form id="editClassForm" action="/course/edit_class" method="post">
 			<div class="mt-3">
 				<h4>Class</h4>
 				<div class="d-flex">
@@ -26,6 +28,8 @@
 				</div>
 			</div>
 			<div hidden="hidden" id="endValue" data-end-value="${length}"></div>
+			<div id="courseNameHolder" data-course-name="${courseName}"></div>
+			<div id="courseCodeHolder" data-course-code="${classInfo.courseCode}"></div>
 			<select id="courseName" name="courseName"
 				class="form-control col-8 mt-2">
 				<option value="0">-- Course --</option>
@@ -41,7 +45,7 @@
 						<h4>Maximum Students</h4>
 						<div class="d-flex justify-content-center">
 							<input type="number" id="maxNum" name="maxNum"
-								class="form-control col-8">
+								class="form-control col-8" value="${classInfo.maxNum}">
 						</div>
 					</div>
 				</div>
@@ -49,8 +53,11 @@
 					<div class="text-center">
 						<h4>Registration Due Date</h4>
 						<div class="d-flex justify-content-center">
+
 							<input type="text" id="registerDueDate" name="registerDueDate"
-								class="form-control col-11">
+								class="form-control col-11"
+								value="<fmt:formatDate value="${classInfo.registerDueDate}"
+								pattern="YYYY/MM/dd" />">
 						</div>
 					</div>
 				</div>
@@ -94,6 +101,30 @@
 						<tr>
 							<th class="p-0"><div class="mt-2 ml-2">Start Time</div></th>
 							<c:forEach var="i" begin="1" end="5">
+								<c:choose>
+									<c:when test="${i eq 1}">
+										<div id="monStartTimeHolder"
+											data-mon-start="${classInfo.monStartTime}"></div>
+									</c:when>
+									<c:when test="${i eq 2}">
+										<div id="tueStartTimeHolder"
+											data-tue-start="${classInfo.tueStartTime}"></div>
+									</c:when>
+									<c:when test="${i eq 3}">
+										<div id="wedStartTimeHolder"
+											data-wed-start="${classInfo.wedStartTime}"></div>
+									</c:when>
+									<c:when test="${i eq 4}">
+										<div id="thuStartTimeHolder"
+											data-thu-start="${classInfo.thuStartTime}"></div>
+									</c:when>
+									<c:when test="${i eq 5}">
+										<div id="friStartTimeHolder"
+											data-fri-start="${classInfo.friStartTime}"></div>
+									</c:when>
+								</c:choose>
+
+
 								<td class="p-0"><select id="dayOfWeek${i}"
 									class="form-control">
 										<option value="0">No Class</option>
@@ -106,17 +137,46 @@
 					</tbody>
 				</table>
 				<div class="d-flex justify-content-end">
-					<button type="submit" id="addClassSubmitBtn"
-						class="btn button mb-4">Create</button>
+					<button type="button" id="editClassCancelBtn"
+						class="btn cancelButton mb-4 mr-2">Cancel</button>
+					<button type="submit" id="editClassSubmitBtn"
+						class="btn button mb-4">Edit</button>
 				</div>
 			</div>
 		</form>
 	</div>
+	<div id="classIdDataHolder" data-class-id="${classInfo.id}"></div>
 </div>
+
 <script>
 	$(document)
 			.ready(
 					function() {
+
+						let courseName = $('#courseNameHolder').data(
+								'course-name');
+						$('#courseName').val(courseName).prop("selected", true);
+						let monStartTime = $('#monStartTimeHolder').data(
+								'mon-start');
+						$('#dayOfWeek1').val(monStartTime).prop("selected",
+								true);
+						let tueStartTime = $('#tueStartTimeHolder').data(
+								'tue-start');
+						$('#dayOfWeek2').val(tueStartTime).prop("selected",
+								true);
+						let wedStartTime = $('#wedStartTimeHolder').data(
+								'wed-start');
+						$('#dayOfWeek3').val(wedStartTime).prop("selected",
+								true);
+						let thuStartTime = $('#thuStartTimeHolder').data(
+								'thu-start');
+						$('#dayOfWeek4').val(thuStartTime).prop("selected",
+								true);
+						let friStartTime = $('#friStartTimeHolder').data(
+								'fri-start');
+						$('#dayOfWeek5').val(friStartTime).prop("selected",
+								true);
+
 						$('#subjectLevel').on('click', function() {
 							if ($('#subjectCode').val() == "0") {
 								alert("Please select the subject code.");
@@ -158,17 +218,33 @@
 												}
 											}
 										});
+
 						$('#registerDueDate').datepicker({
 							dateFormat : 'yy/mm/dd',
 							minDate : 0
 						});
+						let classId = $('#classIdDataHolder').data("class-id");
+						$('#editClassCancelBtn')
+								.on(
+										'click',
+										function() {
+											if (!confirm("Leaving this page will delete the changes. Do you want to leave this page?")) {
+												return false;
+											}
 
-						$('#addClassForm')
+											location.href = "/univ/course/class_detail?classId="
+													+ classId;
+										});
+
+						$('#editClassForm')
 								.on(
 										'submit',
 										function(e) {
 											e.preventDefault();
 
+											let prevCourseCode = $(
+													'#courseCodeHolder').data(
+													'course-code');
 											let courseName = $('#courseName')
 													.val();
 											if (courseName == "0") {
@@ -232,6 +308,8 @@
 														type : "PUT",
 														url : url,
 														data : {
+															"classId" : classId,
+															"prevCourseCode" : prevCourseCode,
 															"courseCode" : courseCode,
 															"maxNum" : maxNum,
 															"courseName" : courseName,
@@ -245,7 +323,8 @@
 														success : function(data) {
 															if (data.code == 1) {
 																alert("success");
-																location.href = "/univ/course/class_list";
+																location.href = "/univ/course/class_detail?classId="
+																		+ classId;
 															} else {
 																alert("error: "
 																		+ data.errorMessage);
@@ -258,3 +337,5 @@
 										});
 					});
 </script>
+
+

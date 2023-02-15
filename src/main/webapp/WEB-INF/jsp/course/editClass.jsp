@@ -240,15 +240,18 @@
 													+ classId;
 										});
 
+						let prevCourseCode = $('#courseCodeHolder').data(
+								'course-code');
 						$('#editClassForm')
 								.on(
 										'submit',
 										function(e) {
 											e.preventDefault();
 
-											let prevCourseCode = $(
-													'#courseCodeHolder').data(
-													'course-code');
+											if (!confirm("Do you want to change the class information to the following information?")) {
+												return false;
+											}
+
 											let courseName = $('#courseName')
 													.val();
 											if (courseName == "0") {
@@ -302,7 +305,7 @@
 												return false;
 											}
 
-											if (!confirm("Are you sure you want to create the class with these information?")) {
+											if (!confirm("Are you sure you want to edit the class with these information?")) {
 												return false;
 											}
 
@@ -326,7 +329,7 @@
 														},
 														success : function(data) {
 															if (data.code == 1) {
-																alert("success");
+																alert("Success editing class.");
 																location.href = "/univ/course/class_detail?classId="
 																		+ classId;
 															} else {
@@ -339,9 +342,37 @@
 														}
 													});
 										});
-						$('#deleteClassBtn').on('click',function(){
-							
-						})
+						$('#deleteClassBtn')
+								.on(
+										'click',
+										function() {
+											if (!confirm("Are you sure you want to delete the class "
+													+ courseName + "?")) {
+												return;
+											}
+											$
+													.ajax({
+														type : "DELETE",
+														url : "/course/delete_class",
+														data : {
+															"classId" : classId
+														},
+														success : function(data) {
+															if (data.code == 1) {
+																alert("Success deleting class "
+																		+ courseName
+																		+ ".");
+																location.href = "/univ/course/class_list"
+															} else {
+																alert("error: "
+																		+ data.errorMessage);
+															}
+														},
+														error : function(e) {
+															alert("error: " + e);
+														}
+													});
+										});
 					});
 </script>
 

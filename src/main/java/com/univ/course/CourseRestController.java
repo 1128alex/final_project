@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -106,13 +107,29 @@ public class CourseRestController {
 			return result;
 		}
 
-		int rowCount = courseBO.updateClass(newClass);
+		int rowCount = courseBO.editClass(newClass);
 
 		if (rowCount > 0) {
 			result.put("code", 1);
 		} else {
 			result.put("code", 500);
 			result.put("errorMessage", "Error while creating new class.");
+		}
+
+		return result;
+	}
+
+	@DeleteMapping("/delete_class")
+	public Map<String, Object> deleteClass(@RequestParam("classId") int classId) {
+		Map<String, Object> result = new HashMap<>();
+
+		int rowCount = courseBO.deleteClass(classId);
+
+		if (rowCount > 0) {
+			result.put("code", 1);
+		} else {
+			result.put("code", 500);
+			result.put("errorMessage", "Error while deleting class.");
 		}
 
 		return result;

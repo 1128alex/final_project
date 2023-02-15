@@ -175,4 +175,12 @@
 		WHERE
 		`id` = #{classId}
 	</select>
+
+	<delete id="deleteClass" parameterType="int">
+		DELETE
+		FROM
+		`class`
+		WHERE
+		`id` = #{classId}
+	</delete>
 </mapper>

@@ -15,14 +15,14 @@
 </div>
 <div class="col-3">
 	<div class="d-flex justify-content-center align-items-center h-100">
-		<a href="/univ/user/log_out" class="btn button ml-5">Log out</a> <a
-			class="ml-5 dropdown-toggle" data-toggle="dropdown">UserId</a>
+		<button type="button" class="ml-5 dropdown-toggle btn button"
+			data-toggle="dropdown">${user.firstName}</button>
 		<div class="dropdown-menu">
-			<a class="dropdown-item" href="#">Action</a> <a class="dropdown-item"
-				href="#">Another action</a> <a class="dropdown-item" href="#">Something
-				else here</a>
+			<a class="dropdown-item" href="#">My profile</a> <a
+				class="dropdown-item" href="#">Email</a> <a class="dropdown-item"
+				href="#">Notification</a>
 			<div role="separator" class="dropdown-divider"></div>
-			<a class="dropdown-item" href="#">Separated link</a>
+			<a class="dropdown-item" href="/univ/user/log_out">Log out</a>
 		</div>
 	</div>
 </div>

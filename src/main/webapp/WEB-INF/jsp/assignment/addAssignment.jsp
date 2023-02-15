@@ -47,8 +47,7 @@
 					Assignment</button>
 			</div>
 		</form>
-		<div class="tempDataStorage" hidden="hidden"
-			data-class-id="${classId}"></div>
+		<div id="classIdHolder" hidden="hidden" data-class-id="${classId}"></div>
 	</div>
 </div>
 
@@ -79,8 +78,7 @@
 										function(e) {
 											e.preventDefault();
 
-
-											let classId = $('.tempDataStorage')
+											let classId = $('#classIdHolder')
 													.data("class-id");
 
 											let asgmtName = $('#asgmtName')

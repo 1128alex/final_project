@@ -14,4 +14,8 @@ public interface AssignmentDAO {
 	public int insertAssignment(Assignment assignment);
 
 	public Assignment selectAsgmtByClassIdAsgmtId(@Param("classId") int classId, @Param("asgmtId") int asgmtId);
+
+	public int updateAssignment(Assignment assignment);
+
+	public int deleteAsgmt(@Param("classId") int classId, @Param("asgmtId") int asgmtId);
 }

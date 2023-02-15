@@ -27,7 +27,7 @@ public class CourseController {
 	private AssignmentBO assignmentBO;
 
 	@GetMapping("/create_class")
-	public String showCreateClassView(Model model) {
+	public String createClassView(Model model) {
 
 		model.addAttribute("view", "course/createClass");
 
@@ -39,26 +39,23 @@ public class CourseController {
 	}
 
 	@GetMapping("/class_list")
-	public String showClassListView(Model model, HttpSession session) {
+	public String classListView(Model model, HttpSession session) {
 
 		User user = (User) session.getAttribute("user");
 		String userType = user.getType();
 
-		if (userType.equals("student")) {
-			model.addAttribute("view", "course/classList");
-		} else if (userType.equals("professor")) {
-			List<Class> classList = courseBO.getClassList(user.getEmail());
-			List<Course> courseList = courseBO.getCourseList();
-			model.addAttribute("view", "course/profClassList");
-			model.addAttribute("classes", classList);
-			model.addAttribute("courses", courseList);
-		}
+		List<Class> classList = courseBO.getClassList(user.getEmail());
+		List<Course> courseList = courseBO.getCourseList();
+		model.addAttribute("userType", userType);
+		model.addAttribute("view", "course/classList");
+		model.addAttribute("classes", classList);
+		model.addAttribute("courses", courseList);
 
 		return "template/layout";
 	}
 
 	@GetMapping("/class_detail")
-	public String showClassDetailView(@RequestParam("classId") int classId, Model model, HttpSession session) {
+	public String classDetailView(@RequestParam("classId") int classId, Model model, HttpSession session) {
 
 		Class currentClass = courseBO.getClassById(classId);
 		Course currentCourse = courseBO.getCourseByCourseCode(currentClass.getCourseCode());
@@ -78,7 +75,7 @@ public class CourseController {
 	}
 
 	@GetMapping("/edit_class")
-	public String showEditClassView(@RequestParam("classId") int classId, Model model, HttpSession session) {
+	public String editClassView(@RequestParam("classId") int classId, Model model, HttpSession session) {
 
 		Class classInfo = courseBO.getClassById(classId);
 

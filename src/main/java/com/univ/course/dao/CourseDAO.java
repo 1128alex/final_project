@@ -26,4 +26,6 @@ public interface CourseDAO {
 	public List<Class> selectClassList(String email);
 
 	public Class selectClassByClassId(int classId);
+
+	public int deleteClass(int classId);
 }

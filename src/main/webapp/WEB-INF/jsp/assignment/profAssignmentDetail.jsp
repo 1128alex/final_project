@@ -6,7 +6,14 @@
 <div class="d-flex">
 	<div class="col-4"></div>
 	<div class="col-4">
-		<h1 class="my-3">Assignment Detail</h1>
+		<div class="d-flex justify-content-between align-items-end">
+			<h1 class="my-3">Assignment Detail</h1>
+			<div class="mr-3">
+				<a
+					href="/univ/assignment/edit_assignment?classId=${assignment.classId}&asgmtId=${assignment.asgmtId}"
+					class="btn button text-white">Edit</a>
+			</div>
+		</div>
 		<h2 class="text-center mt-3">${assignment.asgmtName}</h2>
 		<div class="d-flex justify-content-end">
 			<span>${assignment.asgmtType}</span>
@@ -43,7 +50,6 @@
 						$('#fileBox').append(
 								"<a href=\"" + files[i] + "\" class=\"noDecoA\" download>"
 										+ fileName + "</a><br>");
-
 					}
 				}
 			});

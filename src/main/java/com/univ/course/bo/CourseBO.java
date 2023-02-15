@@ -36,7 +36,7 @@ public class CourseBO {
 		return courseDAO.insertClass(newClass);
 	}
 
-	public int updateClass(Class newClass) {
+	public int editClass(Class newClass) {
 		return courseDAO.updateClass(newClass);
 	}
 
@@ -46,6 +46,10 @@ public class CourseBO {
 
 	public Class getClassById(int classId) {
 		return courseDAO.selectClassByClassId(classId);
+	}
+
+	public int deleteClass(int classId) {
+		return courseDAO.deleteClass(classId);
 	}
 
 }

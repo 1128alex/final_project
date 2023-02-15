@@ -89,4 +89,34 @@
 		#{asgmtId}
 		LIMIT 1;
 	</select>
+
+	<update id="updateAssignment"
+		parameterType="com.univ.assignment.model.Assignment">
+		UPDATE
+		`assignment`
+		SET
+		`asgmtType`=#{asgmtType},
+		`asgmtName`=#{asgmtName},
+		`content` = #{content},
+		`filePath` =
+		#{filePath},
+		`maxScore` = #{maxScore},
+		`dueDate` = #{dueDate},
+		`updatedAt`=NOW()
+		WHERE
+		`classId` =
+		#{classId}
+		AND
+		`asgmtId`
+		=
+		#{asgmtId}
+	</update>
+
+	<delete id="deleteAsgmt" parameterType="map">
+		DELETE FROM `assignment`
+		WHERE
+		`classId` = #{classId}
+		AND
+		`asgmtId` = #{asgmtId}
+	</delete>
 </mapper>

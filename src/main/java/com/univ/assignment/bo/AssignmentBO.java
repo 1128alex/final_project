@@ -24,4 +24,12 @@ public class AssignmentBO {
 	public Assignment getAsgmtByClassIdAsgmtId(int classId, int asgmtId) {
 		return assignmentDAO.selectAsgmtByClassIdAsgmtId(classId, asgmtId);
 	}
+
+	public int editAssignment(Assignment assignment) {
+		return assignmentDAO.updateAssignment(assignment);
+	}
+
+	public int deleteAsgmt(int classId, int asgmtId) {
+		return assignmentDAO.deleteAsgmt(classId, asgmtId);
+	}
 }

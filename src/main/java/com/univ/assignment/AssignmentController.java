@@ -68,4 +68,16 @@ public class AssignmentController {
 		return "template/layout";
 	}
 
+	@GetMapping("/edit_assignment")
+	public String editAssignmentView(@RequestParam("classId") int classId, @RequestParam("asgmtId") int asgmtId,
+			Model model) {
+
+		Assignment assignment = assignmentBO.getAsgmtByClassIdAsgmtId(classId, asgmtId);
+
+		model.addAttribute("assignment", assignment);
+		model.addAttribute("view", "assignment/editAssignment");
+
+		return "template/layout";
+	}
+
 }

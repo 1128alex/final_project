@@ -61,6 +61,20 @@ textarea {
 	font-weight: bold;
 }
 
+.delButton {
+	background-color: #f20000;
+	border-radius: 0px;
+	color: white;
+	font-weight: bold;
+}
+
+.delButton:hover {
+	background-color: #db0000;
+	border-radius: 0px;
+	color: white;
+	font-weight: bold;
+}
+
 #profileImgBox {
 	height: 100px;
 	min-width: 100px;

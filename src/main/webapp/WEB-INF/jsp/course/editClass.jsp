@@ -136,11 +136,15 @@
 						</tr>
 					</tbody>
 				</table>
-				<div class="d-flex justify-content-end">
-					<button type="button" id="editClassCancelBtn"
-						class="btn cancelButton mb-4 mr-2">Cancel</button>
-					<button type="submit" id="editClassSubmitBtn"
-						class="btn button mb-4">Edit</button>
+				<div class="d-flex justify-content-between">
+					<div>
+						<button type="button" id="deleteClassBtn" class="btn delButton">Delete</button>
+					</div>
+					<div>
+						<button type="button" id="editClassCancelBtn"
+							class="btn cancelButton mr-2">Cancel</button>
+						<button type="submit" id="editClassSubmitBtn" class="btn button">Edit</button>
+					</div>
 				</div>
 			</div>
 		</form>
@@ -335,6 +339,7 @@
 														}
 													});
 										});
+						$('#edlBtn')
 					});
 </script>
 

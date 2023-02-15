@@ -339,7 +339,9 @@
 														}
 													});
 										});
-						$('#edlBtn')
+						$('#deleteClassBtn').on('click',function(){
+							
+						})
 					});
 </script>
 

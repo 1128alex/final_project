@@ -15,3 +15,9 @@ SELECT
 FROM
     `user`;
 DESC `user`;
+
+SELECT 
+    *
+FROM
+    `assignment`;
+DESC `assignment`;

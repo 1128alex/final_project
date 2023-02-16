@@ -1,5 +1,6 @@
 package com.univ.course;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,9 @@ import com.univ.assignment.bo.AssignmentBO;
 import com.univ.assignment.model.Assignment;
 import com.univ.course.bo.CourseBO;
 import com.univ.course.model.Class;
+import com.univ.course.model.ClassInfoCombined;
 import com.univ.course.model.Course;
+import com.univ.user.bo.UserBO;
 import com.univ.user.model.User;
 
 import jakarta.servlet.http.HttpSession;
@@ -21,6 +24,8 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/univ/course")
 @Controller
 public class CourseController {
+	@Autowired
+	private UserBO userBO;
 	@Autowired
 	private CourseBO courseBO;
 	@Autowired
@@ -44,7 +49,7 @@ public class CourseController {
 		User user = (User) session.getAttribute("user");
 		String userType = user.getType();
 
-		List<Class> classList = courseBO.getClassList(user.getEmail());
+		List<Class> classList = courseBO.getClassListByEmail(user.getEmail());
 		List<Course> courseList = courseBO.getCourseList();
 		model.addAttribute("userType", userType);
 		model.addAttribute("view", "course/classList");
@@ -91,6 +96,37 @@ public class CourseController {
 
 		model.addAttribute("classInfo", classInfo);
 		model.addAttribute("view", "course/editClass");
+
+		return "template/layout";
+	}
+
+	@GetMapping("/register_class")
+	public String editClassView(Model model, HttpSession session) {
+
+		List<Course> courseList = courseBO.getCourseList();
+		model.addAttribute("courseList", courseList);
+		model.addAttribute("length", courseList.size());
+
+		List<ClassInfoCombined> combinedList = new ArrayList<>();
+
+		List<Class> classList = courseBO.getClassList();
+
+		for (Class _class : classList) {
+			ClassInfoCombined combined = new ClassInfoCombined();
+
+			combined.set_class(_class);
+
+			User user = userBO.getUserByEmail(_class.getProfEmail());
+			combined.setUser(user);
+
+			Course course = courseBO.getCourseByCourseCode(_class.getCourseCode());
+			combined.setCourse(course);
+
+			combinedList.add(combined);
+		}
+
+		model.addAttribute("combinedList", combinedList);
+		model.addAttribute("view", "course/registerClass");
 
 		return "template/layout";
 	}

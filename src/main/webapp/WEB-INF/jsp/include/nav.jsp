@@ -23,8 +23,8 @@
 	<li class="nav-item"><h4>
 			<c:choose>
 				<c:when test="${user.type eq 'student'}">
-					<a href="#" class="nav-link text-white font-weight-bold">Register
-						Class</a>
+					<a href="/univ/course/register_class"
+						class="nav-link text-white font-weight-bold">Register Class</a>
 				</c:when>
 				<c:when test="${user.type eq 'professor'}">
 					<a href="/univ/course/create_class"

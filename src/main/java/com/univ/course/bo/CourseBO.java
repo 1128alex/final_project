@@ -40,8 +40,12 @@ public class CourseBO {
 		return courseDAO.updateClass(newClass);
 	}
 
-	public List<Class> getClassList(String email) {
-		return courseDAO.selectClassList(email);
+	public List<Class> getClassList() {
+		return courseDAO.selectClassList();
+	}
+
+	public List<Class> getClassListByEmail(String email) {
+		return courseDAO.selectClassListByEmail(email);
 	}
 
 	public Class getClassById(int classId) {

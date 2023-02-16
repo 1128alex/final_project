@@ -28,6 +28,7 @@ public class CourseRestController {
 	@Autowired
 	private CourseBO courseBO;
 
+	// Professor
 	@GetMapping("/find_subject_classes")
 	public Map<String, Object> findSubjectClasses(Model model) {
 		Map<String, Object> result = new HashMap<>();
@@ -46,7 +47,7 @@ public class CourseRestController {
 		return result;
 	}
 
-	// https://gilmatnote.tistory.com/11
+	// Professor
 	@PutMapping("/create_class")
 	public Map<String, Object> createClass(@ModelAttribute Class newClass,
 			@RequestParam("registerDueDateString") String registerDueDateString, HttpSession session)
@@ -80,6 +81,7 @@ public class CourseRestController {
 		return result;
 	}
 
+	// Professor
 	@PutMapping("/edit_class")
 	public Map<String, Object> editClass(@RequestParam("classId") int classId,
 			@RequestParam("prevCourseCode") String prevCourseCode, @ModelAttribute Class newClass,
@@ -114,22 +116,6 @@ public class CourseRestController {
 		} else {
 			result.put("code", 500);
 			result.put("errorMessage", "Error while creating new class.");
-		}
-
-		return result;
-	}
-
-	@DeleteMapping("/delete_class")
-	public Map<String, Object> deleteClass(@RequestParam("classId") int classId) {
-		Map<String, Object> result = new HashMap<>();
-
-		int rowCount = courseBO.deleteClass(classId);
-
-		if (rowCount > 0) {
-			result.put("code", 1);
-		} else {
-			result.put("code", 500);
-			result.put("errorMessage", "Error while deleting class.");
 		}
 
 		return result;

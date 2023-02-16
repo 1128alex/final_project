@@ -123,6 +123,11 @@ textarea {
 	width: 100%;
 }
 
+#smallClassTimeTable {
+	width: 100%;
+	table-layout: fixed;
+}
+
 .noDecoA {
 	text-decoration: none;
 	color: black;

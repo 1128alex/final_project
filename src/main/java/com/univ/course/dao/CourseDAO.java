@@ -15,6 +15,10 @@ public interface CourseDAO {
 
 	public List<Course> selectCourseListBySubjectCode(String subjectCode);
 
+	public List<Course> selectFilteredCourseList(@Param("searchKeyword") String searchKeyword,
+			@Param("courseName") String courseName, @Param("subjectCode") String subjectCode,
+			@Param("courseLevel") String courseLevel);
+
 	public Course selectCourseByCourseCode(String courseCode);
 
 	public int selectDuplicated(@Param("courseCode") String courseCode, @Param("profEmail") String profEmail);
@@ -26,6 +30,8 @@ public interface CourseDAO {
 	public List<Class> selectClassList();
 
 	public List<Class> selectClassListByEmail(String email);
+
+	public List<Class> selectClassListByCourseCode(String courseCode);
 
 	public Class selectClassByClassId(int classId);
 

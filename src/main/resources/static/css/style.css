@@ -113,6 +113,11 @@ textarea {
 	border: 2px solid #008B8B;
 }
 
+.linkRow:hover {
+	background-color: #d5e6e8;
+	cursor: pointer;
+}
+
 .classBoxTitle {
 	height: 110px;
 	background-color: #008B8B;

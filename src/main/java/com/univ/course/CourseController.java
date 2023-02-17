@@ -101,28 +101,36 @@ public class CourseController {
 	}
 
 	@GetMapping("/register_class")
-	public String editClassView(Model model, HttpSession session) {
+	public String editClassView(@RequestParam(value = "searchKeyword", required = false) String searchKeyword,
+			@RequestParam(value = "courseName", required = false) String courseName,
+			@RequestParam(value = "subjectCode", required = false) String subjectCode,
+			@RequestParam(value = "courseLevel", required = false) String courseLevel, Model model,
+			HttpSession session) {
 
 		List<Course> courseList = courseBO.getCourseList();
 		model.addAttribute("courseList", courseList);
 		model.addAttribute("length", courseList.size());
 
+		if (searchKeyword == null) {
+			searchKeyword = "";
+		}
+
 		List<ClassInfoCombined> combinedList = new ArrayList<>();
 
-		List<Class> classList = courseBO.getClassList();
+		List<Course> filteredCourseList = courseBO.getFilteredCourseList(searchKeyword, courseName, subjectCode,
+				courseLevel);
 
-		for (Class _class : classList) {
-			ClassInfoCombined combined = new ClassInfoCombined();
+		for (Course course : filteredCourseList) {
+			List<Class> classList = courseBO.getClassListByCourseCode(course.getCourseCode());
+			for (Class _class : classList) {
+				User user = userBO.getUserByEmail(_class.getProfEmail());
 
-			combined.set_class(_class);
-
-			User user = userBO.getUserByEmail(_class.getProfEmail());
-			combined.setUser(user);
-
-			Course course = courseBO.getCourseByCourseCode(_class.getCourseCode());
-			combined.setCourse(course);
-
-			combinedList.add(combined);
+				ClassInfoCombined combined = new ClassInfoCombined();
+				combined.setUser(user);
+				combined.set_class(_class);
+				combined.setCourse(course);
+				combinedList.add(combined);
+			}
 		}
 
 		model.addAttribute("combinedList", combinedList);

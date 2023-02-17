@@ -24,6 +24,11 @@ public class CourseBO {
 		return courseDAO.selectCourseListBySubjectCode(subjectCode);
 	}
 
+	public List<Course> getFilteredCourseList(String searchKeyword, String courseName, String subjectCode,
+			String courseLevel) {
+		return courseDAO.selectFilteredCourseList(searchKeyword, courseName, subjectCode, courseLevel);
+	}
+
 	public Course getCourseByCourseCode(String courseCode) {
 		return courseDAO.selectCourseByCourseCode(courseCode);
 	}
@@ -42,6 +47,10 @@ public class CourseBO {
 
 	public List<Class> getClassList() {
 		return courseDAO.selectClassList();
+	}
+
+	public List<Class> getClassListByCourseCode(String courseCode) {
+		return courseDAO.selectClassListByCourseCode(courseCode);
 	}
 
 	public List<Class> getClassListByEmail(String email) {

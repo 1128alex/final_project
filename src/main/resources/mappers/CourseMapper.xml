@@ -40,6 +40,28 @@
 		ASC
 	</select>
 
+	<select id="getFilteredCourseList"
+		resultType="com.univ.course.model.Class">
+		SELECT
+		`courseCode`,
+		`courseName`,
+		`description`,
+		`price`,
+		`createdAt`,
+		`updatedAt`
+		FROM
+		`class`
+		WHERE
+		`id` OR `courseCode` LIKE
+		CONCAT('%',#{searchKeyword},'%')
+		<if test="couseName != null">
+
+		</if>
+
+		ORDER
+		BY
+		`courseCode`
+	</select>
 	<select id="selectCourseByCourseCode" parameterType="string"
 		resultType="com.univ.course.model.Course">
 		SELECT

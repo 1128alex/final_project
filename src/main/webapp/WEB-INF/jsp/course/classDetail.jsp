@@ -127,5 +127,4 @@
 		<h1 class="mt-3">Students</h1>
 		<div class="classAside"></div>
 	</div>
-
 </div>

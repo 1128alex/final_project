@@ -10,16 +10,20 @@
 				<h1 class="mt-4 ml-4">My Classes</h1>
 			</div>
 			<div class="box d-flex">
-				<c:forEach var="combined" items="${combinedList}" varStatus="status">
-					<a href="/univ/course/class_detail?classId=${combined._class.id}"
+				<c:forEach var="_class" items="${classes}" varStatus="status">
+					<a href="/univ/course/class_detail?classId=${_class.id}"
 						id="classBox${status.count}" class="classBox mx-3 mt-4 mb-2"
-						data-id="${combined._class.id}">
+						data-id="${_class.id}">
 						<div class="classBoxTitle">
 							<div class="d-flex justify-content-center">
-								<h2 class="text-white">${combined._class.courseCode}</h2>
+								<h2 class="text-white">${_class.courseCode}</h2>
 							</div>
 							<div class="d-flex justify-content-center">
-								<h4 id="courseNameBox" class="text-center text-white">${combined.course.courseName}</h4>
+								<c:forEach var="course" items="${courses}">
+									<c:if test="${_class.courseCode eq course.courseCode}">
+										<h4 id="courseNameBox" class="text-center text-white">${course.courseName}</h4>
+									</c:if>
+								</c:forEach>
 							</div>
 						</div>
 					</a>

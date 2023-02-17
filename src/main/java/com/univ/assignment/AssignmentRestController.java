@@ -1,8 +1,6 @@
 package com.univ.assignment;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,8 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.univ.assignment.bo.AssignmentBO;
 import com.univ.assignment.model.Assignment;
-import com.univ.common.FileManagerService;
-import com.univ.user.model.User;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -28,8 +24,6 @@ import jakarta.servlet.http.HttpSession;
 public class AssignmentRestController {
 	@Autowired
 	private AssignmentBO assignmentBO;
-	@Autowired
-	private FileManagerService fileManagerService;
 
 	@PutMapping("/add_assignment")
 	public Map<String, Object> addAssignment(@ModelAttribute Assignment assignment,
@@ -39,45 +33,13 @@ public class AssignmentRestController {
 			throws ParseException {
 		Map<String, Object> result = new HashMap<>();
 
-		if (maxScoreString.equals("") == false) {
-			int maxScore = (int) Integer.parseInt(maxScoreString);
-			assignment.setMaxScore(maxScore);
-		}
-
-		if (files != null) {
-			// saving and adding files to database
-			String[] filePaths = new String[files.size()];
-			User user = (User) session.getAttribute("user");
-			String email = user.getEmail();
-			int index = 0;
-			for (MultipartFile file : files) {
-				filePaths[index++] = fileManagerService.saveFile(email, file);
-			}
-
-			String filePath = null;
-			for (int i = 0; i < filePaths.length; i++) {
-				if (i == 0) {
-					filePath = filePaths[i] + " ";
-				} else {
-					filePath += filePaths[i] + " ";
-				}
-			}
-			assignment.setFilePath(filePath);
-		}
-
-		if (dueDateString != null) {
-			// setting due date
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-			Date dueDate = sdf.parse(dueDateString);
-			assignment.setDueDate(dueDate);
-		}
-
-		int rowCount = assignmentBO.addAssignment(assignment);
+		int rowCount = assignmentBO.addAssignment(assignment, maxScoreString, files, dueDateString, session);
 
 		if (rowCount > 0) {
 			result.put("code", 1);
 		} else {
 			result.put("code", 500);
+			result.put("errorMessage", "Error while adding the assignment.");
 		}
 
 		return result;
@@ -91,40 +53,7 @@ public class AssignmentRestController {
 			throws ParseException {
 		Map<String, Object> result = new HashMap<>();
 
-		if (maxScoreString.equals("") == false) {
-			int maxScore = (int) Integer.parseInt(maxScoreString);
-			assignment.setMaxScore(maxScore);
-		}
-
-		if (files != null) {
-			// saving and adding files to database
-			String[] filePaths = new String[files.size()];
-			User user = (User) session.getAttribute("user");
-			String email = user.getEmail();
-			int index = 0;
-			for (MultipartFile file : files) {
-				filePaths[index++] = fileManagerService.saveFile(email, file);
-			}
-
-			String filePath = null;
-			for (int i = 0; i < filePaths.length; i++) {
-				if (i == 0) {
-					filePath = filePaths[i] + " ";
-				} else {
-					filePath += filePaths[i] + " ";
-				}
-			}
-			assignment.setFilePath(filePath);
-		}
-
-		if (dueDateString != null) {
-			// setting due date
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-			Date dueDate = sdf.parse(dueDateString);
-			assignment.setDueDate(dueDate);
-		}
-
-		int rowCount = assignmentBO.editAssignment(assignment);
+		int rowCount = assignmentBO.editAssignment(assignment, maxScoreString, files, dueDateString, session);
 
 		if (rowCount > 0) {
 			result.put("code", 1);
@@ -152,4 +81,5 @@ public class AssignmentRestController {
 
 		return result;
 	}
+
 }

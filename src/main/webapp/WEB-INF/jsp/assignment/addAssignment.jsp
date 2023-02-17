@@ -149,9 +149,8 @@
 																		+ " created!");
 																location.href = "/univ/assignment/assignment_list?classId="
 																		+ classId;
-															}
-															if (data.code == 500) {
-																alert("error: Error while adding the assignment.");
+															} else if (data.code == 500) {
+																alert("error " + data.code + ": " + data.errorMessage);
 															}
 														},
 														error : function(e) {

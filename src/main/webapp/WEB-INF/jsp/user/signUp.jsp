@@ -231,7 +231,6 @@
 																		+ data.code
 																		+ ": "
 																		+ errorMessage);
-																return false;
 															}
 														},
 														error : function(e) {

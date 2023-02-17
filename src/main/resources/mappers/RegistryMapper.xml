@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- mapper -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.univ.registry.dao.RegistryDAO">
+	<insert id="insertToClass" parameterType="map">
+		INSERT INTO `registry`
+		(
+		`classId`,
+		`registerId`,
+		`studentNum`,
+		`createdAt`,
+		`updatedAt`
+		)
+		VALUES
+		(
+		#{classId},
+		IFNULL(((select `registerId` from (SELECT
+		MAX(`registerId`)
+		`registerId` FROM `registry` where `classId` = #{classId}
+		LIMIT 1) TMP)
+		+1),1),
+		#{studentNum},
+		NOW(),
+		NOW()
+		)
+	</insert>
+
+	<select id="selectRegistryListByStudentNum"
+		parameterType="string" resultType="com.univ.registry.model.Registry">
+		SELECT
+		`classId`,
+		`registerId`,
+		`studentNum`,
+		`createdAt`,
+		`updatedAt`
+		FROM
+		`registry`
+		WHERE
+		`studentNum` =
+		#{studentNum}
+	</select>
+
+	<select id="selectDuplicatedClass" parameterType="map"
+		resultType="int">
+		SELECT
+		count(*)
+		FROM
+		`registry`
+		WHERE
+		`classId` = #{classId}
+		AND
+		`studentNum` =
+		#{studentNum}
+	</select>
+</mapper>

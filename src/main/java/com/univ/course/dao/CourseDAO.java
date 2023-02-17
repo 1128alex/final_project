@@ -36,4 +36,6 @@ public interface CourseDAO {
 	public Class selectClassByClassId(int classId);
 
 	public int deleteClass(int classId);
+
+	public int selectClassLength();
 }

@@ -54,7 +54,7 @@
 		<div hidden="hidden" id="endValue" data-end-value="${length}"></div>
 
 		<div class="mt-3">
-			<table class="table table-bordered">
+			<table class="table table-bordered mt-1">
 				<thead>
 					<tr>
 						<th>Course Code</th>
@@ -158,6 +158,16 @@
 					</c:forEach>
 				</tbody>
 			</table>
+			<c:if test="${pageLength ne 2}">
+				<div class="d-flex justify-content-center align-items-center my-3">
+					<button type="button" id="prevBtn" class="btn button mr-4">Prev</button>
+					<c:forEach var="i" begin="0" end="${pageLength}">
+						<span class="coursePage mx-2" id="coursePage${i}"
+							data-course-page="${i}">${i}</span>
+					</c:forEach>
+					<button type="button" id="nextBtn" class="btn button ml-4">Next</button>
+				</div>
+			</c:if>
 		</div>
 	</div>
 </div>
@@ -262,10 +272,13 @@
 										function() {
 											let classIdHolder = $(this).data(
 													'class-id');
-											alert(classIdHolder);
 
 											location.href = "/univ/course/register_class_detail?classId="
 													+ classIdHolder;
 										});
+						$('.coursePage').on('click', function() {
+							let coursePage = $(this).data('course-page');
+							alert(coursePage);
+						})
 					});
 </script>

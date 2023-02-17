@@ -52,8 +52,10 @@
 		VALUES
 		(
 		#{classId},
-		ifnull(((select asgmtId from (SELECT MAX(`asgmtId`)
-		asgmtId FROM `assignment` where `classId` =#{classId} LIMIT 1) tmp)
+		IFNULL(((select `asgmtId` from (SELECT
+		MAX(`asgmtId`)
+		`asgmtId` FROM `assignment` where `classId` = #{classId}
+		LIMIT 1) TMP)
 		+1),1),
 		#{asgmtType},
 		#{asgmtName},

@@ -71,6 +71,7 @@
 		BY
 		`courseCode`
 	</select>
+
 	<select id="selectCourseByCourseCode" parameterType="string"
 		resultType="com.univ.course.model.Course">
 		SELECT
@@ -256,4 +257,11 @@
 		WHERE
 		`id` = #{classId}
 	</delete>
+
+	<select id="selectClassLength" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM
+		`class`
+	</select>
 </mapper>

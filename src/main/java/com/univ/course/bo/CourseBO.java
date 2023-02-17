@@ -100,4 +100,8 @@ public class CourseBO {
 		return courseDAO.deleteClass(classId);
 	}
 
+	public int getClassLength() {
+		return courseDAO.selectClassLength();
+	}
+
 }

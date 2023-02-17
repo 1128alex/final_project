@@ -16,6 +16,8 @@ import com.univ.course.bo.CourseBO;
 import com.univ.course.model.Class;
 import com.univ.course.model.ClassInfoCombined;
 import com.univ.course.model.Course;
+import com.univ.registry.bo.RegistryBO;
+import com.univ.registry.model.Registry;
 import com.univ.user.bo.UserBO;
 import com.univ.user.model.User;
 
@@ -30,6 +32,8 @@ public class CourseController {
 	private CourseBO courseBO;
 	@Autowired
 	private AssignmentBO assignmentBO;
+	@Autowired
+	private RegistryBO registryBO;
 
 	@GetMapping("/create_class")
 	public String createClassView(Model model) {
@@ -49,12 +53,38 @@ public class CourseController {
 		User user = (User) session.getAttribute("user");
 		String userType = user.getType();
 
-		List<Class> classList = courseBO.getClassListByEmail(user.getEmail());
-		List<Course> courseList = courseBO.getCourseList();
+		List<ClassInfoCombined> combinedList = new ArrayList<>();
+		if (userType.equals("student")) {
+			List<Registry> registryList = registryBO.getRegistryListByStudentNum(user.getStudentNum());
+
+			for (Registry registry : registryList) {
+				ClassInfoCombined combined = new ClassInfoCombined();
+
+				Class _class = courseBO.getClassById(registry.getClassId());
+				Course course = courseBO.getCourseByCourseCode(_class.getCourseCode());
+				combined.setUser(user);
+				combined.set_class(_class);
+				combined.setCourse(course);
+
+				combinedList.add(combined);
+			}
+		} else if (userType.equals("professor")) {
+
+			List<Class> classList = courseBO.getClassListByEmail(user.getEmail());
+			for (Class _class : classList) {
+				ClassInfoCombined combined = new ClassInfoCombined();
+
+				combined.setUser(user);
+				Course course = courseBO.getCourseByCourseCode(_class.getCourseCode());
+				combined.set_class(_class);
+				combined.setCourse(course);
+
+				combinedList.add(combined);
+			}
+		}
+		model.addAttribute("combinedList", combinedList);
 		model.addAttribute("userType", userType);
 		model.addAttribute("view", "course/classList");
-		model.addAttribute("classes", classList);
-		model.addAttribute("courses", courseList);
 
 		return "template/layout";
 	}
@@ -120,6 +150,9 @@ public class CourseController {
 		List<Course> filteredCourseList = courseBO.getFilteredCourseList(searchKeyword, courseName, subjectCode,
 				courseLevel);
 
+		int pageLength = (int) Math.ceil((double) courseBO.getClassLength() / 10);
+		model.addAttribute("pageLength", pageLength);
+
 		for (Course course : filteredCourseList) {
 			List<Class> classList = courseBO.getClassListByCourseCode(course.getCourseCode());
 			for (Class _class : classList) {
@@ -144,8 +177,18 @@ public class CourseController {
 	@GetMapping("/register_class_detail")
 	public String registerClassDetailView(@RequestParam("classId") int classId, Model model) {
 
-		model.addAttribute("view", "course/registerClassDetail");
+		ClassInfoCombined combined = new ClassInfoCombined();
+
+		Class _class = courseBO.getClassById(classId);
+		combined.set_class(_class);
+		User user = userBO.getUserByEmail(_class.getProfEmail());
+		combined.setUser(user);
+		Course course = courseBO.getCourseByCourseCode(_class.getCourseCode());
+		combined.setCourse(course);
+
+		model.addAttribute("combined", combined);
 		model.addAttribute("classId", classId);
+		model.addAttribute("view", "course/registerClassDetail");
 
 		return "template/layout";
 	}

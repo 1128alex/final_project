@@ -21,3 +21,9 @@ SELECT
 FROM
     `assignment`;
 DESC `assignment`;
+
+SELECT 
+    *
+FROM
+    `registry`;
+DESC `registry`;

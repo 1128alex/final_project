@@ -40,8 +40,8 @@
 		ASC
 	</select>
 
-	<select id="getFilteredCourseList"
-		resultType="com.univ.course.model.Class">
+	<select id="selectFilteredCourseList"
+		resultType="com.univ.course.model.Course">
 		SELECT
 		`courseCode`,
 		`courseName`,
@@ -50,14 +50,23 @@
 		`createdAt`,
 		`updatedAt`
 		FROM
-		`class`
+		`course`
 		WHERE
-		`id` OR `courseCode` LIKE
-		CONCAT('%',#{searchKeyword},'%')
-		<if test="couseName != null">
-
-		</if>
-
+		(`courseCode` LIKE
+		CONCAT('%',#{searchKeyword},'%') OR
+		`courseName` LIKE
+		CONCAT('%',#{searchKeyword},'%'))
+		<choose>
+			<when test="courseName != null">AND `courseCode` =
+				#{courseName}
+			</when>
+			<when test="courseLevel != null">AND `courseCode` LIKE
+				CONCAT(#{subjectCode},#{courseLevel},'%')
+			</when>
+			<when test="courseLevel == null and subjectCode != null">AND `courseCode` LIKE
+				CONCAT(#{subjectCode},'%')
+			</when>
+		</choose>
 		ORDER
 		BY
 		`courseCode`
@@ -196,6 +205,27 @@
 		`profEmail` =
 		#{email}
 		ORDER BY `createdAt` DESC;
+	</select>
+
+	<select id="selectClassListByCourseCode" parameterType="string"
+		resultType="com.univ.course.model.Class">
+		SELECT
+		`id`,
+		`courseCode`,
+		`profEmail`,
+		`maxNum`,
+		`registerDueDate`,
+		`monStartTime`,
+		`tueStartTime`,
+		`wedStartTime`,
+		`thuStartTime`,
+		`friStartTime`,
+		`createdAt`,
+		`updatedAt`
+		FROM
+		`class`
+		WHERE
+		`courseCode` = #{courseCode}
 	</select>
 
 	<select id="selectClassByClassId" parameterType="int"

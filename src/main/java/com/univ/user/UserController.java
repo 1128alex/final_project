@@ -1,7 +1,5 @@
 package com.univ.user;
 
-import java.time.LocalDate;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,10 +19,7 @@ public class UserController {
 
 	@GetMapping("/sign_up")
 	public String signUpView(Model model) {
-		String now = LocalDate.now().toString().substring(0, 4);
-
 		model.addAttribute("view", "user/signUp");
-		model.addAttribute("year", now);
 
 		return "template/loginLayout";
 	}

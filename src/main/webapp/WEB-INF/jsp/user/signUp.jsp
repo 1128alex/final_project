@@ -221,19 +221,15 @@
 														processData : false, // Required for file upload
 														contentType : false, // Required for file upload
 														success : function(data) {
-															if (data.code == 2) {
-																alert("An account created with this email already exists.");
-																return false;
-															}
 															if (data.code == 1) {
 																alert("Welcome "
 																		+ firstName
 																		+ "!");
 																location.href = "/univ";
 															} else {
-																alert("error: "
+																alert("error "
 																		+ data.code
-																		+ " "
+																		+ ": "
 																		+ errorMessage);
 																return false;
 															}

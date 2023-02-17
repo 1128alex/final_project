@@ -1,8 +1,16 @@
 package com.univ.user.bo;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.univ.common.EncryptUtils;
+import com.univ.common.FileManagerService;
 import com.univ.user.dao.UserDAO;
 import com.univ.user.model.User;
 
@@ -11,15 +19,59 @@ public class UserBO {
 	@Autowired
 	private UserDAO userDAO;
 
-	public User getUserByIdPassword(String studentNum, String email, String password) {
-		return userDAO.selectUserByIdPassword(studentNum, email, password);
+	@Autowired
+	private FileManagerService fileManagerService;
+
+	public User getUserByIdPassword(String userId, String password) {
+		String email = null;
+		if (userId.contains("@") && userId.contains(".")) {
+			email = userId;
+			userId = null;
+		}
+
+		String hashedPassword = EncryptUtils.md5(password);
+
+		return userDAO.selectUserByIdPassword(userId, email, hashedPassword);
 	}
 
-	public int checkDuplicate(String email) {
-		return userDAO.checkDuplicate(email);
-	}
+	public int addUser(User user, int birthYear, int birthMonthInfo, int birthDay, MultipartFile profileFile)
+			throws ParseException {
 
-	public int addUser(User user) {
+		if (user.getType().equals("student")) {
+			// Creating Student Number
+			// Current Year
+			Integer currentYear = Integer.parseInt(LocalDate.now().toString().substring(2, 4));
+
+			// Faculty Number(Random number)
+			String facultyNum = "01";
+
+			// Making a studentNumber
+			String studentNum = userDAO.selectStudentNum(currentYear, facultyNum);
+			user.setStudentNum(studentNum);
+		}
+		// Combining Birth Information
+		Date birth = toDate(birthDay, birthMonthInfo, birthYear);
+
+		// Hash password
+		String hashedPassword = EncryptUtils.md5(user.getPassword());
+
+		String profileUrl = null;
+		if (profileFile != null) {
+			profileUrl = fileManagerService.saveFile(user.getEmail(), profileFile);
+		}
+
+		int emailRowCount = userDAO.checkDuplicate(user.getEmail());
+
+		if (emailRowCount >= 1) {
+			return 2;
+		}
+
+		// Set the model values
+		user.setBirth(birth);
+		user.setPassword(hashedPassword);
+		user.setProfileUrl(profileUrl);
+
+		// Add the information to Database
 		return userDAO.insertUser(user);
 	}
 
@@ -31,4 +83,10 @@ public class UserBO {
 		return userDAO.selectUserByEmail(email);
 	}
 
+	public Date toDate(int birthDay, int birthMonth, int birthYear) throws ParseException {
+		String birthStr = birthDay + "/" + birthMonth + "/" + birthYear;
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
+		return sdf.parse(birthStr);
+	}
 }

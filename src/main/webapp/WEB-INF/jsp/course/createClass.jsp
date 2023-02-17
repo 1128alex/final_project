@@ -247,8 +247,10 @@
 																alert("success");
 																location.href = "/univ/course/class_list";
 															} else {
-																alert("error: "
-																		+ data.errorMessage);
+																alert("error "
+																		+ data.code
+																		+ ": "
+																		+ +data.errorMessage);
 															}
 														},
 														error : function(e) {

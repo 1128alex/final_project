@@ -1,15 +1,10 @@
 package com.univ.course;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.univ.course.bo.CourseBO;
 import com.univ.course.model.Class;
-import com.univ.user.model.User;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -29,49 +23,18 @@ public class CourseRestController {
 	private CourseBO courseBO;
 
 	// Professor
-	@GetMapping("/find_subject_classes")
-	public Map<String, Object> findSubjectClasses(Model model) {
-		Map<String, Object> result = new HashMap<>();
-
-		return result;
-	}
-
-	@GetMapping("/filter_courses_by_subject")
-	public Map<String, Object> filterCoursesBySubject(
-			@RequestParam(value = "subjectCode", required = false) String subjectCode, Model model,
-			HttpSession session) {
-		Map<String, Object> result = new HashMap<>();
-
-		result.put("code", 1);
-
-		return result;
-	}
-
-	// Professor
 	@PutMapping("/create_class")
 	public Map<String, Object> createClass(@ModelAttribute Class newClass,
 			@RequestParam("registerDueDateString") String registerDueDateString, HttpSession session)
 			throws ParseException {
 		Map<String, Object> result = new HashMap<>();
 
-		User user = (User) session.getAttribute("user");
-		String profEmail = user.getEmail();
-		newClass.setProfEmail(profEmail);
+		int rowCount = courseBO.addClass(newClass, registerDueDateString, session);
 
-		Date registerDueDate = new SimpleDateFormat("yyyy/MM/dd").parse(registerDueDateString);
-		newClass.setRegisterDueDate(registerDueDate);
-
-		int dupCount = courseBO.checkDuplicatedClass(newClass.getCourseCode(), profEmail);
-
-		if (dupCount == 1) {
+		if (rowCount == 2) {
 			result.put("code", 2);
 			result.put("errorMessage", "Your class with this ID already exists.");
-			return result;
-		}
-
-		int rowCount = courseBO.addClass(newClass);
-
-		if (rowCount > 0) {
+		} else if (rowCount > 0) {
 			result.put("code", 1);
 		} else {
 			result.put("code", 500);
@@ -83,35 +46,17 @@ public class CourseRestController {
 
 	// Professor
 	@PutMapping("/edit_class")
-	public Map<String, Object> editClass(@RequestParam("classId") int classId,
-			@RequestParam("prevCourseCode") String prevCourseCode, @ModelAttribute Class newClass,
+	public Map<String, Object> editClass(@ModelAttribute Class newClass, @RequestParam("classId") int classId,
+			@RequestParam("prevCourseCode") String prevCourseCode,
 			@RequestParam("registerDueDateString") String registerDueDateString, HttpSession session)
 			throws ParseException {
 		Map<String, Object> result = new HashMap<>();
 
-		newClass.setId(classId);
-
-		User user = (User) session.getAttribute("user");
-		String profEmail = user.getEmail();
-		newClass.setProfEmail(profEmail);
-
-		Date registerDueDate = new SimpleDateFormat("yyyy/MM/dd").parse(registerDueDateString);
-		newClass.setRegisterDueDate(registerDueDate);
-
-		int dupCount = 0;
-		if (prevCourseCode.equals(newClass.getCourseCode()) == false) {
-			dupCount = courseBO.checkDuplicatedClass(newClass.getCourseCode(), profEmail);
-		}
-
-		if (dupCount == 1) {
+		int rowCount = courseBO.editClass(newClass, classId, prevCourseCode, registerDueDateString, session);
+		if (rowCount == 2) {
 			result.put("code", 2);
 			result.put("errorMessage", "Your class with this ID already exists.");
-			return result;
-		}
-
-		int rowCount = courseBO.editClass(newClass);
-
-		if (rowCount > 0) {
+		} else if (rowCount > 0) {
 			result.put("code", 1);
 		} else {
 			result.put("code", 500);

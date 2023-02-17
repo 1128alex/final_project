@@ -1,14 +1,19 @@
 package com.univ.course.bo;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.univ.course.dao.CourseDAO;
-import com.univ.course.model.Course;
-
 import com.univ.course.model.Class;
+import com.univ.course.model.Course;
+import com.univ.user.model.User;
+
+import jakarta.servlet.http.HttpSession;
 
 @Service
 public class CourseBO {
@@ -33,15 +38,45 @@ public class CourseBO {
 		return courseDAO.selectCourseByCourseCode(courseCode);
 	}
 
-	public int checkDuplicatedClass(String courseCode, String profEmail) {
-		return courseDAO.selectDuplicated(courseCode, profEmail);
-	}
+	public int addClass(Class newClass, String registerDueDateString, HttpSession session) throws ParseException {
 
-	public int addClass(Class newClass) {
+		User user = (User) session.getAttribute("user");
+		String profEmail = user.getEmail();
+		newClass.setProfEmail(profEmail);
+
+		Date registerDueDate = new SimpleDateFormat("yyyy/MM/dd").parse(registerDueDateString);
+		newClass.setRegisterDueDate(registerDueDate);
+
+		int dupCount = courseDAO.selectDuplicated(newClass.getCourseCode(), profEmail);
+
+		if (dupCount == 1) {
+			return 2;
+		}
+
 		return courseDAO.insertClass(newClass);
 	}
 
-	public int editClass(Class newClass) {
+	public int editClass(Class newClass, int classId, String prevCourseCode, String registerDueDateString,
+			HttpSession session) throws ParseException {
+
+		newClass.setId(classId);
+
+		User user = (User) session.getAttribute("user");
+		String profEmail = user.getEmail();
+		newClass.setProfEmail(profEmail);
+
+		Date registerDueDate = new SimpleDateFormat("yyyy/MM/dd").parse(registerDueDateString);
+		newClass.setRegisterDueDate(registerDueDate);
+
+		int dupCount = 0;
+		if (prevCourseCode.equals(newClass.getCourseCode()) == false) {
+			dupCount = courseDAO.selectDuplicated(newClass.getCourseCode(), profEmail);
+		}
+
+		if (dupCount == 1) {
+			return 2;
+		}
+
 		return courseDAO.updateClass(newClass);
 	}
 

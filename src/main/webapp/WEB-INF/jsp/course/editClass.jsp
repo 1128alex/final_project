@@ -364,7 +364,9 @@
 																		+ ".");
 																location.href = "/univ/course/class_list"
 															} else {
-																alert("error: "
+																alert("error "
+																		+ data.code
+																		+ ": "
 																		+ data.errorMessage);
 															}
 														},

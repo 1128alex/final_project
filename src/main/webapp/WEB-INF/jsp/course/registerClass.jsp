@@ -28,10 +28,11 @@
 			</div>
 			<div class="d-flex 	align-items-end">
 				<div class="d-flex align-items-end w-75">
+					<div id="courseNameHolder" data-course-name="${courseName}"></div>
 					<select id="courseName" name="courseName" class="form-control mt-2">
 						<option value="0">-- Course --</option>
 						<c:forEach var="course" items="${courseList}" varStatus="status">
-							<option id="${course.courseCode}"
+							<option id="${course.courseCode}" value="${course.courseCode}"
 								class="courses courses${status.index}">
 								${course.courseCode += " - " += course.courseName}</option>
 						</c:forEach>
@@ -40,13 +41,14 @@
 			</div>
 			<div class="mt-2 d-flex justify-content-between w-75">
 				<input type="text" class="form-control" id="searchKeyword"
-					value="${searchKeyword }">
+					value="${searchKeyword}" placeholder="Search with keywords">
 				<div>
 					<button type="button" id="clearBtn" class="btn button ml-3">Clear</button>
 				</div>
 			</div>
 			<div class="d-flex justify-content-end">
-				<button type="button" id="searchBtn" class="btn button">Search</button>
+				<button type="button" id="searchBtn" class="btn button"
+					onkeypress="click">Search</button>
 			</div>
 		</div>
 		<div hidden="hidden" id="endValue" data-end-value="${length}"></div>
@@ -66,7 +68,8 @@
 				<tbody>
 					<c:forEach var="combined" items="${combinedList}"
 						varStatus="status">
-						<tr class="linkRow" data-class-id-holder="${combined._class.id}">
+						<tr class="linkRow" id="classIdHolder"
+							data-class-id="${combined._class.id}">
 							<td>${combined._class.courseCode}</td>
 							<td>${combined.course.courseName}</td>
 							<td>${combined.user.firstName += " " += combined.user.lastName}</td>
@@ -159,103 +162,110 @@
 	</div>
 </div>
 <script>
-	$(document).ready(
-			function() {
-				$('#courseLevel').on('click', function() {
-					if ($('#subjectCode').val() == '0') {
-						alert("Please select the subject code.");
-						return;
-					}
-				});
-				$('#clearBtn').on('click', function() {
-					$('#subjectCode').val('0');
-					$('#courseLevel').val('0');
-					$('#courseName').val('0');
-					$('#searchKeyword').val('');
-
-					$('.courses').removeClass("d-none"); // All non hidden
-				});
-				$('#subjectCode, #courseLevel').on(
-						'change',
-						function() {
+	$(document)
+			.ready(
+					function() {
+						let courseName = $('#courseNameHolder').data(
+								'course-name');
+						$('#courseName').val(courseName).prop('selected', true);
+						if (courseName == "") {
 							$('#courseName').val('0');
+						}
 
-							let subjectCode = $('#subjectCode').val();
-							let courseLevel = $('#courseLevel').val();
-							$('.courses').addClass("d-none"); // All hidden
-							if (subjectCode == '0') {
-								$('.courses').removeClass("d-none"); // All non hidden
-								$('#courseLevel').val('0');
+						$('#courseLevel').on('click', function() {
+							if ($('#subjectCode').val() == '0') {
+								alert("Please select the subject code.");
 								return;
 							}
-							if ($('#courseLevel').val() != '0') {
-								subjectCode = ''.concat(subjectCode,
-										courseLevel);
-							}
-
-							let endValue = $('#endValue').data("end-value");
-							for (i = endValue - 1; i >= 0; i--) {
-								if ($(''.concat('.courses', i)).val()
-										.startsWith(subjectCode)) {
-									$(''.concat('.courses', i)).removeClass(
-											"d-none");
-								}
-							}
 						});
-				$('#registerDueDate').datepicker({
-					dateFormat : 'yy/mm/dd',
-					minDate : 0
-				});
-				$('#searchBtn').on(
-						'click',
-						function() {
-							let subjectCode = $('#subjectCode').val();
-							let courseLevel = $('#courseLevel').val();
-							let courseName = $('#courseName').val()
-									.split(' - ');
-							let searchKeyword = $('#searchKeyword').val();
+						$('#clearBtn').on('click', function() {
+							$('#subjectCode').val('0');
+							$('#courseLevel').val('0');
+							$('#courseName').val('0');
+							$('#searchKeyword').val('');
 
-							let subjectCodeString = "";
-							let courseLevelString = "";
-							let courseNameString = "";
-							let searchKeywordString = "";
+							$('.courses').removeClass("d-none"); // All non hidden
+						});
+						$('#subjectCode, #courseLevel').on(
+								'change',
+								function() {
+									$('#courseName').val('0');
 
-							if (searchKeyword != '') {
-								searchKeywordString = "searchKeyword="
-										+ searchKeyword;
-							}
-
-							if (courseName != 0) {
-								if (searchKeyword != '') {
-									courseNameString = "&courseName="
-											+ courseName[0];
-								} else {
-									courseNameString = "courseName="
-											+ courseName[0];
-								}
-							} else {
-								if (subjectCode != 0) {
-									if (searchKeyword != '') {
-										subjectCodeString = "&subjectCode="
-												+ subjectCode;
-									} else {
-										subjectCodeString = "subjectCode="
-												+ subjectCode;
+									let subjectCode = $('#subjectCode').val();
+									let courseLevel = $('#courseLevel').val();
+									$('.courses').addClass("d-none"); // All hidden
+									if (subjectCode == '0') {
+										$('.courses').removeClass("d-none"); // All non hidden
+										$('#courseLevel').val('0');
+										return;
 									}
-								}
-								if (courseLevel != 0) {
-									courseLevelString = "&courseLevel="
-											+ courseLevel;
-								}
-							}
+									if ($('#courseLevel').val() != '0') {
+										subjectCode = ''.concat(subjectCode,
+												courseLevel);
+									}
 
-							location.href = "/univ/course/register_class?"
-									+ searchKeywordString + courseNameString
-									+ subjectCodeString + courseLevelString;
+									let endValue = $('#endValue').data(
+											"end-value");
+									for (i = endValue - 1; i >= 0; i--) {
+										if ($(''.concat('.courses', i)).val()
+												.startsWith(subjectCode)) {
+											$(''.concat('.courses', i))
+													.removeClass("d-none");
+										}
+									}
+								});
+						$('#registerDueDate').datepicker({
+							dateFormat : 'yy/mm/dd',
+							minDate : 0
 						});
-				$('.linkRow').on('click', function() {
-					let classIdHolder = $(this).data('class-id-holder');
-					alert(classIdHolder);
-				});
-			});
+						addEventListener("keydown", function(e) {
+							if (e.key === "Enter") {
+								$('#searchBtn').click();
+							}
+						});
+						$('#searchBtn')
+								.on(
+										'click',
+										function(e) {
+											let searchKeyword = $(
+													'#searchKeyword').val();
+											let subjectCode = $('#subjectCode')
+													.val();
+											let courseLevel = $('#courseLevel')
+													.val();
+											let courseName = $('#courseName')
+													.val().split(' - ');
+
+											let parameterString = "";
+
+											parameterString += "searchKeyword="
+													+ searchKeyword;
+											if (courseName != '0') {
+												parameterString += "&courseName="
+														+ courseName;
+											} else if (courseName == '0') {
+												if (subjectCode != '0') {
+													parameterString += "&subjectCode="
+															+ subjectCode;
+												}
+												if (courseLevel != '0') {
+													parameterString += "&courseLevel="
+															+ courseLevel;
+												}
+											}
+											location.href = "/univ/course/register_class?"
+													+ parameterString;
+										});
+						$('.linkRow')
+								.on(
+										'click',
+										function() {
+											let classIdHolder = $(this).data(
+													'class-id');
+											alert(classIdHolder);
+
+											location.href = "/univ/course/register_class_detail?classId="
+													+ classIdHolder;
+										});
+					});
 </script>

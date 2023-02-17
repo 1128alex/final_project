@@ -133,10 +133,20 @@ public class CourseController {
 			}
 		}
 
+		model.addAttribute("courseName", courseName);
+		model.addAttribute("searchKeyword", searchKeyword);
 		model.addAttribute("combinedList", combinedList);
 		model.addAttribute("view", "course/registerClass");
 
 		return "template/layout";
 	}
 
+	@GetMapping("/register_class_detail")
+	public String registerClassDetailView(@RequestParam("classId") int classId, Model model) {
+
+		model.addAttribute("view", "course/registerClassDetail");
+		model.addAttribute("classId", classId);
+
+		return "template/layout";
+	}
 }

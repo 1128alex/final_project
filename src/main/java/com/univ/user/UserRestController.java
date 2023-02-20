@@ -55,7 +55,6 @@ public class UserRestController {
 			@RequestParam("birthMonth") int birthMonthInfo, @RequestParam("birthDay") int birthDay,
 			@RequestParam(value = "profileFile", required = false) MultipartFile profileFile,
 			HttpServletRequest request) throws ParseException {
-
 		Map<String, Object> result = new HashMap<>();
 
 		int rowCount = userBO.addUser(user, birthYear, birthMonthInfo, birthDay, profileFile);

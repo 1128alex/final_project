@@ -114,11 +114,49 @@
 		#{asgmtId}
 	</update>
 
-	<delete id="deleteAsgmt" parameterType="map">
-		DELETE FROM `assignment`
+	<delete id="deleteAssignment" parameterType="map">
+		DELETE FROM
+		`assignment`
 		WHERE
 		`classId` = #{classId}
 		AND
 		`asgmtId` = #{asgmtId}
 	</delete>
+
+	<insert id="insertSubmittedAssignment"
+		parameterType="com.univ.assignment.model.SubmittedAsgmt">
+		INSERT INTO `submittedassignment`
+		(
+		`classId`,
+		`asgmtId`,
+		`studentNum`,
+		`content`,
+		`filePath`,
+		`createdAt`,
+		`updatedAt`
+		)
+		VALUES
+		(
+		#{classId},
+		#{asgmtId},
+		#{studentNum},
+		#{content},
+		#{filePath},
+		NOW(),
+		NOW()
+		)
+	</insert>
+
+	<select id="checkDuplicatedSubmittedAsgmt" parameterType="map"
+		resultType="int">
+		SELECT
+		COUNT(*)
+		FROM
+		`submittedassignment`
+		WHERE
+		`classId` =
+		#{classId},
+		`asgmtId` = #{asgmtId},
+		`studentNum` = #{studentNum}
+	</select>
 </mapper>

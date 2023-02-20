@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.univ.assignment.dao.AssignmentDAO;
 import com.univ.assignment.model.Assignment;
+import com.univ.assignment.model.SubmittedAsgmt;
 import com.univ.common.FileManagerService;
 import com.univ.user.model.User;
 
@@ -109,8 +110,41 @@ public class AssignmentBO {
 		return assignmentDAO.updateAssignment(assignment);
 	}
 
-	public int deleteAsgmt(int classId, int asgmtId) {
-		return assignmentDAO.deleteAsgmt(classId, asgmtId);
+	public int deleteAssignment(int classId, int asgmtId) {
+		return assignmentDAO.deleteAssignment(classId, asgmtId);
+	}
+
+	public int submitAssignment(SubmittedAsgmt submittedAsgmt, List<MultipartFile> files, HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		String studentNum = user.getStudentNum();
+		submittedAsgmt.setStudentNum(studentNum);
+
+		int dupCount = assignmentDAO.checkDuplicatedSubmittedAsgmt(submittedAsgmt.getClassId(),
+				submittedAsgmt.getAsgmtId(), studentNum);
+		if (dupCount > 0) {
+			return 2;
+		}
+
+		if (files != null) {
+			String[] filePaths = new String[files.size()];
+			String email = user.getEmail();
+			int index = 0;
+			for (MultipartFile file : files) {
+				filePaths[index++] = fileManagerService.saveFile(email, file);
+			}
+
+			String filePath = null;
+			for (int i = 0; i < filePaths.length; i++) {
+				if (i == 0) {
+					filePath = filePaths[i] + " ";
+				} else {
+					filePath += filePaths[i] + " ";
+				}
+			}
+			submittedAsgmt.setFilePath(filePath);
+		}
+
+		return assignmentDAO.insertSubmittedAssignment(submittedAsgmt);
 	}
 
 }

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.univ.course.model.Class;
+import com.univ.course.model.ClassCourseCombined;
 import com.univ.course.model.Course;
 
 @Repository
@@ -15,9 +16,9 @@ public interface CourseDAO {
 
 	public List<Course> selectCourseListBySubjectCode(String subjectCode);
 
-	public List<Course> selectFilteredCourseList(@Param("searchKeyword") String searchKeyword,
+	public List<ClassCourseCombined> selectFilteredCourseList(@Param("searchKeyword") String searchKeyword,
 			@Param("courseName") String courseName, @Param("subjectCode") String subjectCode,
-			@Param("courseLevel") String courseLevel);
+			@Param("courseLevel") String courseLevel, @Param("pageNum") int pageNum);
 
 	public Course selectCourseByCourseCode(String courseCode);
 
@@ -37,5 +38,7 @@ public interface CourseDAO {
 
 	public int deleteClass(int classId);
 
-	public int selectClassLength();
+	public int countFilteredCourseList(@Param("searchKeyword") String searchKeyword,
+			@Param("courseName") String courseName, @Param("subjectCode") String subjectCode,
+			@Param("courseLevel") String courseLevel);
 }

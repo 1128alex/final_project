@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.univ.assignment.model.Assignment;
+import com.univ.assignment.model.SubmittedAsgmt;
 
 @Repository
 public interface AssignmentDAO {
@@ -17,5 +18,10 @@ public interface AssignmentDAO {
 
 	public int updateAssignment(Assignment assignment);
 
-	public int deleteAsgmt(@Param("classId") int classId, @Param("asgmtId") int asgmtId);
+	public int deleteAssignment(@Param("classId") int classId, @Param("asgmtId") int asgmtId);
+
+	public int insertSubmittedAssignment(SubmittedAsgmt submittedAsgmt);
+
+	public int checkDuplicatedSubmittedAsgmt(@Param("classId") int classId, @Param("asgmtId") int asgmtId,
+			@Param("studentNum") String studentNum);
 }

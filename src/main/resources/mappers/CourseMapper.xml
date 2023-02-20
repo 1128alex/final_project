@@ -40,36 +40,91 @@
 		ASC
 	</select>
 
-	<select id="selectFilteredCourseList"
-		resultType="com.univ.course.model.Course">
-		SELECT
-		`courseCode`,
-		`courseName`,
-		`description`,
-		`price`,
-		`createdAt`,
-		`updatedAt`
+	<select id="selectFilteredCourseList" parameterType="map"
+		resultType="com.univ.course.model.ClassCourseCombined">
+		<!-- select `courseCode`, `courseName`, `description`, `price`, `createdAt`, 
+			`updatedAt`, `rownum` from ( select `courseCode`, `courseName`, `description`, 
+			`price`, `createdAt`, `updatedAt`, @ROWNUM := @ROWNUM + 1 as `rownum` from 
+			`course`, (select @ROWNUM :=0) as a WHERE (`courseCode` LIKE CONCAT('%',#{searchKeyword},'%') 
+			OR `courseName` LIKE CONCAT('%',#{searchKeyword},'%')) <choose> <when test="courseName 
+			!= null">AND `courseCode` = #{courseName} </when> <when test="courseLevel 
+			!= null">AND `courseCode` LIKE CONCAT(#{subjectCode},#{courseLevel},'%') 
+			</when> <when test="courseLevel == null and subjectCode != null">AND `courseCode` 
+			LIKE CONCAT(#{subjectCode},'%') </when> </choose> ORDER BY `courseCode` ) 
+			as tmp where #{pageNum} * 10 > tmp.rownum and tmp.rownum > #{pageNum} * 10 
+			- 10; -->
+
+
+		<!-- SELECT `courseCode`, `courseName`, `description`, `price`, `createdAt`, 
+			`updatedAt` FROM `course` WHERE ( `courseCode` LIKE CONCAT('%',#{searchKeyword},'%') 
+			OR `courseName` LIKE CONCAT('%',#{searchKeyword},'%')) <choose> <when test="courseName 
+			!= null">AND `courseCode` = #{courseName}</when> <when test="courseLevel 
+			!= null">AND `courseCode` LIKE CONCAT(#{subjectCode},#{courseLevel},'%') 
+			</when> <when test="courseLevel == null and subjectCode != null">AND `courseCode` 
+			LIKE CONCAT(#{subjectCode},'%') </when> </choose> ORDER BY `courseCode` -->
+
+		SELECT * FROM
+		(SELECT
+		d.*,
+		@ROWNUM := @ROWNUM + 1 AS
+		`rownum`
 		FROM
-		`course`
+		(
+		SELECT
+		a.`courseCode`,
+		a.`courseName`,
+		a.`description`,
+		a.`price`,
+		b.`id`,
+		b.`profEmail`,
+		b.`maxNum`,
+		b.`registerDueDate`,
+		b.`monStartTime`,
+		b.`tueStartTime`,
+		b.`wedStartTime`,
+		b.`thuStartTime`,
+		b.`friStartTime`,
+		b.`createdAt`,
+		b.`updatedAt`,
+		c.`email`,
+		c.`firstName`,
+		c.`lastName`,
+		c.`gender`,
+		c.`subject`
+		FROM
+		`course` as a
+		LEFT
+		JOIN
+		`class`
+		as
+		b
+		ON
+		a.`courseCode` =
+		b.`courseCode`
+		LEFT JOIN
+		`user` as c
+		ON
+		b.`profEmail` =
+		c.`email`
 		WHERE
-		(`courseCode` LIKE
-		CONCAT('%',#{searchKeyword},'%') OR
-		`courseName` LIKE
+		(a.`courseCode`
+		LIKE
+		CONCAT('%',#{searchKeyword},'%')
+		OR
+		a.`courseName`
+		LIKE
 		CONCAT('%',#{searchKeyword},'%'))
 		<choose>
-			<when test="courseName != null">AND `courseCode` =
-				#{courseName}
-			</when>
-			<when test="courseLevel != null">AND `courseCode` LIKE
-				CONCAT(#{subjectCode},#{courseLevel},'%')
-			</when>
-			<when test="courseLevel == null and subjectCode != null">AND `courseCode` LIKE
-				CONCAT(#{subjectCode},'%')
+			<when test="courseName != null">AND a.`courseCode` = #{courseName}</when>
+			<when test="courseLevel != null">AND a.`courseCode` LIKE
+				CONCAT(#{subjectCode},#{courseLevel},'%')</when>
+			<when test="courseLevel == null and subjectCode != null">AND a.`courseCode` LIKE CONCAT(#{subjectCode},'%')
 			</when>
 		</choose>
-		ORDER
-		BY
-		`courseCode`
+		ORDER BY a.`courseCode`,b.`id`) AS d, (SELECT
+		@ROWNUM:=0) AS e) f
+		WHERE
+		`rownum` BETWEEN #{pageNum} * 3 - 2 AND #{pageNum} * 3;
 	</select>
 
 	<select id="selectCourseByCourseCode" parameterType="string"
@@ -208,27 +263,6 @@
 		ORDER BY `createdAt` DESC;
 	</select>
 
-	<select id="selectClassListByCourseCode" parameterType="string"
-		resultType="com.univ.course.model.Class">
-		SELECT
-		`id`,
-		`courseCode`,
-		`profEmail`,
-		`maxNum`,
-		`registerDueDate`,
-		`monStartTime`,
-		`tueStartTime`,
-		`wedStartTime`,
-		`thuStartTime`,
-		`friStartTime`,
-		`createdAt`,
-		`updatedAt`
-		FROM
-		`class`
-		WHERE
-		`courseCode` = #{courseCode}
-	</select>
-
 	<select id="selectClassByClassId" parameterType="int"
 		resultType="com.univ.course.model.Class">
 		SELECT
@@ -258,10 +292,40 @@
 		`id` = #{classId}
 	</delete>
 
-	<select id="selectClassLength" resultType="int">
+	<select id="countFilteredCourseList" parameterType="map"
+		resultType="int">
 		SELECT
-		COUNT(*)
+		COUNT(*) as `cnt`
 		FROM
+		`course` as a
+		LEFT
+		JOIN
 		`class`
+		as
+		b
+		ON
+		a.`courseCode` =
+		b.`courseCode`
+		LEFT JOIN
+		`user` as c
+		ON
+		b.`profEmail` =
+		c.`email`
+		WHERE
+		(a.`courseCode`
+		LIKE
+		CONCAT('%',#{searchKeyword},'%')
+		OR
+		a.`courseName`
+		LIKE
+		CONCAT('%',#{searchKeyword},'%'))
+		<choose>
+			<when test="courseName != null">AND a.`courseCode` = #{courseName}</when>
+			<when test="courseLevel != null">AND a.`courseCode` LIKE
+				CONCAT(#{subjectCode},#{courseLevel},'%')</when>
+			<when test="courseLevel == null and subjectCode != null">AND a.`courseCode` LIKE CONCAT(#{subjectCode},'%')
+			</when>
+		</choose>
+		ORDER BY a.`courseCode`,b.`id`
 	</select>
 </mapper>

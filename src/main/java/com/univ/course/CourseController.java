@@ -14,6 +14,7 @@ import com.univ.assignment.bo.AssignmentBO;
 import com.univ.assignment.model.Assignment;
 import com.univ.course.bo.CourseBO;
 import com.univ.course.model.Class;
+import com.univ.course.model.ClassCourseCombined;
 import com.univ.course.model.ClassInfoCombined;
 import com.univ.course.model.Course;
 import com.univ.registry.bo.RegistryBO;
@@ -134,8 +135,8 @@ public class CourseController {
 	public String editClassView(@RequestParam(value = "searchKeyword", required = false) String searchKeyword,
 			@RequestParam(value = "courseName", required = false) String courseName,
 			@RequestParam(value = "subjectCode", required = false) String subjectCode,
-			@RequestParam(value = "courseLevel", required = false) String courseLevel, Model model,
-			HttpSession session) {
+			@RequestParam(value = "courseLevel", required = false) String courseLevel,
+			@RequestParam(value = "pageNum", required = false) Integer pageNum, Model model, HttpSession session) {
 
 		List<Course> courseList = courseBO.getCourseList();
 		model.addAttribute("courseList", courseList);
@@ -145,28 +146,21 @@ public class CourseController {
 			searchKeyword = "";
 		}
 
-		List<ClassInfoCombined> combinedList = new ArrayList<>();
-
-		List<Course> filteredCourseList = courseBO.getFilteredCourseList(searchKeyword, courseName, subjectCode,
-				courseLevel);
-
-		int pageLength = (int) Math.ceil((double) courseBO.getClassLength() / 10);
-		model.addAttribute("pageLength", pageLength);
-
-		for (Course course : filteredCourseList) {
-			List<Class> classList = courseBO.getClassListByCourseCode(course.getCourseCode());
-			for (Class _class : classList) {
-				User user = userBO.getUserByEmail(_class.getProfEmail());
-
-				ClassInfoCombined combined = new ClassInfoCombined();
-				combined.setUser(user);
-				combined.set_class(_class);
-				combined.setCourse(course);
-				combinedList.add(combined);
-			}
+		if (pageNum == null) {
+			pageNum = 1;
 		}
 
-		model.addAttribute("courseName", courseName);
+		List<ClassCourseCombined> combinedList = courseBO.getFilteredCourseList(searchKeyword, courseName, subjectCode,
+				courseLevel, pageNum);
+
+		int pageLength = (int) Math
+				.ceil(courseBO.countFilteredCourseList(searchKeyword, courseName, subjectCode, courseLevel) / 3.0);
+		model.addAttribute("pageLength", pageLength);
+		model.addAttribute("pageNum", pageNum);
+
+		if (courseName != null) {
+			model.addAttribute("courseName", courseName);
+		}
 		model.addAttribute("searchKeyword", searchKeyword);
 		model.addAttribute("combinedList", combinedList);
 		model.addAttribute("view", "course/registerClass");

@@ -12,13 +12,16 @@
 			<h4>Select Course</h4>
 			<b>Filter</b>
 			<div class="d-flex">
+				<div id="subjectCodeHolder" data-subject-code="${subjectCode}"></div>
 				<select id="subjectCode" name="subjectCode"
 					class="form-control col-5 mr-2">
 					<option value="0">-- Subject --</option>
 					<option value="CS">Computer Science</option>
 					<option value="ECON">Economics</option>
 					<option value="MATH">Math</option>
-				</select> <select id="courseLevel" name="courseLevel"
+				</select>
+				<div id="courseLevelHolder" data-course-level="${courseLevel}"></div>
+				<select id="courseLevel" name="courseLevel"
 					class="form-control col-5 ml-2">
 					<option value="0">-- Level --</option>
 					<c:forEach var="i" begin="1" end="4">
@@ -69,10 +72,10 @@
 					<c:forEach var="combined" items="${combinedList}"
 						varStatus="status">
 						<tr class="linkRow" id="classIdHolder"
-							data-class-id="${combined._class.id}">
-							<td>${combined._class.courseCode}</td>
-							<td>${combined.course.courseName}</td>
-							<td>${combined.user.firstName += " " += combined.user.lastName}</td>
+							data-class-id="${combined.id}">
+							<td>${combined.courseCode}</td>
+							<td>${combined.courseName}</td>
+							<td>${combined.firstName += " " += combined.lastName}</td>
 							<td><table id="smallClassTimeTable">
 									<thead>
 										<tr>
@@ -86,8 +89,8 @@
 									<tbody>
 										<tr>
 											<c:choose>
-												<c:when test="${combined._class.monStartTime ne 0}">
-													<td class="text-center">${combined._class.monStartTime += ":00"}</td>
+												<c:when test="${combined.monStartTime ne 0}">
+													<td class="text-center">${combined.monStartTime += ":00"}</td>
 												</c:when>
 												<c:otherwise>
 													<td class="text-center p-1">
@@ -98,8 +101,8 @@
 												</c:otherwise>
 											</c:choose>
 											<c:choose>
-												<c:when test="${combined._class.tueStartTime ne 0}">
-													<td class="text-center">${combined._class.tueStartTime += ":00"}</td>
+												<c:when test="${combined.tueStartTime ne 0}">
+													<td class="text-center">${combined.tueStartTime += ":00"}</td>
 
 												</c:when>
 												<c:otherwise>
@@ -111,8 +114,8 @@
 												</c:otherwise>
 											</c:choose>
 											<c:choose>
-												<c:when test="${combined._class.wedStartTime ne 0}">
-													<td class="text-center">${combined._class.wedStartTime += ":00"}</td>
+												<c:when test="${combined.wedStartTime ne 0}">
+													<td class="text-center">${combined.wedStartTime += ":00"}</td>
 												</c:when>
 												<c:otherwise>
 													<td class="text-center p-1">
@@ -123,8 +126,8 @@
 												</c:otherwise>
 											</c:choose>
 											<c:choose>
-												<c:when test="${combined._class.thuStartTime ne 0}">
-													<td class="text-center">${combined._class.thuStartTime += ":00"}</td>
+												<c:when test="${combined.thuStartTime ne 0}">
+													<td class="text-center">${combined.thuStartTime += ":00"}</td>
 												</c:when>
 												<c:otherwise>
 													<td class="text-center p-1">
@@ -135,8 +138,8 @@
 												</c:otherwise>
 											</c:choose>
 											<c:choose>
-												<c:when test="${combined._class.friStartTime ne 0}">
-													<td class="text-center">${combined._class.friStartTime += ":00"}</td>
+												<c:when test="${combined.friStartTime ne 0}">
+													<td class="text-center">${combined.friStartTime += ":00"}</td>
 												</c:when>
 												<c:otherwise>
 													<td class="text-center p-1">
@@ -150,24 +153,36 @@
 
 									</tbody>
 								</table></td>
-							<td><fmt:formatNumber value="${combined.course.price}"
+							<td><fmt:formatNumber value="${combined.price}"
 									type="currency" currencySymbol="$" /></td>
-							<td><fmt:formatDate
-									value="${combined._class.registerDueDate}" pattern="dd/MM/YYYY" /></td>
+							<td><fmt:formatDate value="${combined.registerDueDate}"
+									pattern="dd/MM/YYYY" /></td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
-			<c:if test="${pageLength ne 2}">
-				<div class="d-flex justify-content-center align-items-center my-3">
-					<button type="button" id="prevBtn" class="btn button mr-4">Prev</button>
-					<c:forEach var="i" begin="0" end="${pageLength}">
-						<span class="coursePage mx-2" id="coursePage${i}"
-							data-course-page="${i}">${i}</span>
-					</c:forEach>
-					<button type="button" id="nextBtn" class="btn button ml-4">Next</button>
-				</div>
-			</c:if>
+			<div class="d-flex justify-content-center align-items-center my-3">
+				<button type="button" id="prevBtn" class="btn button mr-4"
+					value="${pageNum - 1}">Prev</button>
+				<div id="pageLengthHolder" data-page-length="${pageLength}"></div>
+				<c:forEach var="i" begin="1" end="${pageLength}">
+					<c:choose>
+						<c:when test="${i eq pageNum }">
+							<span
+								class="coursePage mx-2 underline font-weight-bold"
+								id="coursePage${i}" data-course-page="${i}">${i}</span>
+						</c:when>
+						<c:otherwise>
+							<span class="coursePage mx-2" id="coursePage${i}"
+								data-course-page="${i}">${i}</span>
+						</c:otherwise>
+					</c:choose>
+
+
+				</c:forEach>
+				<button type="button" id="nextBtn" class="btn button ml-4"
+					value="${pageNum + 1}">Next</button>
+			</div>
 		</div>
 	</div>
 </div>
@@ -175,6 +190,22 @@
 	$(document)
 			.ready(
 					function() {
+						let subjectCode = $('#subjectCodeHolder').data(
+								'subject-code');
+						$('#subjectCode').val(subjectCode).prop('selected',
+								true);
+						if (subjectCode == "") {
+							$('#subjectCode').val('0');
+						}
+
+						let courseLevel = $('#courseLevelHolder').data(
+								'course-level');
+						$('#courseLevel').val(courseLevel).prop('selected',
+								true);
+						if (courseLevel == "") {
+							$('#courseLevel').val('0');
+						}
+
 						let courseName = $('#courseNameHolder').data(
 								'course-name');
 						$('#courseName').val(courseName).prop('selected', true);
@@ -276,9 +307,57 @@
 											location.href = "/univ/course/register_class_detail?classId="
 													+ classIdHolder;
 										});
-						$('.coursePage').on('click', function() {
-							let coursePage = $(this).data('course-page');
-							alert(coursePage);
-						})
+						$('.coursePage')
+								.on(
+										'click',
+										function() {
+											let searchKeyword = $(
+													'#searchKeyword').val();
+											let subjectCode = $('#subjectCode')
+													.val();
+											let courseLevel = $('#courseLevel')
+													.val();
+											let courseName = $('#courseName')
+													.val().split(' - ');
+											let pageNum = $(this).data(
+													'course-page');
+
+											let parameterString = "";
+
+											parameterString += "searchKeyword="
+													+ searchKeyword;
+											if (courseName != '0') {
+												parameterString += "&courseName="
+														+ courseName;
+											} else if (courseName == '0') {
+												if (subjectCode != '0') {
+													parameterString += "&subjectCode="
+															+ subjectCode;
+												}
+												if (courseLevel != '0') {
+													parameterString += "&courseLevel="
+															+ courseLevel;
+												}
+											}
+											parameterString += "&pageNum="
+													+ pageNum;
+
+											location.href = "/univ/course/register_class?"
+													+ parameterString;
+
+										});
+						$('#prevBtn,#nextBtn')
+								.on(
+										'click',
+										function() {
+											let pageNum = $(this).val();
+											if (pageNum == 0
+													|| pageNum == $(
+															'#pageLengthHolder')
+															.data('page-length') + 1) {
+												return;
+											}
+											$('#coursePage' + pageNum).click();
+										})
 					});
 </script>

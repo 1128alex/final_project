@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.univ.course.dao.CourseDAO;
 import com.univ.course.model.Class;
+import com.univ.course.model.ClassCourseCombined;
 import com.univ.course.model.Course;
 import com.univ.user.model.User;
 
@@ -29,9 +30,9 @@ public class CourseBO {
 		return courseDAO.selectCourseListBySubjectCode(subjectCode);
 	}
 
-	public List<Course> getFilteredCourseList(String searchKeyword, String courseName, String subjectCode,
-			String courseLevel) {
-		return courseDAO.selectFilteredCourseList(searchKeyword, courseName, subjectCode, courseLevel);
+	public List<ClassCourseCombined> getFilteredCourseList(String searchKeyword, String courseName, String subjectCode,
+			String courseLevel, int pageNum) {
+		return courseDAO.selectFilteredCourseList(searchKeyword, courseName, subjectCode, courseLevel, pageNum);
 	}
 
 	public Course getCourseByCourseCode(String courseCode) {
@@ -100,8 +101,10 @@ public class CourseBO {
 		return courseDAO.deleteClass(classId);
 	}
 
-	public int getClassLength() {
-		return courseDAO.selectClassLength();
+	public int countFilteredCourseList(String searchKeyword, String courseName, String subjectCode,
+			String courseLevel) {
+
+		return courseDAO.countFilteredCourseList(searchKeyword, courseName, subjectCode, courseLevel);
 	}
 
 }

@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.univ.assignment.bo.AssignmentBO;
 import com.univ.assignment.model.Assignment;
+import com.univ.assignment.model.SubmittedAsgmt;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -70,7 +71,7 @@ public class AssignmentRestController {
 			@RequestParam("asgmtId") int asgmtId) {
 		Map<String, Object> result = new HashMap<>();
 
-		int rowCount = assignmentBO.deleteAsgmt(classId, asgmtId);
+		int rowCount = assignmentBO.deleteAssignment(classId, asgmtId);
 
 		if (rowCount > 0) {
 			result.put("code", 1);
@@ -82,4 +83,24 @@ public class AssignmentRestController {
 		return result;
 	}
 
+	// SubmittedAssignment
+	@PutMapping("/submit_assignment")
+	public Map<String, Object> submitAssignment(@ModelAttribute SubmittedAsgmt submittedAsgmt,
+			@RequestParam(value = "files", required = false) List<MultipartFile> files, HttpSession session) {
+		Map<String, Object> result = new HashMap<>();
+
+		int rowCount = assignmentBO.submitAssignment(submittedAsgmt, files, session);
+
+		if (rowCount == 2) {
+			result.put("code", 2);
+			result.put("errorMessage", "You have already submitted your assignment.");
+		} else if (rowCount > 0) {
+			result.put("code", 1);
+		} else {
+			result.put("code", 500);
+			result.put("errorMessage", "Error while submitting assignment");
+		}
+
+		return result;
+	}
 }

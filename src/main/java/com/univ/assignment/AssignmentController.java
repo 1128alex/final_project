@@ -17,6 +17,8 @@ import com.univ.course.model.Course;
 import com.univ.user.bo.UserBO;
 import com.univ.user.model.User;
 
+import jakarta.servlet.http.HttpSession;
+
 @RequestMapping("/univ/assignment")
 @Controller
 public class AssignmentController {
@@ -58,12 +60,21 @@ public class AssignmentController {
 
 	@GetMapping("/assignment_detail")
 	public String assignmentDetailView(@RequestParam("classId") int classId, @RequestParam("asgmtId") int asgmtId,
-			Model model) {
+			Model model, HttpSession session) {
 
 		Assignment assignment = assignmentBO.getAsgmtByClassIdAsgmtId(classId, asgmtId);
+		Class _class = courseBO.getClassById(classId);
+		Course course = courseBO.getCourseByCourseCode(_class.getCourseCode());
+		User user = (User) session.getAttribute("user");
+		String type = user.getType();
 
+		model.addAttribute("course", course);
 		model.addAttribute("assignment", assignment);
-		model.addAttribute("view", "assignment/profAssignmentDetail");
+		if (type.equals("student")) {
+			model.addAttribute("view", "assignment/assignmentDetail");
+		} else if (type.equals("professor")) {
+			model.addAttribute("view", "assignment/profAssignmentDetail");
+		}
 
 		return "template/layout";
 	}

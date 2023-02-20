@@ -146,3 +146,12 @@ textarea {
 .asmntA, .asmntA:hover {
 	text-decoration: underline;
 }
+
+.coursePage:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.underline {
+	text-decoration: underline;
+}

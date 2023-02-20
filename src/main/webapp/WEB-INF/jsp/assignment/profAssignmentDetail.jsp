@@ -2,10 +2,12 @@
 	pageEncoding="UTF-8"%>
 <!-- Core -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!--Formatting-->
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <div class="d-flex">
-	<div class="col-4"></div>
-	<div class="col-4">
+	<div class="col-3"></div>
+	<div class="col-6">
 		<div class="d-flex justify-content-between align-items-end">
 			<h1 class="my-3">Assignment Detail</h1>
 			<div class="mr-3">
@@ -30,8 +32,40 @@
 		<div id="fileBox"></div>
 		<div id="fileDataHolder" data-file-string="${assignment.filePath}"></div>
 
+		<h2 class="mt-4">Submissions</h2>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>Student</th>
+					<th>Submitted Time</th>
+					<th>Status</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="submittedAsgmt" items="${submittedAsgmtList}">
+					<tr>
+						<td>${submittedAsgmt.firstName += " " += submittedAsgmt.lastName}</td>
+						<td><fmt:formatDate value="${submittedAsgmt.updatedAt}"
+								pattern="dd MMM yyyy" /></td>
+						<td><c:choose>
+								<c:when test="${submittedAsgmt.score eq null}">
+									<span class="text-danger">Not Graded</span>
+								</c:when>
+								<c:when test="${submittedAsgmt.score ne null}">
+									<span class="text-success">Graded</span>
+								</c:when>
+							</c:choose></td>
+						<td><a
+							href="/univ/assignment/grade_assignment?subAsgmtId=${submittedAsgmt.id}"
+							class="underline">Grade</a></td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+
 	</div>
-	<div class="col-4"></div>
+	<div class="col-3"></div>
 </div>
 
 <script>

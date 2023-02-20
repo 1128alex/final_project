@@ -2,17 +2,20 @@ package com.univ.assignment.model;
 
 import java.util.Date;
 
-public class SubmittedAsgmt {
+public class AssignmentUserCombined {
 	private int id;
 	private int classId;
 	private int asgmtId;
 	private String studentNum;
 	private String content;
 	private String filePath;
-	private int score;
+	private Integer score;
 	private String feedback;
 	private Date createdAt;
 	private Date updatedAt;
+	private String email;
+	private String firstName;
+	private String lastName;
 
 	public int getId() {
 		return id;
@@ -62,12 +65,8 @@ public class SubmittedAsgmt {
 		this.filePath = filePath;
 	}
 
-	public int getScore() {
+	public Integer getScore() {
 		return score;
-	}
-
-	public void setScore(int score) {
-		this.score = score;
 	}
 
 	public String getFeedback() {
@@ -76,6 +75,10 @@ public class SubmittedAsgmt {
 
 	public void setFeedback(String feedback) {
 		this.feedback = feedback;
+	}
+
+	public void setScore(Integer score) {
+		this.score = score;
 	}
 
 	public Date getCreatedAt() {
@@ -92,6 +95,30 @@ public class SubmittedAsgmt {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 }

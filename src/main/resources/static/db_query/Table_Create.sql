@@ -70,6 +70,7 @@ CREATE TABLE `submittedassignment` (
     `content` TEXT,
     `filePath` TEXT,
     `score` INT,
+    `feedback` TEXT,
     `createdAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updatedAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4;

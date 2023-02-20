@@ -155,8 +155,75 @@
 		`submittedassignment`
 		WHERE
 		`classId` =
-		#{classId},
-		`asgmtId` = #{asgmtId},
+		#{classId}
+		AND
+		`asgmtId` = #{asgmtId}
+		AND
 		`studentNum` = #{studentNum}
 	</select>
+
+	<select id="selectSubmittedAsgmtUserList" parameterType="int"
+		resultType="com.univ.assignment.model.AssignmentUserCombined">
+		SELECT
+		a.`id`,
+		a.`classId`,
+		a.`asgmtId`,
+		a.`studentNum`,
+		a.`content`,
+		a.`filePath`,
+		a.`score`,
+		a.`feedback`,
+		a.`createdAt`,
+		a.`updatedAt`,
+		b.`email`,
+		b.`firstName`,
+		b.`lastName`
+		FROM
+		`submittedassignment` as a
+		INNER JOIN
+		`user`as b
+		ON
+		a.`studentNum` =
+		b.`studentNum`
+		WHERE
+		`classId` = #{classId}
+		AND
+		`asgmtId` = #{asgmtId}
+	</select>
+
+	<select id="selectSubmittedAsgmtUserById" parameterType="int"
+		resultType="com.univ.assignment.model.AssignmentUserCombined">
+		SELECT
+		a.`id`,
+		a.`classId`,
+		a.`asgmtId`,
+		a.`studentNum`,
+		a.`content`,
+		a.`filePath`,
+		a.`score`,
+		a.`feedback`,
+		a.`createdAt`,
+		a.`updatedAt`,
+		b.`email`,
+		b.`firstName`,
+		b.`lastName`
+		FROM
+		`submittedassignment` as a
+		INNER JOIN
+		`user`as b
+		ON
+		a.`studentNum` =
+		b.`studentNum`
+		WHERE
+		`id` = #{id}
+	</select>
+
+	<update id="updateGradeSubmittedAsgmt" parameterType="map">
+		UPDATE
+		`submittedassignment`
+		SET `score` = #{score}, `feedback` =
+		#{feedback}
+		WHERE
+		`id` = #{id}
+	</update>
 </mapper>

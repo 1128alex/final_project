@@ -103,4 +103,22 @@ public class AssignmentRestController {
 
 		return result;
 	}
+
+	@PutMapping("/grade_assignment")
+	public Map<String, Object> gradeAssignment(@RequestParam("subAsgmtId") int subAsgmtId,
+			@RequestParam("score") int score, @RequestParam("feedback") String feedback) {
+		Map<String, Object> result = new HashMap<>();
+
+		int rowCount = assignmentBO.gradeSubmittedAsgmt(subAsgmtId, score, feedback);
+
+		if (rowCount > 0) {
+			result.put("code", 1);
+		} else {
+			result.put("code", 500);
+			result.put("errorMessage", "Error while grading Assignment");
+		}
+
+		return result;
+	}
+
 }

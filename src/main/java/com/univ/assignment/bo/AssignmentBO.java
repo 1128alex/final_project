@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.univ.assignment.dao.AssignmentDAO;
 import com.univ.assignment.model.Assignment;
+import com.univ.assignment.model.AssignmentUserCombined;
 import com.univ.assignment.model.SubmittedAsgmt;
 import com.univ.common.FileManagerService;
 import com.univ.user.model.User;
@@ -145,6 +146,18 @@ public class AssignmentBO {
 		}
 
 		return assignmentDAO.insertSubmittedAssignment(submittedAsgmt);
+	}
+
+	public List<AssignmentUserCombined> getSubmittedAsgmtUserList(int classId, int asgmtId) {
+		return assignmentDAO.selectSubmittedAsgmtUserList(classId, asgmtId);
+	}
+
+	public AssignmentUserCombined getSubmittedAsgmtUserById(int id) {
+		return assignmentDAO.selectSubmittedAsgmtUserById(id);
+	}
+
+	public int gradeSubmittedAsgmt(int subAsgmtId, int score, String feedback) {
+		return assignmentDAO.updateGradeSubmittedAsgmt(subAsgmtId, score, feedback);
 	}
 
 }

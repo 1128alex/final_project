@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.univ.assignment.bo.AssignmentBO;
 import com.univ.assignment.model.Assignment;
+import com.univ.assignment.model.AssignmentUserCombined;
 import com.univ.course.bo.CourseBO;
 import com.univ.course.model.Class;
 import com.univ.course.model.Course;
@@ -74,6 +75,11 @@ public class AssignmentController {
 			model.addAttribute("view", "assignment/assignmentDetail");
 		} else if (type.equals("professor")) {
 			model.addAttribute("view", "assignment/profAssignmentDetail");
+
+			List<AssignmentUserCombined> submittedAsgmtList = assignmentBO.getSubmittedAsgmtUserList(_class.getId(),
+					assignment.getAsgmtId());
+			model.addAttribute("submittedAsgmtList", submittedAsgmtList);
+
 		}
 
 		return "template/layout";
@@ -91,4 +97,16 @@ public class AssignmentController {
 		return "template/layout";
 	}
 
+	@GetMapping("/grade_assignment")
+	public String gradeAssignmentView(@RequestParam("subAsgmtId") int subAsmgtId, Model model) {
+
+		AssignmentUserCombined submittedAsgmt = assignmentBO.getSubmittedAsgmtUserById(subAsmgtId);
+		Assignment assignment = assignmentBO.getAsgmtByClassIdAsgmtId(submittedAsgmt.getClassId(),
+				submittedAsgmt.getAsgmtId());
+		model.addAttribute("assignment", assignment);
+		model.addAttribute("submittedAsgmt", submittedAsgmt);
+		model.addAttribute("view", "assignment/gradeAssignment");
+
+		return "template/layout";
+	}
 }

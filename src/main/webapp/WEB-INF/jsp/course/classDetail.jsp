@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <!-- Core -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!--Formatting-->
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <div class="d-flex">
 	<div class="col-3"></div>
@@ -107,16 +109,17 @@
 				<thead>
 					<tr>
 						<th>Assignment name</th>
-						<th>Status</th>
+						<th>Due Date</th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="assignment" items="${assignments}">
+					<c:forEach var="assignment" items="${assignmentList}">
 						<tr>
 							<td><a
 								href="/univ/assignment/assignment_detail?classId=${currentClass.id}&asgmtId=${assignment.asgmtId}"
 								class="asmntA">${assignment.asgmtName}</a></td>
-							<td></td>
+							<td><fmt:formatDate value="${assignment.dueDate}"
+									pattern="d MMM yyyy" /></td>
 						</tr>
 					</c:forEach>
 				</tbody>

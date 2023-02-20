@@ -9,8 +9,9 @@ public class SubmittedAsgmt {
 	private String studentNum;
 	private String content;
 	private String filePath;
-	private int score;
+	private Integer score;
 	private String feedback;
+	private boolean access;
 	private Date createdAt;
 	private Date updatedAt;
 
@@ -62,11 +63,11 @@ public class SubmittedAsgmt {
 		this.filePath = filePath;
 	}
 
-	public int getScore() {
+	public Integer getScore() {
 		return score;
 	}
 
-	public void setScore(int score) {
+	public void setScore(Integer score) {
 		this.score = score;
 	}
 
@@ -76,6 +77,14 @@ public class SubmittedAsgmt {
 
 	public void setFeedback(String feedback) {
 		this.feedback = feedback;
+	}
+
+	public boolean isAccess() {
+		return access;
+	}
+
+	public void setAccess(boolean access) {
+		this.access = access;
 	}
 
 	public Date getCreatedAt() {

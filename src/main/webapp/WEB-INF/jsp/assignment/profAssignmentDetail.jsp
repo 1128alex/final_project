@@ -39,6 +39,7 @@
 					<th>Student</th>
 					<th>Submitted Time</th>
 					<th>Status</th>
+					<th>Score</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -49,16 +50,35 @@
 						<td><fmt:formatDate value="${submittedAsgmt.updatedAt}"
 								pattern="dd MMM yyyy" /></td>
 						<td><c:choose>
-								<c:when test="${submittedAsgmt.score eq null}">
+								<c:when test="${assignment.asgmtType eq 'Ungraded Assignment'}">
+									<span class="text-success">Ungraded Assignment</span>
+								</c:when>
+								<c:when
+									test="${submittedAsgmt.score eq null and submittedAsgmt.feedback eq null}">
 									<span class="text-danger">Not Graded</span>
+								</c:when>
+								<c:when
+									test="${submittedAsgmt.score eq null and submittedAsgmt.feedback ne null}">
+									<span class="text-warning">Only Feedback Given</span>
 								</c:when>
 								<c:when test="${submittedAsgmt.score ne null}">
 									<span class="text-success">Graded</span>
 								</c:when>
 							</c:choose></td>
-						<td><a
-							href="/univ/assignment/grade_assignment?subAsgmtId=${submittedAsgmt.id}"
-							class="underline">Grade</a></td>
+						<td><c:if test="${assignment.maxScore ne 0}">${submittedAsgmt.score += " / " += assignment.maxScore}</c:if>
+						</td>
+						<td><c:choose>
+								<c:when test="${submittedAsgmt.score eq null}">
+									<a
+										href="/univ/assignment/grade_assignment?subAsgmtId=${submittedAsgmt.id}"
+										class="underline">Grade</a>
+								</c:when>
+								<c:when test="${submittedAsgmt.score ne null}">
+									<a
+										href="/univ/assignment/grade_assignment?subAsgmtId=${submittedAsgmt.id}"
+										class="underline">Update</a>
+								</c:when>
+							</c:choose></td>
 					</tr>
 				</c:forEach>
 			</tbody>

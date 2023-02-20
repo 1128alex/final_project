@@ -27,3 +27,9 @@ SELECT
 FROM
     `registry`;
 DESC `registry`;
+
+SELECT 
+    *
+FROM
+    `submittedassignment`;
+DESC `submittedassignment`;

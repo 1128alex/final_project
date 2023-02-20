@@ -26,4 +26,8 @@ public class RegistryBO {
 	public List<Registry> getRegistryListByStudentNum(String studentNum) {
 		return registryDAO.selectRegistryListByStudentNum(studentNum);
 	}
+
+	public int countRegistryByClassId(int classId) {
+		return registryDAO.countRegistryByClassId(classId);
+	}
 }

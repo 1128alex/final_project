@@ -5,7 +5,8 @@
 <!DOCTYPE html>
 <div class="d-flex justify-content-center">
 	<div class="col-4">
-		<h2 class="mt-3 font-weight-bold">Add Assignment</h2>
+		<h2 class="mt-3 font-weight-bold">Add Assignment for
+			${course.courseCode += " - " += course.courseName}</h2>
 		<form id="assignmentAddForm" action="/assignment/add_assignment">
 			<div class="mt-3">
 				<h4>Assignment Name</h4>

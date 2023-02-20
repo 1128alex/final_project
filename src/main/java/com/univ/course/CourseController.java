@@ -95,16 +95,16 @@ public class CourseController {
 
 		Class currentClass = courseBO.getClassById(classId);
 		Course currentCourse = courseBO.getCourseByCourseCode(currentClass.getCourseCode());
-		List<Assignment> assignment = assignmentBO.getAsgmtListByClassId(classId);
+		List<Assignment> assignmentList = assignmentBO.getAsgmtListByClassId(classId);
 
 		User user = (User) session.getAttribute("user");
-		String profEmail = user.getEmail();
 
-		model.addAttribute("profEmail", profEmail);
+		model.addAttribute("profEmail", user.getEmail());
+		model.addAttribute("userType", user.getType());
 
 		model.addAttribute("currentClass", currentClass);
 		model.addAttribute("currentCourse", currentCourse);
-		model.addAttribute("assignments", assignment);
+		model.addAttribute("assignmentList", assignmentList);
 		model.addAttribute("view", "course/classDetail");
 
 		return "template/layout";

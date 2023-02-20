@@ -34,7 +34,7 @@ public class FileManagerService {
 		// file upload: in bytes
 		try {
 			byte[] bytes = file.getBytes();
-			Path path = Paths.get(filePath + file.getOriginalFilename());
+			Path path = Paths.get(filePath + file.getOriginalFilename().replace(" ", "_"));
 			Files.write(path, bytes);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -42,7 +42,7 @@ public class FileManagerService {
 		}
 
 		// http://localhost/images/aaaa_1630213213/sun.png
-		return "/images/" + directoryName + file.getOriginalFilename();
+		return "/images/" + directoryName + file.getOriginalFilename().replace(" ", "_");
 	}
 
 	public void deleteFile(String filePath) { // filePath

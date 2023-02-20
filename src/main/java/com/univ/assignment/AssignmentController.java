@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.univ.assignment.bo.AssignmentBO;
 import com.univ.assignment.model.Assignment;
 import com.univ.assignment.model.AssignmentUserCombined;
+import com.univ.assignment.model.SubmittedAsgmt;
 import com.univ.course.bo.CourseBO;
 import com.univ.course.model.Class;
 import com.univ.course.model.Course;
@@ -54,6 +55,10 @@ public class AssignmentController {
 	@GetMapping("/add_assignment")
 	public String addAssignmentView(@RequestParam("classId") int classId, Model model) {
 		model.addAttribute("view", "assignment/addAssignment");
+
+		Class _class = courseBO.getClassById(classId);
+		Course course = courseBO.getCourseByCourseCode(_class.getCourseCode());
+		model.addAttribute("course", course);
 		model.addAttribute("classId", classId);
 
 		return "template/layout";
@@ -73,6 +78,11 @@ public class AssignmentController {
 		model.addAttribute("assignment", assignment);
 		if (type.equals("student")) {
 			model.addAttribute("view", "assignment/assignmentDetail");
+
+			SubmittedAsgmt submittedAsgmt = assignmentBO.getSubmittedAsgmt(classId, asgmtId, user.getStudentNum());
+			if (submittedAsgmt != null) {
+				model.addAttribute("submittedAsgmt", submittedAsgmt);
+			}
 		} else if (type.equals("professor")) {
 			model.addAttribute("view", "assignment/profAssignmentDetail");
 

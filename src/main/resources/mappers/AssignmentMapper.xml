@@ -107,11 +107,11 @@
 		`updatedAt`=NOW()
 		WHERE
 		`classId` =
-		#{classId}
-		AND
+		#{classId},
 		`asgmtId`
 		=
-		#{asgmtId}
+		#{asgmtId},
+		`updatedAt` = NOW()
 	</update>
 
 	<delete id="deleteAssignment" parameterType="map">
@@ -132,6 +132,7 @@
 		`studentNum`,
 		`content`,
 		`filePath`,
+		`access`,
 		`createdAt`,
 		`updatedAt`
 		)
@@ -142,10 +143,30 @@
 		#{studentNum},
 		#{content},
 		#{filePath},
+		#{access},
 		NOW(),
 		NOW()
 		)
 	</insert>
+	<update id="updateSubmittedAssignment"
+		parameterType="com.univ.assignment.model.SubmittedAsgmt">
+		UPDATE `submittedassignment`
+		SET
+		`content` =
+		#{content},
+		`filePath` = #{filePath},
+		`score` = NULL,
+		`access` = #{access},
+		`updatedAt` =
+		NOW()
+		WHERE
+		`classId` = #{classId}
+		AND
+		`asgmtId` = #{asgmtId}
+		AND
+		`studentNum` =
+		#{studentNum}
+	</update>
 
 	<select id="checkDuplicatedSubmittedAsgmt" parameterType="map"
 		resultType="int">
@@ -162,7 +183,32 @@
 		`studentNum` = #{studentNum}
 	</select>
 
-	<select id="selectSubmittedAsgmtUserList" parameterType="int"
+	<select id="selectSubmittedAsgmt" parameterType="map"
+		resultType="com.univ.assignment.model.SubmittedAsgmt">
+		SELECT
+		`classId`,
+		`asgmtId`,
+		`studentNum`,
+		`content`,
+		`score`,
+		`feedback`,
+		`filePath`,
+		`access`,
+		`createdAt`,
+		`updatedAt`
+		FROM
+		`submittedassignment`
+		WHERE
+		`classId` = #{classId}
+		AND
+		`asgmtId` =
+		#{asgmtId}
+		AND
+		`studentNum` =
+		#{studentNum}
+	</select>
+
+	<select id="selectSubmittedAsgmtUserList" parameterType="map"
 		resultType="com.univ.assignment.model.AssignmentUserCombined">
 		SELECT
 		a.`id`,
@@ -222,7 +268,8 @@
 		UPDATE
 		`submittedassignment`
 		SET `score` = #{score}, `feedback` =
-		#{feedback}
+		#{feedback},
+		`access` = #{access}, `updatedAt` = NOW()
 		WHERE
 		`id` = #{id}
 	</update>

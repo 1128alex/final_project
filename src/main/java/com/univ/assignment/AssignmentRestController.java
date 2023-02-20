@@ -85,16 +85,14 @@ public class AssignmentRestController {
 
 	// SubmittedAssignment
 	@PutMapping("/submit_assignment")
-	public Map<String, Object> submitAssignment(@ModelAttribute SubmittedAsgmt submittedAsgmt,
+	public Map<String, Object> submitAssignment(@RequestParam("resubmit") boolean re,
+			@ModelAttribute SubmittedAsgmt submittedAsgmt,
 			@RequestParam(value = "files", required = false) List<MultipartFile> files, HttpSession session) {
 		Map<String, Object> result = new HashMap<>();
 
-		int rowCount = assignmentBO.submitAssignment(submittedAsgmt, files, session);
+		int rowCount = assignmentBO.submitAssignment(re, submittedAsgmt, files, session);
 
-		if (rowCount == 2) {
-			result.put("code", 2);
-			result.put("errorMessage", "You have already submitted your assignment.");
-		} else if (rowCount > 0) {
+		if (rowCount > 0) {
 			result.put("code", 1);
 		} else {
 			result.put("code", 500);
@@ -106,10 +104,12 @@ public class AssignmentRestController {
 
 	@PutMapping("/grade_assignment")
 	public Map<String, Object> gradeAssignment(@RequestParam("subAsgmtId") int subAsgmtId,
-			@RequestParam("score") int score, @RequestParam("feedback") String feedback) {
+			@RequestParam(value = "score", required = false) Integer score,
+			@RequestParam(value = "feedback", required = false) String feedback,
+			@RequestParam("access") boolean access) {
 		Map<String, Object> result = new HashMap<>();
 
-		int rowCount = assignmentBO.gradeSubmittedAsgmt(subAsgmtId, score, feedback);
+		int rowCount = assignmentBO.gradeSubmittedAsgmt(subAsgmtId, score, feedback, access);
 
 		if (rowCount > 0) {
 			result.put("code", 1);

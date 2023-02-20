@@ -24,7 +24,7 @@
 
 		<hr>
 		<h2 class="mt-3">Student's Submission</h2>
-		<textarea rows="3" cols="" class="form-control">${submittedAsgmt.content}</textarea>
+		<textarea rows="3" cols="" class="form-control" disabled="disabled">${submittedAsgmt.content}</textarea>
 		<h3 class="mt-4">File Attachments</h3>
 		<div id="studFileBox"></div>
 		<div id="studFileDataHolder"
@@ -35,8 +35,9 @@
 				<div>
 					<h3>Grade</h3>
 					<div class="d-flex align-items-end">
+						<div id="maxScoreHolder" data-max-score="${assignment.maxScore}"></div>
 						<input type="number" id="score" class="form-control" min="0"
-							max="${assignment.maxScore}">
+							max="${assignment.maxScore}" value="${submittedAsgmt.score}">
 						<div class="col-6">
 							<h4>${"/ " += assignment.maxScore}</h4>
 						</div>
@@ -44,9 +45,11 @@
 				</div>
 			</div>
 			<h3>Feedback</h3>
-			<textarea rows="3" cols="" id="feedback" class="form-control"></textarea>
+			<textarea rows="3" cols="" id="feedback" class="form-control">${submittedAsgmt.feedback}</textarea>
 			<div class="d-flex justify-content-end">
-				<button id="gradeBtn" type="button" class="btn button my-3">Submit
+				<label><input type="checkbox" id="editAccessCheckbox">Give
+					access to edit</label>
+				<button id="gradeBtn" type="button" class="btn button my-3">Return
 					Grade</button>
 			</div>
 		</c:if>
@@ -66,6 +69,7 @@
 								"subasgmt-id");
 						let classId = $('#classIdHolder').data("class-id");
 						let asgmtId = $('#asgmtIdHolder').data("asgmt-id");
+						let maxScore = $('#maxScoreHolder').data("max-score");
 
 						let fileString = $('#fileDataHolder').data(
 								"file-string");
@@ -83,6 +87,7 @@
 												+ fileName + "</a><br>");
 							}
 						}
+
 						let studFileString = $('#studFileDataHolder').data(
 								"stud-file-string");
 						if (studFileString == '') {
@@ -91,8 +96,9 @@
 						} else {
 							let studFiles = studFileString.split(" ");
 
-							for (let i = 0; i < files.length - 1; i++) {
-								let studFileName = files[i].split("/").pop();
+							for (let i = 0; i < studFiles.length - 1; i++) {
+								let studFileName = studFiles[i].split("/")
+										.pop();
 
 								$('#studFileBox').append(
 										"<a href=\"" + studFiles[i] + "\" class=\"noDecoA\" download>"
@@ -100,8 +106,8 @@
 							}
 						}
 						$('#score').on('change', function() {
-							if ($(this).val() > 100) {
-								$('#score').val(100);
+							if ($(this).val() > maxScore) {
+								$('#score').val(maxScore);
 							}
 						})
 
@@ -111,6 +117,15 @@
 										function() {
 											let score = $('#score').val();
 											let feedback = $('#feedback').val();
+
+											let access = true;
+											if ($(
+													'input:checkbox[id="editAccessCheckbox"]')
+													.is(":checked") == true) {
+												access = true;
+											} else {
+												access = false;
+											}
 											$
 													.ajax({
 														type : "PUT",
@@ -118,7 +133,8 @@
 														data : {
 															"subAsgmtId" : subAsgmtId,
 															"score" : score,
-															"feedback" : feedback
+															"feedback" : feedback,
+															"access" : access
 														},
 														success : function(data) {
 															if (data.code == 1) {

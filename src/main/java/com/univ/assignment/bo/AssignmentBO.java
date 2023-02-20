@@ -115,16 +115,11 @@ public class AssignmentBO {
 		return assignmentDAO.deleteAssignment(classId, asgmtId);
 	}
 
-	public int submitAssignment(SubmittedAsgmt submittedAsgmt, List<MultipartFile> files, HttpSession session) {
+	public int submitAssignment(boolean re, SubmittedAsgmt submittedAsgmt, List<MultipartFile> files,
+			HttpSession session) {
 		User user = (User) session.getAttribute("user");
 		String studentNum = user.getStudentNum();
 		submittedAsgmt.setStudentNum(studentNum);
-
-		int dupCount = assignmentDAO.checkDuplicatedSubmittedAsgmt(submittedAsgmt.getClassId(),
-				submittedAsgmt.getAsgmtId(), studentNum);
-		if (dupCount > 0) {
-			return 2;
-		}
 
 		if (files != null) {
 			String[] filePaths = new String[files.size()];
@@ -145,7 +140,23 @@ public class AssignmentBO {
 			submittedAsgmt.setFilePath(filePath);
 		}
 
-		return assignmentDAO.insertSubmittedAssignment(submittedAsgmt);
+		Assignment assignment = getAsgmtByClassIdAsgmtId(submittedAsgmt.getClassId(), submittedAsgmt.getAsgmtId());
+		if (assignment.getAsgmtType().equals("Ungraded Assignment")) {
+			submittedAsgmt.setAccess(true);
+		} else {
+			submittedAsgmt.setAccess(false);
+		}
+
+		if (re) {
+			return assignmentDAO.updateSubmittedAssignment(submittedAsgmt);
+		} else {
+			return assignmentDAO.insertSubmittedAssignment(submittedAsgmt);
+		}
+
+	}
+
+	public SubmittedAsgmt getSubmittedAsgmt(int classId, int asgmtId, String studentNum) {
+		return assignmentDAO.selectSubmittedAsgmt(classId, asgmtId, studentNum);
 	}
 
 	public List<AssignmentUserCombined> getSubmittedAsgmtUserList(int classId, int asgmtId) {
@@ -156,8 +167,13 @@ public class AssignmentBO {
 		return assignmentDAO.selectSubmittedAsgmtUserById(id);
 	}
 
-	public int gradeSubmittedAsgmt(int subAsgmtId, int score, String feedback) {
-		return assignmentDAO.updateGradeSubmittedAsgmt(subAsgmtId, score, feedback);
+	public int gradeSubmittedAsgmt(int subAsgmtId, Integer score, String feedback, boolean access) {
+
+		if (feedback.equals("")) {
+			feedback = null;
+		}
+
+		return assignmentDAO.updateGradeSubmittedAsgmt(subAsgmtId, score, feedback, access);
 	}
 
 }

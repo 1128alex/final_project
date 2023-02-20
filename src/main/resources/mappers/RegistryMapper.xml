@@ -53,4 +53,14 @@
 		`studentNum` =
 		#{studentNum}
 	</select>
+
+	<select id="countRegistryByClassId" parameterType="int"
+		resultType="int">
+		SELECT
+		COUNT(*)
+		FROM
+		`registry`
+		WHERE
+		`classId` = #{classId}
+	</select>
 </mapper>

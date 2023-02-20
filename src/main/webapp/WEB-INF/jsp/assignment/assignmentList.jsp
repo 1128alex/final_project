@@ -21,7 +21,7 @@
 					<th>Assignment Name</th>
 					<th>Submitted Students</th>
 					<th>Due Date</th>
-					<th>Average Grade</th>
+					<th>Grade</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -32,7 +32,7 @@
 						<td>-- Submitted Students --</td>
 						<td><fmt:formatDate value="${assignment.dueDate}"
 								pattern="d MMM yyyy" /></td>
-						<td>-- Average Grade --</td>
+						<td>-- Grade --</td>
 					</tr>
 				</c:forEach>
 			</tbody>

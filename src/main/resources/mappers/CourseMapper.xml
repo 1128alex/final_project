@@ -328,4 +328,52 @@
 		</choose>
 		ORDER BY a.`courseCode`,b.`id`
 	</select>
+
+	<select id="selectClassCourseByClassId" parameterType="int"
+		resultType="com.univ.course.model.ClassCourseCombined">
+		SELECT
+		a.`courseCode`,
+		a.`courseName`,
+		a.`description`,
+		a.`price`,
+		b.`id`,
+		b.`profEmail`,
+		b.`maxNum`,
+		b.`registerDueDate`,
+		b.`monStartTime`,
+		b.`tueStartTime`,
+		b.`wedStartTime`,
+		b.`thuStartTime`,
+		b.`friStartTime`,
+		b.`createdAt`,
+		b.`updatedAt`,
+		c.`email`,
+		c.`firstName`,
+		c.`lastName`,
+		c.`gender`,
+		c.`subject`,
+		d.`averageGrade`
+		FROM
+		`course` as a
+		LEFT
+		JOIN
+		`class`
+		as
+		b
+		ON
+		a.`courseCode` =
+		b.`courseCode`
+		LEFT JOIN
+		`user` as c
+		ON
+		b.`profEmail` =
+		c.`email`,
+		(select avg(`perScore`) as `averageGrade`
+		from
+		`submittedassignment`
+		where `classId` = #{classId}) as d
+		WHERE
+		b.`id` =
+		#{classId}
+	</select>
 </mapper>

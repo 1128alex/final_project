@@ -9,10 +9,11 @@
 				class="nav-link text-white font-weight-bold">My Classes</a>
 		</h4></li>
 	<li class="nav-item"><h4>
-			<a href="#" class="nav-link text-white font-weight-bold">Grade</a>
+			<a href="/univ/course/grade_class_list"
+				class="nav-link text-white font-weight-bold">Grade</a>
 		</h4></li>
 	<li class="nav-item"><h4>
-			<a href="#" class="nav-link text-white font-weight-bold">Calendar</a>
+			<a href="#" class="nav-link text-white font-weight-bold">Timetable</a>
 		</h4></li>
 	<li class="nav-item"><h4>
 			<a href="#" class="nav-link text-white font-weight-bold">Programs</a>

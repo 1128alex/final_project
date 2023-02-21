@@ -41,4 +41,7 @@ public interface CourseDAO {
 	public int countFilteredCourseList(@Param("searchKeyword") String searchKeyword,
 			@Param("courseName") String courseName, @Param("subjectCode") String subjectCode,
 			@Param("courseLevel") String courseLevel);
+
+	public ClassCourseCombined selectClassCourseByClassId(int classId);
+
 }

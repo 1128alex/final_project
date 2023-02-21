@@ -30,4 +30,5 @@ public class RegistryBO {
 	public int countRegistryByClassId(int classId) {
 		return registryDAO.countRegistryByClassId(classId);
 	}
+
 }

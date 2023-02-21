@@ -16,4 +16,5 @@ public interface RegistryDAO {
 	public int selectDuplicatedClass(@Param("classId") int classId, @Param("studentNum") String studentNum);
 
 	public int countRegistryByClassId(int classId);
+
 }

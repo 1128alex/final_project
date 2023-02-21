@@ -267,9 +267,21 @@
 	<update id="updateGradeSubmittedAsgmt" parameterType="map">
 		UPDATE
 		`submittedassignment`
-		SET `score` = #{score}, `feedback` =
+		SET `score` = #{score}, `perScore` =
+		#{score} *
+		100 / (SELECT `maxScore` FROM `assignment` WHERE `classId` =
+		(select
+		`classId` from (SELECT `classId` FROM `submittedassignment` WHERE `id`
+		=
+		#{id})TMP) and
+		`asgmtId`
+		= (SELECT `asgmtId` FROM (SELECT `asgmtId`
+		FROM `submittedassignment` WHERE `id` =
+		#{id})TMP)),
+		`feedback` =
 		#{feedback},
-		`access` = #{access}, `updatedAt` = NOW()
+		`access` = #{access}, `updatedAt` =
+		NOW()
 		WHERE
 		`id` = #{id}
 	</update>

@@ -23,6 +23,7 @@ public class ClassCourseCombined {
 	private String lastName;
 	private String gender;
 	private String subject;
+	private Integer averageGrade;
 
 	public String getCourseCode() {
 		return courseCode;
@@ -182,6 +183,14 @@ public class ClassCourseCombined {
 
 	public void setSubject(String subject) {
 		this.subject = subject;
+	}
+
+	public Integer getAverageGrade() {
+		return averageGrade;
+	}
+
+	public void setAverageGrade(Integer averageGrade) {
+		this.averageGrade = averageGrade;
 	}
 
 }

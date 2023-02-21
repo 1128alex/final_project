@@ -107,4 +107,8 @@ public class CourseBO {
 		return courseDAO.countFilteredCourseList(searchKeyword, courseName, subjectCode, courseLevel);
 	}
 
+	public ClassCourseCombined getClassCourseByClassId(int classId) {
+		return courseDAO.selectClassCourseByClassId(classId);
+	}
+
 }

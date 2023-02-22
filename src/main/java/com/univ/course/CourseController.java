@@ -204,4 +204,11 @@ public class CourseController {
 
 		return "template/layout";
 	}
+
+	@GetMapping("/timetable")
+	public String timetableView(Model model) {
+		model.addAttribute("view", "course/timetable");
+
+		return "template/layout";
+	}
 }

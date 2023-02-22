@@ -13,7 +13,8 @@
 				class="nav-link text-white font-weight-bold">Grade</a>
 		</h4></li>
 	<li class="nav-item"><h4>
-			<a href="#" class="nav-link text-white font-weight-bold">Timetable</a>
+			<a href="/univ/course/timetable"
+				class="nav-link text-white font-weight-bold">Timetable</a>
 		</h4></li>
 	<li class="nav-item"><h4>
 			<a href="#" class="nav-link text-white font-weight-bold">Programs</a>

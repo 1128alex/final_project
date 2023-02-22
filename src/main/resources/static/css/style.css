@@ -123,6 +123,10 @@ textarea {
 	background-color: #008B8B;
 }
 
+.colFixedTable {
+	table-layout: fixed;
+}
+
 #classTable {
 	table-layout: fixed;
 	width: 100%;
@@ -152,6 +156,26 @@ textarea {
 	cursor: pointer;
 }
 
+.border-grey>thead>tr>th, .border-grey>tbody>tr>td {
+	border: 1px solid grey;
+}
+
 .underline {
 	text-decoration: underline;
+}
+
+.classFilledTime {
+	background-color: #ffa3a3;
+	height: 60px;
+	padding-top: 5px;
+}
+
+.classAvailableTime {
+	cursor: pointer;
+	height: 60px;
+}
+
+.classAvailableTime:hover {
+	cursor: pointer;
+	background-color: #ccedcc;
 }

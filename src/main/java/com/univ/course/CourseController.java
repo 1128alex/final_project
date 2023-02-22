@@ -206,7 +206,18 @@ public class CourseController {
 	}
 
 	@GetMapping("/timetable")
-	public String timetableView(Model model) {
+	public String timetableView(Model model, HttpSession session) {
+
+		User user = (User) session.getAttribute("user");
+
+		List<ClassCourseCombined> combinedList = new ArrayList<>();
+		List<Registry> registryList = registryBO.getRegistryListByStudentNum(user.getStudentNum());
+		for (Registry registry : registryList) {
+			ClassCourseCombined combined = courseBO.getClassCourseByClassId(registry.getClassId());
+			combinedList.add(combined);
+		}
+		model.addAttribute("type", user.getType());
+		model.addAttribute("combinedList", combinedList);
 		model.addAttribute("view", "course/timetable");
 
 		return "template/layout";

@@ -71,31 +71,31 @@
 		FROM
 		(
 		SELECT
-		a.`courseCode`,
-		a.`courseName`,
-		a.`description`,
-		a.`price`,
-		b.`id`,
-		b.`profEmail`,
-		b.`maxNum`,
-		b.`registerDueDate`,
-		b.`monStartTime`,
-		b.`tueStartTime`,
-		b.`wedStartTime`,
-		b.`thuStartTime`,
-		b.`friStartTime`,
-		b.`createdAt`,
-		b.`updatedAt`,
+		a.`id`,
+		a.`profEmail`,
+		a.`maxNum`,
+		a.`registerDueDate`,
+		a.`monStartTime`,
+		a.`tueStartTime`,
+		a.`wedStartTime`,
+		a.`thuStartTime`,
+		a.`friStartTime`,
+		a.`createdAt`,
+		a.`updatedAt`,
+		b.`courseCode`,
+		b.`courseName`,
+		b.`description`,
+		b.`price`,
 		c.`email`,
 		c.`firstName`,
 		c.`lastName`,
 		c.`gender`,
 		c.`subject`
 		FROM
-		`course` as a
+		`class` as a
 		LEFT
 		JOIN
-		`class`
+		`course`
 		as
 		b
 		ON
@@ -104,24 +104,24 @@
 		LEFT JOIN
 		`user` as c
 		ON
-		b.`profEmail` =
+		a.`profEmail` =
 		c.`email`
 		WHERE
-		(a.`courseCode`
+		(b.`courseCode`
 		LIKE
 		CONCAT('%',#{searchKeyword},'%')
 		OR
-		a.`courseName`
+		b.`courseName`
 		LIKE
 		CONCAT('%',#{searchKeyword},'%'))
 		<choose>
-			<when test="courseName != null">AND a.`courseCode` = #{courseName}</when>
-			<when test="courseLevel != null">AND a.`courseCode` LIKE
+			<when test="courseName != null">AND b.`courseCode` = #{courseName}</when>
+			<when test="courseLevel != null">AND b.`courseCode` LIKE
 				CONCAT(#{subjectCode},#{courseLevel},'%')</when>
-			<when test="courseLevel == null and subjectCode != null">AND a.`courseCode` LIKE CONCAT(#{subjectCode},'%')
+			<when test="courseLevel == null and subjectCode != null">AND b.`courseCode` LIKE CONCAT(#{subjectCode},'%')
 			</when>
 		</choose>
-		ORDER BY a.`courseCode`,b.`id`) AS d, (SELECT
+		ORDER BY b.`courseCode`,a.`id`) AS d, (SELECT
 		@ROWNUM:=0) AS e) f
 		WHERE
 		`rownum` BETWEEN #{pageNum} * 3 - 2 AND #{pageNum} * 3;
@@ -297,10 +297,10 @@
 		SELECT
 		COUNT(*) as `cnt`
 		FROM
-		`course` as a
+		`class` as a
 		LEFT
 		JOIN
-		`class`
+		`course`
 		as
 		b
 		ON
@@ -309,24 +309,24 @@
 		LEFT JOIN
 		`user` as c
 		ON
-		b.`profEmail` =
+		a.`profEmail` =
 		c.`email`
 		WHERE
-		(a.`courseCode`
+		(b.`courseCode`
 		LIKE
 		CONCAT('%',#{searchKeyword},'%')
 		OR
-		a.`courseName`
+		b.`courseName`
 		LIKE
 		CONCAT('%',#{searchKeyword},'%'))
 		<choose>
-			<when test="courseName != null">AND a.`courseCode` = #{courseName}</when>
-			<when test="courseLevel != null">AND a.`courseCode` LIKE
+			<when test="courseName != null">AND b.`courseCode` = #{courseName}</when>
+			<when test="courseLevel != null">AND b.`courseCode` LIKE
 				CONCAT(#{subjectCode},#{courseLevel},'%')</when>
-			<when test="courseLevel == null and subjectCode != null">AND a.`courseCode` LIKE CONCAT(#{subjectCode},'%')
+			<when test="courseLevel == null and subjectCode != null">AND b.`courseCode` LIKE CONCAT(#{subjectCode},'%')
 			</when>
 		</choose>
-		ORDER BY a.`courseCode`,b.`id`
+		ORDER BY b.`courseCode`,a.`id`
 	</select>
 
 	<select id="selectClassCourseByClassId" parameterType="int"
@@ -368,12 +368,15 @@
 		ON
 		b.`profEmail` =
 		c.`email`,
-		(select avg(`perScore`) as `averageGrade`
+		(select avg(`perScore`)
+		as `averageGrade`
 		from
 		`submittedassignment`
-		where `classId` = #{classId}) as d
+		where `classId` =
+		#{classId}) as d
 		WHERE
-		b.`id` =
+		b.`id`
+		=
 		#{classId}
 	</select>
 </mapper>

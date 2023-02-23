@@ -31,13 +31,9 @@
 					class="form-control col-8 mt-2">
 					<option value="0">-- Course --</option>
 					<c:forEach var="course" items="${courseList}" varStatus="status">
-						<c:forEach var="combined" items="${combinedList}">
-							<c:if test="${combined.courseCode ne course.courseCode}">
-								<option id="${course.courseCode}"
-									class="courses courses${status.index}">
-									${course.courseCode += " - " += course.courseName}</option>
-							</c:if>
-						</c:forEach>
+						<option id="${course.courseCode}"
+							class="courses courses${status.index}">
+							${course.courseCode += " - " += course.courseName}</option>
 					</c:forEach>
 				</select>
 				<div class="mt-3 d-flex">
@@ -46,7 +42,7 @@
 							<h4>Maximum Students</h4>
 							<div class="d-flex justify-content-center">
 								<input type="number" id="maxNum" name="maxNum"
-									class="form-control col-8">
+									class="form-control col-8" min="0">
 							</div>
 						</div>
 					</div>
@@ -55,7 +51,7 @@
 							<h4>Registration Due Date</h4>
 							<div class="d-flex justify-content-center">
 								<input type="text" id="registerDueDate" name="registerDueDate"
-									class="form-control col-11">
+									class="form-control col-11" autocomplete="off">
 							</div>
 						</div>
 					</div>
@@ -242,6 +238,7 @@
 
 											let subjectCode = $('#subjectCode')
 													.val();
+
 											let subjectLevel = $(
 													'#subjectLevel').val();
 											$('.courses').addClass("d-none"); // All hidden
@@ -259,11 +256,11 @@
 
 											let endValue = $('#endValueHolder')
 													.data("end-value");
-											for (i = endValue - 1; i >= 0; i--) {
-												if ($(''.concat('.courses', i))
+											for (let i = endValue - 1; i >= 0; i--) {
+												if ($('.courses'.concat(i))
 														.val().startsWith(
 																subjectCode)) {
-													$(''.concat('.courses', i))
+													$('.courses'.concat(i))
 															.removeClass(
 																	"d-none");
 												}
@@ -276,9 +273,7 @@
 									$('.classSelectedTime').removeClass(
 											'classSelectedTime');
 
-
-									});
-								})
+								});
 						$('#registerDueDate').datepicker({
 							dateFormat : 'yy/mm/dd',
 							minDate : 0
@@ -300,7 +295,7 @@
 													.split(' - ')[0];
 
 											let maxNum = $('#maxNum').val();
-											if (maxNum == '') {
+											if (maxNum == '' || maxNum == "0") {
 												alert("Please select the number of maximum students available in this class.");
 												return false;
 											}
@@ -378,7 +373,7 @@
 											let url = $(this).attr("action");
 											$
 													.ajax({
-														type : "PUT",
+														type : "GET",
 														url : url,
 														data : {
 															"courseCode" : courseCode,

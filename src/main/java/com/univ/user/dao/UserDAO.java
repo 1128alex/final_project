@@ -17,4 +17,11 @@ public interface UserDAO {
 	public String selectStudentNum(@Param("year") Integer year, @Param("faculty") String faculty);
 
 	public User selectUserByEmail(String email);
+
+	public User selectVerifyQuestion(String email);
+
+	public int verifyQuestion(@Param("email") String email, @Param("question") String question,
+			@Param("answer") String answer);
+
+	public int resetPassword(@Param("email") String email, @Param("password") String password);
 }

@@ -32,6 +32,10 @@ textarea {
 	resize: none;
 }
 
+input:focus::placeholder {
+	color: transparent;
+}
+
 .button {
 	background-color: #008B8B;
 	border-radius: 0px;

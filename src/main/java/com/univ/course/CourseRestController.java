@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +25,7 @@ public class CourseRestController {
 	private CourseBO courseBO;
 
 	// Professor
-	@PutMapping("/create_class")
+	@GetMapping("/create_class")
 	public Map<String, Object> createClass(@ModelAttribute Class newClass,
 			@RequestParam("registerDueDateString") String registerDueDateString, HttpSession session)
 			throws ParseException {
@@ -61,6 +63,22 @@ public class CourseRestController {
 		} else {
 			result.put("code", 500);
 			result.put("errorMessage", "Error while creating new class.");
+		}
+
+		return result;
+	}
+
+	@DeleteMapping("/delete_class")
+	public Map<String, Object> deleteClass(@RequestParam("classId") int classId) {
+		Map<String, Object> result = new HashMap<>();
+
+		int rowCount = courseBO.deleteClass(classId);
+
+		if (rowCount > 0) {
+			result.put("code", 1);
+		} else {
+			result.put("code", 500);
+			result.put("errorMessage", "Error while deleting class.");
 		}
 
 		return result;

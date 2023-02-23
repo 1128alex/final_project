@@ -15,8 +15,6 @@
 		`birth`,
 		`gender`,
 		`subject`,
-		`verifyQuestion`,
-		`verifyAnswer`,
 		`profileUrl`
 		FROM
 		`user`
@@ -105,12 +103,45 @@
 		`birth`,
 		`gender`,
 		`subject`,
-		`verifyQuestion`,
-		`verifyAnswer`,
 		`profileUrl`
 		FROM
 		`user`
 		WHERE
 		`email` = #{email}
 	</select>
+
+	<select id="selectVerifyQuestion" parameterType="string"
+		resultType="com.univ.user.model.User">
+		SELECT
+		`email`,
+		`verifyQuestion`,
+		`verifyAnswer`
+		FROM
+		`user`
+		WHERE
+		`email` = #{email}
+	</select>
+
+	<select id="verifyQuestion" parameterType="map" resultType="int">
+		SELECT
+		count(*)
+		FROM
+		`user`
+		WHERE
+		`email` =
+		#{email}
+		AND
+		`verifyQuestion` =
+		#{question}
+		AND
+		`verifyAnswer` = #{answer}
+	</select>
+
+	<update id="resetPassword" parameterType="map">
+		UPDATE `user`
+		SET
+		`password` = #{password}
+		WHERE
+		`email` = #{email}
+	</update>
 </mapper>

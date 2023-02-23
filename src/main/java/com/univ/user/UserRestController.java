@@ -75,4 +75,53 @@ public class UserRestController {
 		return result;
 	}
 
+	@PostMapping("/get_verify_question")
+	public Map<String, Object> getVerifyQuestion(@RequestParam("email") String email) {
+		Map<String, Object> result = new HashMap<>();
+
+		User user = userBO.getVerifyQuestion(email);
+
+		if (user != null) {
+			result.put("code", 1);
+			result.put("question", user.getVerifyQuestion());
+		} else {
+			result.put("code", 500);
+			result.put("errorMessage", "Error while getting verification question.");
+		}
+		return result;
+	}
+
+	@PostMapping("/verify_question")
+	public Map<String, Object> verifyQuestion(@RequestParam("email") String email,
+			@RequestParam("question") String question, @RequestParam("answer") String answer) {
+		Map<String, Object> result = new HashMap<>();
+
+		int rowCount = userBO.verifyQuestion(email, question, answer);
+
+		if (rowCount == 1) {
+			result.put("code", 1);
+		} else {
+			result.put("code", 500);
+			result.put("errorMessage", "Error while getting verification question.");
+		}
+		return result;
+	}
+
+	@PostMapping("/reset_password")
+	public Map<String, Object> resetPassword(@RequestParam("email") String email,
+			@RequestParam("password") String password) {
+		Map<String, Object> result = new HashMap<>();
+
+		int rowCount = userBO.resetPassword(email, password);
+
+		if (rowCount == 1) {
+			result.put("code", 1);
+		} else {
+			result.put("code", 500);
+			result.put("errorMessage", "Error while getting verification question.");
+		}
+
+		return result;
+	}
+
 }

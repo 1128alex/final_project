@@ -89,4 +89,18 @@ public class UserBO {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
 		return sdf.parse(birthStr);
 	}
+
+	public User getVerifyQuestion(String email) {
+		return userDAO.selectVerifyQuestion(email);
+	}
+
+	public int verifyQuestion(String email, String question, String answer) {
+		return userDAO.verifyQuestion(email, question, answer);
+	}
+
+	public int resetPassword(String email, String password) {
+		String hashedPassword = EncryptUtils.md5(password);
+
+		return userDAO.resetPassword(email, hashedPassword);
+	}
 }

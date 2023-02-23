@@ -37,13 +37,21 @@ public class CourseController {
 	private RegistryBO registryBO;
 
 	@GetMapping("/create_class")
-	public String createClassView(Model model) {
+	public String createClassView(Model model, HttpSession session) {
 
-		model.addAttribute("view", "course/createClass");
+		// timetable information
+		User user = (User) session.getAttribute("user");
+		String type = user.getType();
+		model.addAttribute("type", type);
+
+		List<ClassCourseCombined> combinedList = courseBO.getCombinedListByEmail(user.getEmail());
+		model.addAttribute("combinedList", combinedList);
 
 		List<Course> courseList = courseBO.getCourseList();
 		model.addAttribute("courseList", courseList);
 		model.addAttribute("length", courseList.size());
+
+		model.addAttribute("view", "course/createClass");
 
 		return "template/layout";
 	}
@@ -209,15 +217,22 @@ public class CourseController {
 	public String timetableView(Model model, HttpSession session) {
 
 		User user = (User) session.getAttribute("user");
+		String type = user.getType();
+		model.addAttribute("type", type);
 
-		List<ClassCourseCombined> combinedList = new ArrayList<>();
-		List<Registry> registryList = registryBO.getRegistryListByStudentNum(user.getStudentNum());
-		for (Registry registry : registryList) {
-			ClassCourseCombined combined = courseBO.getClassCourseByClassId(registry.getClassId());
-			combinedList.add(combined);
+		if (type.equals("student")) {
+			List<ClassCourseCombined> combinedList = new ArrayList<>();
+			List<Registry> registryList = registryBO.getRegistryListByStudentNum(user.getStudentNum());
+			for (Registry registry : registryList) {
+				ClassCourseCombined combined = courseBO.getClassCourseByClassId(registry.getClassId());
+				combinedList.add(combined);
+			}
+			model.addAttribute("combinedList", combinedList);
+		} else if (type.equals("professor")) {
+			List<ClassCourseCombined> combinedList = courseBO.getCombinedListByEmail(user.getEmail());
+			model.addAttribute("combinedList", combinedList);
 		}
-		model.addAttribute("type", user.getType());
-		model.addAttribute("combinedList", combinedList);
+
 		model.addAttribute("view", "course/timetable");
 
 		return "template/layout";

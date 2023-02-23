@@ -30,6 +30,8 @@ public interface CourseDAO {
 
 	public List<Class> selectClassList();
 
+	public List<ClassCourseCombined> selectCombinedListByEmail(String email);
+
 	public List<Class> selectClassListByEmail(String email);
 
 	public List<Class> selectClassListByCourseCode(String courseCode);

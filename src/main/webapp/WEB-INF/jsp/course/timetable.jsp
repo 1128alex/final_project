@@ -23,97 +23,132 @@
 			<tbody class="text-center">
 				<c:forEach var="i" begin="6" end="20">
 					<tr>
-						<td>${i}:00</td>
+						<td>
+							<div class="h-100">
+								<div
+									class="h-100 d-flex justify-content-center align-items-center">${i}:00</div>
+							</div>
+						</td>
 						<td id="mon${i}" class="p-0"><c:set var="count" value="0" />
-							<c:forEach var="combined" items="${combinedList}">
-								<c:choose>
-									<c:when test="${combined.monStartTime eq i}">
-										<c:if test="${type eq 'student'}">
-											<c:set var="count" value="1"></c:set>
-											<div class="classFilledTime">${combined.courseCode}<br>${combined.firstName += " " += combined.lastName}
-											</div>
-										</c:if>
-										<c:if test="${type eq 'professor'}">
-											<c:set var="count" value="1"></c:set>
-											<div class="classFilledTime">${combined.courseCode}</div>
-										</c:if>
-									</c:when>
-								</c:choose>
-							</c:forEach> <c:if test="${count eq 0}">
-								<div class="classAvailableTime"></div>
-							</c:if></td>
+							<div class="h-100">
+								<c:forEach var="combined" items="${combinedList}">
+									<c:choose>
+										<c:when test="${combined.monStartTime eq i}">
+											<c:if test="${type eq 'student'}">
+												<c:set var="count" value="1"></c:set>
+												<div
+													class="classFilledTime h-100 d-flex justify-content-center align-items-center">${combined.courseCode}<br>${combined.firstName += " " += combined.lastName}
+												</div>
+											</c:if>
+											<c:if test="${type eq 'professor'}">
+												<c:set var="count" value="1"></c:set>
+												<div
+													class="classFilledTime h-100 d-flex justify-content-center align-items-center">${combined.courseCode}</div>
+											</c:if>
+										</c:when>
+									</c:choose>
+								</c:forEach>
+								<c:if test="${count eq 0}">
+									<div
+										class="classAvailableTime h-100 d-flex justify-content-center align-items-center"></div>
+								</c:if>
+							</div></td>
 						<td id="tue${i}" class="p-0"><c:set var="count" value="0" />
-							<c:forEach var="combined" items="${combinedList}">
-								<c:choose>
-									<c:when test="${combined.tueStartTime eq i}">
-										<c:if test="${type eq 'student'}">
-											<c:set var="count" value="1"></c:set>
-											<div class="classFilledTime">${combined.courseCode}<br>${combined.firstName += " " += combined.lastName}
-											</div>
-										</c:if>
-										<c:if test="${type eq 'professor'}">
-											<c:set var="count" value="1"></c:set>
-											<div class="classFilledTime">${combined.courseCode}</div>
-										</c:if>
-									</c:when>
-								</c:choose>
-							</c:forEach> <c:if test="${count eq 0}">
-								<div class="classAvailableTime"></div>
-							</c:if></td>
+							<div class="h-100">
+								<c:forEach var="combined" items="${combinedList}">
+									<c:choose>
+										<c:when test="${combined.tueStartTime eq i}">
+											<c:if test="${type eq 'student'}">
+												<c:set var="count" value="1"></c:set>
+												<div
+													class="classFilledTime h-100 d-flex justify-content-center align-items-center">${combined.courseCode}<br>${combined.firstName += " " += combined.lastName}
+												</div>
+											</c:if>
+											<c:if test="${type eq 'professor'}">
+												<c:set var="count" value="1"></c:set>
+												<div
+													class="classFilledTime h-100 d-flex justify-content-center align-items-center">${combined.courseCode}</div>
+											</c:if>
+										</c:when>
+									</c:choose>
+								</c:forEach>
+								<c:if test="${count eq 0}">
+									<div
+										class="classAvailableTime h-100 d-flex justify-content-center align-items-center"></div>
+								</c:if>
+							</div></td>
 						<td id="wed${i}" class="p-0"><c:set var="count" value="0" />
-							<c:forEach var="combined" items="${combinedList}">
-								<c:choose>
-									<c:when test="${combined.wedStartTime eq i}">
-										<c:if test="${type eq 'student'}">
-											<c:set var="count" value="1"></c:set>
-											<div class="classFilledTime">${combined.courseCode}<br>${combined.firstName += " " += combined.lastName}
-											</div>
-										</c:if>
-										<c:if test="${type eq 'professor'}">
-											<c:set var="count" value="1"></c:set>
-											<div class="classFilledTime">${combined.courseCode}</div>
-										</c:if>
-									</c:when>
-								</c:choose>
-							</c:forEach> <c:if test="${count eq 0}">
-								<div class="classAvailableTime"></div>
-							</c:if></td>
+							<div class="h-100">
+								<c:forEach var="combined" items="${combinedList}">
+									<c:choose>
+										<c:when test="${combined.wedStartTime eq i}">
+											<c:if test="${type eq 'student'}">
+												<c:set var="count" value="1"></c:set>
+												<div
+													class="classFilledTime h-100 d-flex justify-content-center align-items-center">${combined.courseCode}<br>${combined.firstName += " " += combined.lastName}
+												</div>
+											</c:if>
+											<c:if test="${type eq 'professor'}">
+												<c:set var="count" value="1"></c:set>
+												<div
+													class="classFilledTime h-100 d-flex justify-content-center align-items-center">${combined.courseCode}</div>
+											</c:if>
+										</c:when>
+									</c:choose>
+								</c:forEach>
+								<c:if test="${count eq 0}">
+									<div
+										class="classAvailableTime h-100 d-flex justify-content-center align-items-center"></div>
+								</c:if>
+							</div></td>
 						<td id="thu${i}" class="p-0"><c:set var="count" value="0" />
-							<c:forEach var="combined" items="${combinedList}">
-								<c:choose>
-									<c:when test="${combined.thuStartTime eq i}">
-										<c:if test="${type eq 'student'}">
-											<c:set var="count" value="1"></c:set>
-											<div class="classFilledTime">${combined.courseCode}<br>${combined.firstName += " " += combined.lastName}
-											</div>
-										</c:if>
-										<c:if test="${type eq 'professor'}">
-											<c:set var="count" value="1"></c:set>
-											<div class="classFilledTime">${combined.courseCode}</div>
-										</c:if>
-									</c:when>
-								</c:choose>
-							</c:forEach> <c:if test="${count eq 0}">
-								<div class="classAvailableTime"></div>
-							</c:if></td>
+							<div class="h-100">
+								<c:forEach var="combined" items="${combinedList}">
+									<c:choose>
+										<c:when test="${combined.thuStartTime eq i}">
+											<c:if test="${type eq 'student'}">
+												<c:set var="count" value="1"></c:set>
+												<div
+													class="classFilledTime h-100 d-flex justify-content-center align-items-center">${combined.courseCode}<br>${combined.firstName += " " += combined.lastName}
+												</div>
+											</c:if>
+											<c:if test="${type eq 'professor'}">
+												<c:set var="count" value="1"></c:set>
+												<div
+													class="classFilledTime h-100 d-flex justify-content-center align-items-center">${combined.courseCode}</div>
+											</c:if>
+										</c:when>
+									</c:choose>
+								</c:forEach>
+								<c:if test="${count eq 0}">
+									<div
+										class="classAvailableTime h-100 d-flex justify-content-center align-items-center"></div>
+								</c:if>
+							</div></td>
 						<td id="fri${i}" class="p-0"><c:set var="count" value="0" />
-							<c:forEach var="combined" items="${combinedList}">
-								<c:choose>
-									<c:when test="${combined.friStartTime eq i}">
-										<c:if test="${type eq 'student'}">
-											<c:set var="count" value="1"></c:set>
-											<div class="classFilledTime">${combined.courseCode}<br>${combined.firstName += " " += combined.lastName}
-											</div>
-										</c:if>
-										<c:if test="${type eq 'professor'}">
-											<c:set var="count" value="1"></c:set>
-											<div class="classFilledTime">${combined.courseCode}</div>
-										</c:if>
-									</c:when>
-								</c:choose>
-							</c:forEach> <c:if test="${count eq 0}">
-								<div class="classAvailableTime"></div>
-							</c:if></td>
+							<div class="h-100">
+								<c:forEach var="combined" items="${combinedList}">
+									<c:choose>
+										<c:when test="${combined.friStartTime eq i}">
+											<c:if test="${type eq 'student'}">
+												<c:set var="count" value="1"></c:set>
+												<div
+													class="classFilledTime h-100 d-flex justify-content-center align-items-center">${combined.courseCode}<br>${combined.firstName += " " += combined.lastName}
+												</div>
+											</c:if>
+											<c:if test="${type eq 'professor'}">
+												<c:set var="count" value="1"></c:set>
+												<div
+													class="classFilledTime h-100 d-flex justify-content-center align-items-center">${combined.courseCode}</div>
+											</c:if>
+										</c:when>
+									</c:choose>
+								</c:forEach>
+								<c:if test="${count eq 0}">
+									<div
+										class="classAvailableTime h-100 d-flex justify-content-center align-items-center"></div>
+								</c:if>
+							</div></td>
 					</tr>
 				</c:forEach>
 			</tbody>

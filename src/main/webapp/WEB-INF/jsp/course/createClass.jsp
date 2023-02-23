@@ -4,111 +4,180 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <div class="d-flex justify-content-center">
-	<div class="col-4">
+	<div class="col-6">
 		<h2 class="mt-3 font-weight-bold">Add Class</h2>
 		<form id="addClassForm" action="/course/create_class" method="get">
-			<div class="mt-3">
-				<h4>Class</h4>
-				<div class="d-flex">
-					<select id="subjectCode" name="subjectCode"
-						class="form-control col-5 mr-2">
-						<option value="0">-- Subject --</option>
-						<option value="CS">Computer Science</option>
-						<option value="ECON">Economics</option>
-						<option value="MATH">Math</option>
-					</select> <select id="subjectLevel" name="subjectLevel"
-						class="form-control col-5 ml-2">
-						<option value="0">-- Level --</option>
-						<c:forEach var="i" begin="1" end="4">
-							<option>${i}</option>
+			<div class="col-10">
+				<div class="mt-3">
+					<h4>Class</h4>
+					<div class="d-flex">
+						<select id="subjectCode" name="subjectCode"
+							class="form-control col-5 mr-2">
+							<option value="0">-- Subject --</option>
+							<option value="CS">Computer Science</option>
+							<option value="ECON">Economics</option>
+							<option value="MATH">Math</option>
+						</select> <select id="subjectLevel" name="subjectLevel"
+							class="form-control col-5 ml-2">
+							<option value="0">-- Level --</option>
+							<c:forEach var="i" begin="1" end="4">
+								<option>${i}</option>
+							</c:forEach>
+						</select>
+					</div>
+				</div>
+				<div id="endValueHolder" data-end-value="${length}"></div>
+				<select id="courseName" name="courseName"
+					class="form-control col-8 mt-2">
+					<option value="0">-- Course --</option>
+					<c:forEach var="course" items="${courseList}" varStatus="status">
+						<c:forEach var="combined" items="${combinedList}">
+							<c:if test="${combined.courseCode ne course.courseCode}">
+								<option id="${course.courseCode}"
+									class="courses courses${status.index}">
+									${course.courseCode += " - " += course.courseName}</option>
+							</c:if>
 						</c:forEach>
-					</select>
-				</div>
-			</div>
-			<div hidden="hidden" id="endValue" data-end-value="${length}"></div>
-			<select id="courseName" name="courseName"
-				class="form-control col-8 mt-2">
-				<option value="0">-- Course --</option>
-				<c:forEach var="course" items="${courseList}" varStatus="status">
-					<option id="${course.courseCode}"
-						class="courses courses${status.index}">
-						${course.courseCode += " - " += course.courseName}</option>
-				</c:forEach>
-			</select>
-			<div class="mt-3 d-flex">
-				<div class="w-50 d-flex justify-content-center">
-					<div class="text-center">
-						<h4>Maximum Students</h4>
-						<div class="d-flex justify-content-center">
-							<input type="number" id="maxNum" name="maxNum"
-								class="form-control col-8">
+					</c:forEach>
+				</select>
+				<div class="mt-3 d-flex">
+					<div class="w-50 d-flex justify-content-center">
+						<div class="text-center">
+							<h4>Maximum Students</h4>
+							<div class="d-flex justify-content-center">
+								<input type="number" id="maxNum" name="maxNum"
+									class="form-control col-8">
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="w-50 d-flex justify-content-center">
-					<div class="text-center">
-						<h4>Registration Due Date</h4>
-						<div class="d-flex justify-content-center">
-							<input type="text" id="registerDueDate" name="registerDueDate"
-								class="form-control col-11">
+					<div class="w-50 d-flex justify-content-center">
+						<div class="text-center">
+							<h4>Registration Due Date</h4>
+							<div class="d-flex justify-content-center">
+								<input type="text" id="registerDueDate" name="registerDueDate"
+									class="form-control col-11">
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="mt-3">
-				<h4>Class Schedule</h4>
-				<table class="table table-bordered">
-					<thead>
+				<h3 class="mt-3">Timetable</h3>
+				<span>Select class times.(Blue is the selected time)</span>
+				<table
+					class="table table-bordered border-grey colFixedTable smallTimetable">
+					<thead class="text-center">
 						<tr>
-							<th class="p-0">
-								<div class="ml-2">Day of the Week</div>
-							</th>
-							<td class="p-0">
-								<div class="dayOfWeek mt-1">
-									<label>Mon</label>
-								</div>
-							</td>
-							<td class="p-0">
-								<div class="dayOfWeek mt-1">
-									<label>Tue</label>
-								</div>
-							</td>
-							<td class="p-0">
-								<div class="dayOfWeek mt-1">
-									<label>Wed</label>
-								</div>
-							</td>
-							<td class="p-0">
-								<div class="dayOfWeek mt-1">
-									<label>Thu</label>
-								</div>
-							</td>
-							<td class="p-0">
-								<div class="dayOfWeek mt-1">
-									<label>Fri</label>
-								</div>
-							</td>
+							<th>Time</th>
+							<th>Monday</th>
+							<th>Tuesday</th>
+							<th>Wednesday</th>
+							<th>Thursday</th>
+							<th>Friday</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<th class="p-0"><div class="mt-2 ml-2">Start Time</div></th>
-							<c:forEach var="i" begin="1" end="5">
-								<td class="p-0"><select id="dayOfWeek${i}"
-									class="form-control">
-										<option value="0">No Class</option>
-										<c:forEach var="j" begin="6" end="20">
-											<option value="${j}">${j}:00</option>
+					<tbody class="text-center">
+						<c:forEach var="i" begin="6" end="20">
+							<tr>
+								<td>
+									<div class="h-100">
+										<div
+											class="h-100 d-flex justify-content-center align-items-center">${i}:00</div>
+									</div>
+								</td>
+								<td class="p-0"><c:set var="count" value="0" />
+									<div class="h-100">
+										<c:forEach var="combined" items="${combinedList}">
+											<c:choose>
+												<c:when test="${combined.monStartTime eq i}">
+													<c:set var="count" value="1"></c:set>
+													<div id="mon${i}"
+														class="classFilledTime h-100 d-flex justify-content-center align-items-center">${combined.courseCode}
+													</div>
+												</c:when>
+											</c:choose>
 										</c:forEach>
-								</select></td>
-							</c:forEach>
-						</tr>
+										<c:if test="${count eq 0}">
+											<div id="mon${i}"
+												class="classAvailableTime h-100 d-flex justify-content-center align-items-center"
+												data-time="mon${i}"></div>
+										</c:if>
+									</div></td>
+								<td class="p-0"><c:set var="count" value="0" />
+									<div class="h-100">
+										<c:forEach var="combined" items="${combinedList}">
+											<c:choose>
+												<c:when test="${combined.tueStartTime eq i}">
+													<c:set var="count" value="1"></c:set>
+													<div id="tue${i}"
+														class="classFilledTime h-100 d-flex justify-content-center align-items-center">${combined.courseCode}</div>
+												</c:when>
+											</c:choose>
+										</c:forEach>
+										<c:if test="${count eq 0}">
+											<div id="tue${i}"
+												class="classAvailableTime h-100 d-flex justify-content-center align-items-center"
+												data-time="tue${i}"></div>
+										</c:if>
+									</div></td>
+								<td class="p-0"><c:set var="count" value="0" />
+									<div class="h-100">
+										<c:forEach var="combined" items="${combinedList}">
+											<c:choose>
+												<c:when test="${combined.wedStartTime eq i}">
+													<c:set var="count" value="1"></c:set>
+													<div id="wed${i}"
+														class="classFilledTime h-100 d-flex justify-content-center align-items-center">${combined.courseCode}</div>
+												</c:when>
+											</c:choose>
+										</c:forEach>
+										<c:if test="${count eq 0}">
+											<div id="wed${i}"
+												class="classAvailableTime h-100 d-flex justify-content-center align-items-center"
+												data-time="wed${i}"></div>
+										</c:if>
+									</div></td>
+								<td class="p-0"><c:set var="count" value="0" />
+									<div class="h-100">
+										<c:forEach var="combined" items="${combinedList}">
+											<c:choose>
+												<c:when test="${combined.thuStartTime eq i}">
+													<c:set var="count" value="1"></c:set>
+													<div id="thu${i}"
+														class="classFilledTime h-100 d-flex justify-content-center align-items-center">${combined.courseCode}</div>
+												</c:when>
+											</c:choose>
+										</c:forEach>
+										<c:if test="${count eq 0}">
+											<div id="thu${i}"
+												class="classAvailableTime h-100 d-flex justify-content-center align-items-center"
+												data-time="thu${i}"></div>
+										</c:if>
+									</div></td>
+								<td class="p-0"><c:set var="count" value="0" />
+									<div class="h-100">
+										<c:forEach var="combined" items="${combinedList}">
+											<c:choose>
+												<c:when test="${combined.friStartTime eq i}">
+													<c:set var="count" value="1"></c:set>
+													<div id="fri${i}"
+														class="classFilledTime h-100 d-flex justify-content-center align-items-center">${combined.courseCode}</div>
+												</c:when>
+											</c:choose>
+										</c:forEach>
+										<c:if test="${count eq 0}">
+											<div id="fri${i}"
+												class="classAvailableTime h-100 d-flex justify-content-center align-items-center"
+												data-time="fri${i}"></div>
+										</c:if>
+									</div></td>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
-				<div class="d-flex justify-content-end">
-					<button type="submit" id="addClassSubmitBtn"
-						class="btn button mb-4">Create</button>
-				</div>
+			</div>
+			<div class="d-flex justify-content-end">
+				<button type="submit" id="addClassSubmitBtn" class="btn button mb-4">Create</button>
 			</div>
 		</form>
 	</div>
@@ -123,11 +192,53 @@
 								return;
 							}
 						});
+						$('.classAvailableTime')
+								.on(
+										'click',
+										function() {
+											let courseName = $('#courseName')
+													.val();
+											if (courseName == "0") {
+												alert("Please select the course that you are going to teach.");
+												return;
+											}
+											let courseCode = courseName
+													.split(' - ')[0];
+
+											let dayOfWeek = $(this)
+													.data("time").substring(0,
+															3);
+											let time = $(this).data("time")
+													.substring(3);
+
+											for (let i = 6; i <= 20; i++) {
+												if ($('#'.concat(dayOfWeek, i))
+														.hasClass(
+																"classSelectedTime")
+														&& i != time) {
+													alert("There is a class already in the same day.");
+													return;
+												}
+											}
+
+											if ($(this).hasClass(
+													"classSelectedTime")) {
+												$(this).removeClass(
+														"classSelectedTime");
+												$(this).text("");
+											} else {
+												$(this).addClass(
+														"classSelectedTime");
+												$(this).text(courseCode);
+											}
+										});
+
 						$('#subjectCode, #subjectLevel')
 								.on(
 										'change',
 										function() {
 											$('#courseName').val('0');
+											$('#courseName').change();
 
 											let subjectCode = $('#subjectCode')
 													.val();
@@ -146,8 +257,8 @@
 														subjectLevel);
 											}
 
-											let endValue = $('#endValue').data(
-													"end-value");
+											let endValue = $('#endValueHolder')
+													.data("end-value");
 											for (i = endValue - 1; i >= 0; i--) {
 												if ($(''.concat('.courses', i))
 														.val().startsWith(
@@ -158,6 +269,16 @@
 												}
 											}
 										});
+						$('#courseName').on(
+								'change',
+								function() {
+									$('.classSelectedTime').text("");
+									$('.classSelectedTime').removeClass(
+											'classSelectedTime');
+
+
+									});
+								})
 						$('#registerDueDate').datepicker({
 							dateFormat : 'yy/mm/dd',
 							minDate : 0
@@ -191,34 +312,62 @@
 												return false;
 											}
 
+											let monStartTime;
+											let tueStartTime;
+											let wedStartTime;
+											let thuStartTime;
+											let friStartTime;
+
 											let timeCount = 0;
-											let monStartTime = $('#dayOfWeek1')
-													.val();
-											if (monStartTime != "0") {
-												timeCount++;
-											}
-											let tueStartTime = $('#dayOfWeek2')
-													.val();
-											if (tueStartTime != "0") {
-												timeCount++;
-											}
-											let wedStartTime = $('#dayOfWeek3')
-													.val();
-											if (wedStartTime != "0") {
-												timeCount++;
-											}
-											let thuStartTime = $('#dayOfWeek4')
-													.val();
-											if (thuStartTime != "0") {
-												timeCount++;
-											}
-											let friStartTime = $('#dayOfWeek5')
-													.val();
-											if (friStartTime != "0") {
-												timeCount++;
+											for (let i = 6; i <= 20; i++) {
+												if ($('#mon'.concat(i))
+														.hasClass(
+																'classSelectedTime')) {
+													monStartTime = $(
+															'#mon'.concat(i))
+															.data("time")
+															.substring(3);
+													timeCount++;
+												}
+												if ($('#tue'.concat(i))
+														.hasClass(
+																'classSelectedTime')) {
+													tueStartTime = $(
+															'#tue'.concat(i))
+															.data("time")
+															.substring(3);
+													timeCount++;
+												}
+												if ($('#wed'.concat(i))
+														.hasClass(
+																'classSelectedTime')) {
+													wedStartTime = $(
+															'#wed'.concat(i))
+															.data("time")
+															.substring(3);
+													timeCount++;
+												}
+												if ($('#thu'.concat(i))
+														.hasClass(
+																'classSelectedTime')) {
+													thuStartTime = $(
+															'#thu'.concat(i))
+															.data("time")
+															.substring(3);
+													timeCount++;
+												}
+												if ($('#fri'.concat(i))
+														.hasClass(
+																'classSelectedTime')) {
+													friStartTime = $(
+															'#fri'.concat(i))
+															.data("time")
+															.substring(3);
+													timeCount++;
+												}
 											}
 											if (timeCount == 0) {
-												alert("There has to be at least one class time.");
+												alert("Please select your class time.");
 												return false;
 											}
 
@@ -250,7 +399,7 @@
 																alert("error "
 																		+ data.code
 																		+ ": "
-																		+ +data.errorMessage);
+																		+ data.errorMessage);
 															}
 														},
 														error : function(e) {

@@ -240,6 +240,49 @@
 		BY
 		`courseCode`
 	</select>
+
+	<select id="selectCombinedListByEmail" parameterType="string"
+		resultType="com.univ.course.model.ClassCourseCombined">
+		SELECT
+		a.`id`,
+		a.`profEmail`,
+		a.`maxNum`,
+		a.`registerDueDate`,
+		a.`monStartTime`,
+		a.`tueStartTime`,
+		a.`wedStartTime`,
+		a.`thuStartTime`,
+		a.`friStartTime`,
+		a.`createdAt`,
+		a.`updatedAt`,
+		b.`courseCode`,
+		b.`courseName`,
+		b.`description`,
+		b.`price`,
+		c.`email`,
+		c.`firstName`,
+		c.`lastName`,
+		c.`gender`,
+		c.`subject`
+		FROM
+		`class` as a
+		LEFT
+		JOIN
+		`course`
+		as
+		b
+		ON
+		a.`courseCode` =
+		b.`courseCode`
+		LEFT JOIN
+		`user` as c
+		ON
+		a.`profEmail` =
+		c.`email`
+		WHERE
+		c.`email` = #{email}
+	</select>
+
 	<select id="selectClassListByEmail" parameterType="string"
 		resultType="com.univ.course.model.Class">
 		SELECT

@@ -89,6 +89,10 @@ public class CourseBO {
 		return courseDAO.selectClassListByCourseCode(courseCode);
 	}
 
+	public List<ClassCourseCombined> getCombinedListByEmail(String email) {
+		return courseDAO.selectCombinedListByEmail(email);
+	}
+
 	public List<Class> getClassListByEmail(String email) {
 		return courseDAO.selectClassListByEmail(email);
 	}

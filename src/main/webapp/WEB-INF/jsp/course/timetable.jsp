@@ -37,20 +37,22 @@
 											<c:if test="${type eq 'student'}">
 												<c:set var="count" value="1"></c:set>
 												<div
-													class="classFilledTime h-100 d-flex justify-content-center align-items-center">${combined.courseCode}<br>${combined.firstName += " " += combined.lastName}
+													class="classFilledTime classFilledTimeHover hover-pointer h-100 d-flex justify-content-center align-items-center"
+													data-class-id="${combined.id}">${combined.courseCode}<br>${combined.firstName += " " += combined.lastName}
 												</div>
 											</c:if>
 											<c:if test="${type eq 'professor'}">
 												<c:set var="count" value="1"></c:set>
 												<div
-													class="classFilledTime h-100 d-flex justify-content-center align-items-center">${combined.courseCode}</div>
+													class="classFilledTime classFilledTimeHover hover-pointer h-100 d-flex justify-content-center align-items-center"
+													data-class-id="${combined.id}">${combined.courseCode}</div>
 											</c:if>
 										</c:when>
 									</c:choose>
 								</c:forEach>
 								<c:if test="${count eq 0}">
 									<div
-										class="classAvailableTime h-100 d-flex justify-content-center align-items-center"></div>
+										class="h-100 d-flex justify-content-center align-items-center"></div>
 								</c:if>
 							</div></td>
 						<td id="tue${i}" class="p-0"><c:set var="count" value="0" />
@@ -61,20 +63,22 @@
 											<c:if test="${type eq 'student'}">
 												<c:set var="count" value="1"></c:set>
 												<div
-													class="classFilledTime h-100 d-flex justify-content-center align-items-center">${combined.courseCode}<br>${combined.firstName += " " += combined.lastName}
+													class="classFilledTime classFilledTimeHover hover-pointer h-100 d-flex justify-content-center align-items-center"
+													data-class-id="${combined.id}">${combined.courseCode}<br>${combined.firstName += " " += combined.lastName}
 												</div>
 											</c:if>
 											<c:if test="${type eq 'professor'}">
 												<c:set var="count" value="1"></c:set>
 												<div
-													class="classFilledTime h-100 d-flex justify-content-center align-items-center">${combined.courseCode}</div>
+													class="classFilledTime classFilledTimeHover hover-pointer h-100 d-flex justify-content-center align-items-center"
+													data-class-id="${combined.id}">${combined.courseCode}</div>
 											</c:if>
 										</c:when>
 									</c:choose>
 								</c:forEach>
 								<c:if test="${count eq 0}">
 									<div
-										class="classAvailableTime h-100 d-flex justify-content-center align-items-center"></div>
+										class="h-100 d-flex justify-content-center align-items-center"></div>
 								</c:if>
 							</div></td>
 						<td id="wed${i}" class="p-0"><c:set var="count" value="0" />
@@ -85,20 +89,22 @@
 											<c:if test="${type eq 'student'}">
 												<c:set var="count" value="1"></c:set>
 												<div
-													class="classFilledTime h-100 d-flex justify-content-center align-items-center">${combined.courseCode}<br>${combined.firstName += " " += combined.lastName}
+													class="classFilledTime classFilledTimeHover hover-pointer h-100 d-flex justify-content-center align-items-center"
+													data-class-id="${combined.id}">${combined.courseCode}<br>${combined.firstName += " " += combined.lastName}
 												</div>
 											</c:if>
 											<c:if test="${type eq 'professor'}">
 												<c:set var="count" value="1"></c:set>
 												<div
-													class="classFilledTime h-100 d-flex justify-content-center align-items-center">${combined.courseCode}</div>
+													class="classFilledTime classFilledTimeHover hover-pointer hover-pointer h-100 d-flex justify-content-center align-items-center"
+													data-class-id="${combined.id}">${combined.courseCode}</div>
 											</c:if>
 										</c:when>
 									</c:choose>
 								</c:forEach>
 								<c:if test="${count eq 0}">
 									<div
-										class="classAvailableTime h-100 d-flex justify-content-center align-items-center"></div>
+										class="h-100 d-flex justify-content-center align-items-center"></div>
 								</c:if>
 							</div></td>
 						<td id="thu${i}" class="p-0"><c:set var="count" value="0" />
@@ -109,20 +115,22 @@
 											<c:if test="${type eq 'student'}">
 												<c:set var="count" value="1"></c:set>
 												<div
-													class="classFilledTime h-100 d-flex justify-content-center align-items-center">${combined.courseCode}<br>${combined.firstName += " " += combined.lastName}
+													class="classFilledTime classFilledTimeHover hover-pointer h-100 d-flex justify-content-center align-items-center"
+													data-class-id="${combined.id}">${combined.courseCode}<br>${combined.firstName += " " += combined.lastName}
 												</div>
 											</c:if>
 											<c:if test="${type eq 'professor'}">
 												<c:set var="count" value="1"></c:set>
 												<div
-													class="classFilledTime h-100 d-flex justify-content-center align-items-center">${combined.courseCode}</div>
+													class="classFilledTime classFilledTimeHover hover-pointer h-100 d-flex justify-content-center align-items-center"
+													data-class-id="${combined.id}">${combined.courseCode}</div>
 											</c:if>
 										</c:when>
 									</c:choose>
 								</c:forEach>
 								<c:if test="${count eq 0}">
 									<div
-										class="classAvailableTime h-100 d-flex justify-content-center align-items-center"></div>
+										class="h-100 d-flex justify-content-center align-items-center"></div>
 								</c:if>
 							</div></td>
 						<td id="fri${i}" class="p-0"><c:set var="count" value="0" />
@@ -133,20 +141,22 @@
 											<c:if test="${type eq 'student'}">
 												<c:set var="count" value="1"></c:set>
 												<div
-													class="classFilledTime h-100 d-flex justify-content-center align-items-center">${combined.courseCode}<br>${combined.firstName += " " += combined.lastName}
+													class="classFilledTime classFilledTimeHover hover-pointer h-100 d-flex justify-content-center align-items-center"
+													data-class-id="${combined.id}">${combined.courseCode}<br>${combined.firstName += " " += combined.lastName}
 												</div>
 											</c:if>
 											<c:if test="${type eq 'professor'}">
 												<c:set var="count" value="1"></c:set>
 												<div
-													class="classFilledTime h-100 d-flex justify-content-center align-items-center">${combined.courseCode}</div>
+													class="classFilledTime classFilledTimeHover hover-pointer h-100 d-flex justify-content-center align-items-center"
+													data-class-id="${combined.id}">${combined.courseCode}</div>
 											</c:if>
 										</c:when>
 									</c:choose>
 								</c:forEach>
 								<c:if test="${count eq 0}">
 									<div
-										class="classAvailableTime h-100 d-flex justify-content-center align-items-center"></div>
+										class="h-100 d-flex justify-content-center align-items-center"></div>
 								</c:if>
 							</div></td>
 					</tr>
@@ -157,3 +167,11 @@
 	<div class="col-3"></div>
 </div>
 
+<script>
+	$(document).ready(function() {
+		$('.classFilledTime').on('click', function() {
+			let classId = $(this).data('class-id');
+			location.href = "/univ/course/class_detail?classId=" + classId;
+		});
+	});
+</script>

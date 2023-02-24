@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.univ.user.model.User;
+
 import jakarta.servlet.http.HttpSession;
 
 @RequestMapping("/univ/user")
@@ -41,7 +43,7 @@ public class UserController {
 
 	@GetMapping("/find_password")
 	public String findPasswordView(Model model) {
-		model.addAttribute("view", "user/userVerification");
+		model.addAttribute("view", "userVerification");
 
 		return "template/loginLayout";
 	}
@@ -52,5 +54,18 @@ public class UserController {
 		model.addAttribute("view", "user/resetPassword");
 
 		return "template/loginLayout";
+	}
+
+	@GetMapping("/profile")
+	public String profileView(Model model, HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		if (user == null) {
+			return "redirect:/univ/user/sign_in";
+		}
+
+		model.addAttribute("user", user);
+		model.addAttribute("view", "user/profile");
+
+		return "template/layout";
 	}
 }

@@ -39,4 +39,21 @@ public class BoardRestController {
 
 		return result;
 	}
+
+	@PostMapping("/add_comment")
+	public Map<String, Object> addComment(@RequestParam("classId") int classId, @RequestParam("postId") int postId,
+			@RequestParam("content") String content, HttpSession session) {
+		Map<String, Object> result = new HashMap<>();
+
+		int rowCount = boardBO.addComment(classId, postId, content, session);
+
+		if (rowCount == 1) {
+			result.put("code", 1);
+		} else {
+			result.put("code", 500);
+			result.put("errorMessage", "Error while creating post.");
+		}
+
+		return result;
+	}
 }

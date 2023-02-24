@@ -95,7 +95,7 @@
 										</c:forEach>
 										<c:if test="${count eq 0}">
 											<div id="mon${i}"
-												class="classAvailableTime h-100 d-flex justify-content-center align-items-center"
+												class="classAvailableTime hover-pointer h-100 d-flex justify-content-center align-items-center"
 												data-time="mon${i}"></div>
 										</c:if>
 									</div></td>
@@ -112,7 +112,7 @@
 										</c:forEach>
 										<c:if test="${count eq 0}">
 											<div id="tue${i}"
-												class="classAvailableTime h-100 d-flex justify-content-center align-items-center"
+												class="classAvailableTime hover-pointer h-100 d-flex justify-content-center align-items-center"
 												data-time="tue${i}"></div>
 										</c:if>
 									</div></td>
@@ -129,7 +129,7 @@
 										</c:forEach>
 										<c:if test="${count eq 0}">
 											<div id="wed${i}"
-												class="classAvailableTime h-100 d-flex justify-content-center align-items-center"
+												class="classAvailableTime hover-pointer h-100 d-flex justify-content-center align-items-center"
 												data-time="wed${i}"></div>
 										</c:if>
 									</div></td>
@@ -146,7 +146,7 @@
 										</c:forEach>
 										<c:if test="${count eq 0}">
 											<div id="thu${i}"
-												class="classAvailableTime h-100 d-flex justify-content-center align-items-center"
+												class="classAvailableTime hover-pointer h-100 d-flex justify-content-center align-items-center"
 												data-time="thu${i}"></div>
 										</c:if>
 									</div></td>
@@ -163,7 +163,7 @@
 										</c:forEach>
 										<c:if test="${count eq 0}">
 											<div id="fri${i}"
-												class="classAvailableTime h-100 d-flex justify-content-center align-items-center"
+												class="classAvailableTime hover-pointer h-100 d-flex justify-content-center align-items-center"
 												data-time="fri${i}"></div>
 										</c:if>
 									</div></td>

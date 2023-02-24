@@ -18,7 +18,8 @@
 		<button type="button" class="ml-5 dropdown-toggle btn button"
 			data-toggle="dropdown">${user.firstName}</button>
 		<div class="dropdown-menu">
-			<a class="dropdown-item" href="#">My profile</a> <a
+			<a class="dropdown-item"
+				href="/univ/user/profile?email=${user.email}">My profile</a> <a
 				class="dropdown-item" href="#">Email</a> <a class="dropdown-item"
 				href="#">Notification</a>
 			<div role="separator" class="dropdown-divider"></div>

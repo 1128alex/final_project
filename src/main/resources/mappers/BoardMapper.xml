@@ -29,6 +29,7 @@
 		NOW()
 		)
 	</insert>
+
 	<select id="selectPostListByClassId" parameterType="int"
 		resultType="com.univ.board.model.PostUserCombined">
 		SELECT
@@ -56,4 +57,93 @@
 		ORDER BY
 		a.`updatedAt` DESC
 	</select>
+
+	<select id="selectPostByClassIdPostId" parameterType="map"
+		resultType="com.univ.board.model.PostUserCombined">
+		SELECT
+		a.`classId`,
+		a.`postId`,
+		a.`writerEmail`,
+		a.`title`,
+		a.`content`,
+		a.`filePath`,
+		a.`createdAt`,
+		a.`updatedAt`,
+		b.`email`,
+		b.`firstName`,
+		b.`lastName`,
+		b.`profileUrl`
+		FROM
+		`post` as a
+		INNER JOIN
+		`user` as b
+		ON
+		a.`writerEmail` = b.`email`
+		WHERE
+		a.`classId` =
+		#{classId}
+		AND
+		a.`postId` = #{postId}
+		ORDER BY
+		a.`updatedAt` DESC
+	</select>
+
+	<insert id="insertComment"
+		parameterType="com.univ.board.model.Comment">
+		INSERT INTO `comment`
+		(
+		`classId`,
+		`postId`,
+		`commentId`,
+		`writerEmail`,
+		`content`,
+		`createdAt`,
+		`updatedAt`
+		)
+		VALUES
+		(
+		#{classId},
+		#{postId},
+		IFNULL((SELECT a FROM (SELECT MAX(`commentId`) as a FROM
+		`comment`
+		WHERE
+		`classId` = #{classId} AND `postId` = #{postId})
+		TMP)+1,1),
+		#{writerEmail},
+		#{content},
+		NOW(),
+		NOW()
+		)
+	</insert>
+
+	<select id="selectCommentListByClassIdPostId"
+		parameterType="map"
+		resultType="com.univ.board.model.CommentUserCombined">
+		SELECT
+		a.`classId`,
+		a.`postId`,
+		a.`commentId`,
+		a.`writerEmail`,
+		a.`content`,
+		a.`createdAt`,
+		a.`updatedAt`,
+		b.`email`,
+		b.`firstName`,
+		b.`lastName`,
+		b.`profileUrl`
+		FROM
+		`comment` as a
+		INNER JOIN
+		`user` as b
+		ON
+		a.`writerEmail` = b.`email`
+		WHERE
+		a.`classId` =
+		#{classId}
+		AND
+		a.`postId` = #{postId}
+		ORDER BY
+		a.`updatedAt` DESC
+	</select>
+
 </mapper>

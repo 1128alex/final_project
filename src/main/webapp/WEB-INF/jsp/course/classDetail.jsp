@@ -97,8 +97,8 @@
 			<table class="table">
 				<thead class="text-center">
 					<tr>
-						<th class="border-right" style="width: 70%">Title</th>
-						<th class="border-right">Poster</th>
+						<th style="width: 70%">Title</th>
+						<th>Poster</th>
 						<th>Date</th>
 					</tr>
 				</thead>
@@ -106,8 +106,8 @@
 					<c:forEach var="post" items="${postList}">
 						<tr class="linkRow" data-class-id="${post.classId}"
 							data-post-id="${post.postId}">
-							<td class="border-right">${post.title}</td>
-							<td class="text-center border-right">${post.firstName += " " += post.lastName}</td>
+							<td>${post.title}</td>
+							<td class="text-center">${post.firstName += " " += post.lastName}</td>
 							<td class="text-center"><fmt:formatDate
 									value="${post.updatedAt}" pattern="d MMM yyyy" /></td>
 						</tr>
@@ -149,16 +149,16 @@
 			<table class="table">
 				<thead class="text-center">
 					<tr>
-						<th class="border-right" style="width: 70%">Title</th>
-						<th class="border-right">Poster</th>
+						<th style="width: 70%">Title</th>
+						<th>Poster</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach var="post" items="${postList}">
 						<tr class="linkRow" data-class-id="${post.classId}"
 							data-post-id="${post.postId}">
-							<td class="border-right">${post.title}</td>
-							<td class="text-center border-right">${post.firstName += " " += post.lastName}</td>
+							<td>${post.title}</td>
+							<td class="text-center">${post.firstName += " " += post.lastName}</td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -168,9 +168,16 @@
 </div>
 
 <script>
-	$(document).ready(function() {
-		$('.linkRow').on('click', function() {
-			alert($(this).data("class-id") + " " + $(this).data("post-id"));
-		})
-	})
+	$(document).ready(
+			function() {
+				$('.linkRow').on(
+						'click',
+						function() {
+							let classId = $(this).data("class-id");
+							let postId = $(this).data("post-id");
+
+							location.href = "/univ/board/post_detail?classId="
+									+ classId + "&postId=" + postId;
+						});
+			});
 </script>

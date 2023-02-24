@@ -36,11 +36,19 @@ input:focus::placeholder {
 	color: transparent;
 }
 
+.contentBox {
+	min-height: 200px;
+}
+
 .button {
 	background-color: #008B8B;
 	border-radius: 0px;
 	color: white;
 	font-weight: bold;
+}
+
+.hover-pointer:hover {
+	cursor: pointer;
 }
 
 .button:hover {
@@ -79,10 +87,7 @@ input:focus::placeholder {
 	font-weight: bold;
 }
 
-#profileImgBox {
-	height: 100px;
-	min-width: 100px;
-	max-width: 100px;
+.profileImgBox {
 	object-fit: cover;
 	border-radius: 50%;
 }
@@ -174,16 +179,17 @@ input:focus::placeholder {
 }
 
 .classAvailableTime:hover {
-	cursor: pointer;
 	background-color: #ccedcc;
 }
 
+.classFilledTimeHover:hover {
+	background-color: #fc8686;
+}
+
 .classSelectedTime {
-	cursor: pointer;
 	background-color: #b9c8fa;
 }
 
 .classSelectedTime:hover {
-	cursor: pointer;
 	background-color: #7e9af7;
 }

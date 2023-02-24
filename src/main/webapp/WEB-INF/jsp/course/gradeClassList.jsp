@@ -6,7 +6,7 @@
 <div class="d-flex">
 	<div class="col-3"></div>
 	<div class="col-6">
-		<h1>Grade List</h1>
+		<h1 class="mt-3">Grade List</h1>
 		<table class="table">
 			<thead>
 				<tr>

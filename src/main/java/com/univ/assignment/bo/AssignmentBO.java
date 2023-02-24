@@ -39,22 +39,13 @@ public class AssignmentBO {
 
 		if (files != null) {
 			// saving and adding files to database
-			String[] filePaths = new String[files.size()];
+			String filePath = "";
 			User user = (User) session.getAttribute("user");
 			String email = user.getEmail();
-			int index = 0;
 			for (MultipartFile file : files) {
-				filePaths[index++] = fileManagerService.saveFile(email, file);
+				filePath += fileManagerService.saveFile(email, file);
 			}
 
-			String filePath = null;
-			for (int i = 0; i < filePaths.length; i++) {
-				if (i == 0) {
-					filePath = filePaths[i] + " ";
-				} else {
-					filePath += filePaths[i] + " ";
-				}
-			}
 			assignment.setFilePath(filePath);
 		}
 

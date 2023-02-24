@@ -91,12 +91,29 @@
 		</div>
 		<div class="mt-4">
 			<h1>
-				<a href="" class="noDecoA">Class Board</a>
+				<a href="/univ/board/post_list?classId=${currentClass.id}"
+					class="noDecoA">Class Board</a>
 			</h1>
-			<table class="table table-bordered">
-				<tr>
-					<th>Posts</th>
-				</tr>
+			<table class="table">
+				<thead class="text-center">
+					<tr>
+						<th class="border-right" style="width: 70%">Title</th>
+						<th class="border-right">Poster</th>
+						<th>Date</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="post" items="${postList}">
+						<tr class="linkRow" data-class-id="${post.classId}"
+							data-post-id="${post.postId}">
+							<td class="border-right">${post.title}</td>
+							<td class="text-center border-right">${post.firstName += " " += post.lastName}</td>
+							<td class="text-center"><fmt:formatDate
+									value="${post.updatedAt}" pattern="d MMM yyyy" /></td>
+						</tr>
+					</c:forEach>
+				</tbody>
+
 			</table>
 		</div>
 		<div class="mt-4">
@@ -127,7 +144,33 @@
 		</div>
 	</div>
 	<div class="col-3 classAsideArea">
-		<h1 class="mt-3">Students</h1>
-		<div class="classAside"></div>
+		<h1 class="mt-3">Class Board</h1>
+		<div class="classAside">
+			<table class="table">
+				<thead class="text-center">
+					<tr>
+						<th class="border-right" style="width: 70%">Title</th>
+						<th class="border-right">Poster</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="post" items="${postList}">
+						<tr class="linkRow" data-class-id="${post.classId}"
+							data-post-id="${post.postId}">
+							<td class="border-right">${post.title}</td>
+							<td class="text-center border-right">${post.firstName += " " += post.lastName}</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>
+
+<script>
+	$(document).ready(function() {
+		$('.linkRow').on('click', function() {
+			alert($(this).data("class-id") + " " + $(this).data("post-id"));
+		})
+	})
+</script>

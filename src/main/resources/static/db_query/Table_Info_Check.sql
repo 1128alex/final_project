@@ -1,8 +1,8 @@
 SELECT 
     *
 FROM
-    `class`;
-DESC `class`;
+    `user`;
+DESC `user`;
 
 SELECT 
     *
@@ -13,8 +13,8 @@ DESC `course`;
 SELECT 
     *
 FROM
-    `user`;
-DESC `user`;
+    `class`;
+DESC `class`;
 
 SELECT 
     *
@@ -33,3 +33,13 @@ SELECT
 FROM
     `submittedassignment`;
 DESC `submittedassignment`;
+SELECT 
+    *
+FROM
+    `post`;
+DESC `post`;
+SELECT 
+    *
+FROM
+    `comment`;
+DESC `comment`;

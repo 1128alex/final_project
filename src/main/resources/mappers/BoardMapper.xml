@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- mapper 설정 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.univ.board.dao.BoardDAO">
+	<insert id="insertPost"
+		parameterType="com.univ.board.model.Post">
+		INSERT INTO `post`
+		(
+		`classId`,
+		`postId`,
+		`writerEmail`,
+		`title`,
+		`content`,
+		`filePath`,
+		`createdAt`,
+		`updatedAt`
+		)
+		VALUES
+		(
+		#{classId},
+		IFNULL((SELECT a FROM (SELECT MAX(`postId`) as a FROM
+		`post` WHERE `classId` = #{classId}) TMP)+1,1),
+		#{writerEmail},
+		#{title},
+		#{content},
+		#{filePath},
+		NOW(),
+		NOW()
+		)
+	</insert>
+	<select id="selectPostListByClassId" parameterType="int"
+		resultType="com.univ.board.model.PostUserCombined">
+		SELECT
+		a.`classId`,
+		a.`postId`,
+		a.`writerEmail`,
+		a.`title`,
+		a.`content`,
+		a.`filePath`,
+		a.`createdAt`,
+		a.`updatedAt`,
+		b.`email`,
+		b.`firstName`,
+		b.`lastName`,
+		b.`profileUrl`
+		FROM
+		`post` as a
+		INNER JOIN
+		`user` as b
+		ON
+		a.`writerEmail` = b.`email`
+		WHERE
+		a.`classId` =
+		#{classId}
+		ORDER BY
+		a.`updatedAt` DESC
+	</select>
+</mapper>

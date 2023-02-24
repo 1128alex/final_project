@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.univ.assignment.bo.AssignmentBO;
 import com.univ.assignment.model.Assignment;
+import com.univ.board.bo.BoardBO;
+import com.univ.board.model.PostUserCombined;
 import com.univ.course.bo.CourseBO;
 import com.univ.course.model.Class;
 import com.univ.course.model.ClassCourseCombined;
@@ -35,6 +37,8 @@ public class CourseController {
 	private AssignmentBO assignmentBO;
 	@Autowired
 	private RegistryBO registryBO;
+	@Autowired
+	private BoardBO boardBO;
 
 	@GetMapping("/create_class")
 	public String createClassView(Model model, HttpSession session) {
@@ -106,6 +110,10 @@ public class CourseController {
 		List<Assignment> assignmentList = assignmentBO.getAsgmtListByClassId(classId);
 
 		User user = (User) session.getAttribute("user");
+
+		List<PostUserCombined> postList = boardBO.getPostListByClassId(classId);
+
+		model.addAttribute("postList", postList);
 
 		model.addAttribute("profEmail", user.getEmail());
 		model.addAttribute("userType", user.getType());

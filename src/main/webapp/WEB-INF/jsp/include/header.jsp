@@ -20,8 +20,8 @@
 		<div class="dropdown-menu">
 			<a class="dropdown-item"
 				href="/univ/user/profile?email=${user.email}">My profile</a> <a
-				class="dropdown-item" href="#">Email</a> <a class="dropdown-item"
-				href="#">Notification</a>
+				class="dropdown-item" href="/univ/mail/send_email">Email</a> <a
+				class="dropdown-item" href="#">Notification</a>
 			<div role="separator" class="dropdown-divider"></div>
 			<a class="dropdown-item" href="/univ/user/log_out">Log out</a>
 		</div>

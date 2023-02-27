@@ -16,3 +16,14 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: alexnivautomailsender@gmail.com
+    password: xfgtcnyufcwyaciu
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true

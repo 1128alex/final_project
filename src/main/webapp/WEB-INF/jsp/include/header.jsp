@@ -20,7 +20,8 @@
 		<div class="dropdown-menu">
 			<a class="dropdown-item"
 				href="/univ/user/profile?email=${user.email}">My profile</a> <a
-				class="dropdown-item" href="/univ/mail/send_email">Email</a> <a
+				class="dropdown-item" href="/univ/chat/room?roomId=1">Chat</a> <a
+				class="dropdown-item" href="/univ/mail/email_inbox">Email</a> <a
 				class="dropdown-item" href="#">Notification</a>
 			<div role="separator" class="dropdown-divider"></div>
 			<a class="dropdown-item" href="/univ/user/log_out">Log out</a>

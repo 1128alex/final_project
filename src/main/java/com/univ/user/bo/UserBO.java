@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -102,5 +103,9 @@ public class UserBO {
 		String hashedPassword = EncryptUtils.md5(password);
 
 		return userDAO.resetPassword(email, hashedPassword);
+	}
+
+	public List<User> getUserListByTypeName(String type, String name) {
+		return userDAO.selectUserListByTypeName(type, name);
 	}
 }

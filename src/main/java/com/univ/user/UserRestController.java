@@ -2,6 +2,7 @@ package com.univ.user;
 
 import java.text.ParseException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,6 +117,23 @@ public class UserRestController {
 
 		if (rowCount == 1) {
 			result.put("code", 1);
+		} else {
+			result.put("code", 500);
+			result.put("errorMessage", "Error while getting verification question.");
+		}
+
+		return result;
+	}
+
+	@PostMapping("/user_list")
+	public Map<String, Object> userList(@RequestParam("type") String type, @RequestParam("name") String name) {
+		Map<String, Object> result = new HashMap<>();
+
+		List<User> userList = userBO.getUserListByTypeName(type, name);
+
+		if (userList != null) {
+			result.put("code", 1);
+			result.put("userList", userList);
 		} else {
 			result.put("code", 500);
 			result.put("errorMessage", "Error while getting verification question.");

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.univ.chat.model.Chat;
+import com.univ.chat.model.ChatRoom;
 
 @Repository
 public interface ChatDAO {
@@ -15,5 +16,9 @@ public interface ChatDAO {
 	public List<Chat> selectMessageList(int roomId);
 
 	public List<Chat> selectNewMessage(@Param("roomId") int roomId, @Param("currentId") int currentId);
+
+	public ChatRoom selectChatRoomByRoomId(int roomId);
+
+	public List<ChatRoom> selectChatRoomListByEmail(String email);
 
 }

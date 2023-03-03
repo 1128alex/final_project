@@ -1,5 +1,7 @@
 package com.univ.user.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -24,4 +26,6 @@ public interface UserDAO {
 			@Param("answer") String answer);
 
 	public int resetPassword(@Param("email") String email, @Param("password") String password);
+
+	public List<User> selectUserListByTypeName(@Param("type") String type, @Param("name") String name);
 }

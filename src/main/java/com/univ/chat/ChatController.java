@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.univ.chat.bo.ChatBO;
 import com.univ.chat.model.Chat;
+import com.univ.chat.model.ChatRoom;
 import com.univ.user.model.User;
 
 import jakarta.servlet.http.HttpSession;
@@ -22,14 +23,22 @@ public class ChatController {
 	private ChatBO chatBO;
 
 	@GetMapping("/room")
-	public String roomView(@RequestParam("roomId") int roomId, Model model, HttpSession session) {
+	public String roomView(@RequestParam(value = "roomId", required = false) Integer roomId, Model model,
+			HttpSession session) {
 		User user = (User) session.getAttribute("user");
 		String loggedEmail = user.getEmail();
-
-		List<Chat> chatList = chatBO.getMessageList(roomId);
-
 		model.addAttribute("loggedEmail", loggedEmail);
-		model.addAttribute("chatList", chatList);
+
+		List<ChatRoom> roomList = chatBO.getChatRoomListByEmail(loggedEmail);
+		model.addAttribute("roomList", roomList);
+
+		if (roomId != null) {
+			ChatRoom currentRoom = chatBO.getChatRoomByRoomId(roomId);
+			List<Chat> chatList = chatBO.getMessageList(roomId);
+			model.addAttribute("currentRoom", currentRoom);
+			model.addAttribute("chatList", chatList);
+		}
+
 		model.addAttribute("view", "chat/chat");
 
 		return "template/layout";

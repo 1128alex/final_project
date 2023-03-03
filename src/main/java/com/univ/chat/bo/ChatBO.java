@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.univ.chat.dao.ChatDAO;
 import com.univ.chat.model.Chat;
+import com.univ.chat.model.ChatRoom;
 
 @Service
 public class ChatBO {
@@ -24,6 +25,14 @@ public class ChatBO {
 
 	public List<Chat> getNewMessage(int roomId, int currentId) {
 		return chatDAO.selectNewMessage(roomId, currentId);
+	}
+
+	public ChatRoom getChatRoomByRoomId(int roomId) {
+		return chatDAO.selectChatRoomByRoomId(roomId);
+	}
+
+	public List<ChatRoom> getChatRoomListByEmail(String loggedEmail) {
+		return chatDAO.selectChatRoomListByEmail(loggedEmail);
 	}
 
 }

@@ -53,4 +53,32 @@
 		AND
 		`id` > #{currentId}
 	</select>
+
+	<select id="selectChatRoomByRoomId" parameterType="int"
+		resultType="com.univ.chat.model.ChatRoom">
+		SELECT
+		`id`,
+		`members`,
+		`roomName`,
+		`createdAt`,
+		`updatedAt`
+		FROM
+		`chatroom`
+		WHERE
+		`id` = #{roomId}
+	</select>
+
+	<select id="selectChatRoomListByEmail" parameterType="string"
+		resultType="com.univ.chat.model.ChatRoom">
+		SELECT
+		`id`,
+		`members`,
+		`roomName`,
+		`createdAt`,
+		`updatedAt`
+		FROM
+		`chatroom`
+		WHERE
+		`members` like CONCAT('/',#{email},'/')
+	</select>
 </mapper>

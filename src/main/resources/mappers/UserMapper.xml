@@ -144,4 +144,25 @@
 		WHERE
 		`email` = #{email}
 	</update>
+
+	<select id="selectUserListByTypeName" parameterType="map"
+		resultType="com.univ.user.model.User">
+		SELECT
+		`email`,
+		`studentNum`,
+		`type`,
+		`firstName`,
+		`lastName`,
+		`birth`,
+		`gender`,
+		`subject`,
+		`profileUrl`
+		FROM
+		`user`
+		WHERE
+		`type`=#{type}
+		AND
+		CONCAT(`firstName`,' ',`lastName`) LIKE #{name}
+		<!-- (`firstName` LIKE #{name} OR `lastName` LIKE #{name}) -->
+	</select>
 </mapper>

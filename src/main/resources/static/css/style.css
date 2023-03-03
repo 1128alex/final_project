@@ -193,3 +193,24 @@ input:focus::placeholder {
 .classSelectedTime:hover {
 	background-color: #7e9af7;
 }
+
+.greyBorder {
+	border: 1px solid lightgrey;
+}
+
+.sharpBorder {
+	border-radius: 0px;
+}
+
+.chatRoomList {
+	background-color: #f0f1f2;
+	height: 553px;
+	overflow-y: auto;
+	height: 553px;
+}
+
+#chatBox {
+	height: 400px;
+	overflow-x: auto;
+	overflow-y: auto;
+}

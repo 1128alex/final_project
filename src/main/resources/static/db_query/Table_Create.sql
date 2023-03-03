@@ -98,16 +98,16 @@ CREATE TABLE `comment` (
     `updatedAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4;
 
-
 CREATE TABLE `chatroom` (
     `id` INT NOT NULL,
+    `members` TEXT NOT NULL,
     `roomName` VARCHAR(150) NOT NULL,
     `createdAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updatedAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4;
 
 CREATE TABLE `chat` (
-    `id` INT NOT NULL,
+    `id` INT auto_increment primary key,
     `roomId` INT NOT NULL,
     `writer` VARCHAR(150) NOT NULL,
     `content` VARCHAR(150) NOT NULL,

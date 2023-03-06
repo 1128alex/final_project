@@ -127,6 +127,15 @@ input:focus::placeholder {
 	cursor: pointer;
 }
 
+.selectedRow {
+	background-color: #b8d1d4;
+}
+
+.selectedRow:hover {
+	background-color: #d5e6e8;
+	cursor: pointer;
+}
+
 .classBoxTitle {
 	height: 110px;
 	background-color: #008B8B;
@@ -202,15 +211,54 @@ input:focus::placeholder {
 	border-radius: 0px;
 }
 
+.roomListTable>tbody {
+	display: block;
+	overflow-y: scroll;
+	height: 500px;
+}
+
 .chatRoomList {
 	background-color: #f0f1f2;
-	height: 553px;
+}
+
+.selectedChatRoom {
+	background-color: #d2d2d2;
 	overflow-y: auto;
-	height: 553px;
+}
+
+.chatRoomTitle {
+	height: 50px;
+	overflow: hidden;
+}
+
+.chatRoomBox {
+	height: 500px;
+}
+
+.chatBalloon {
+	border: 2px solid lightgrey;
+	border-radius: 6px;
+	max-width: 300px;
+	overflow-wrap: break-word;
+	padding: 5px;
+	background-color: #eaffff;
+}
+
+.myChat {
+	background-color: #008B8B;
+	color: white;
 }
 
 #chatBox {
-	height: 400px;
-	overflow-x: auto;
+	border-top: 1px solid lightgrey;
 	overflow-y: auto;
+}
+
+#userListBox {
+	max-height: 350px;
+}
+
+#memberList {
+	height: 50px;
+	overflow-x: auto;
 }

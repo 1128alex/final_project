@@ -27,5 +27,6 @@ public interface UserDAO {
 
 	public int resetPassword(@Param("email") String email, @Param("password") String password);
 
-	public List<User> selectUserListByTypeName(@Param("type") String type, @Param("name") String name);
+	public List<User> selectUserListByTypeName(@Param("type") String type, @Param("search") String search,
+			@Param("loggedEmail") String loggedEmail);
 }

@@ -13,13 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.univ.chat.bo.ChatBO;
 import com.univ.chat.model.Chat;
 
+import jakarta.servlet.http.HttpSession;
+
 @RequestMapping("/chat")
 @RestController
 public class ChatRestController {
 	@Autowired
 	private ChatBO chatBO;
 
-	@GetMapping("add_message")
+	@GetMapping("/add_message")
 	public Map<String, Object> addMessage(@RequestParam("roomId") int roomId, @RequestParam("writer") String writer,
 			@RequestParam("content") String content) {
 		Map<String, Object> result = new HashMap<>();
@@ -36,7 +38,7 @@ public class ChatRestController {
 		return result;
 	}
 
-	@GetMapping("get_new_message")
+	@GetMapping("/get_new_message")
 	public Map<String, Object> getNewMessage(@RequestParam("roomId") int roomId,
 			@RequestParam("currentId") int currentId) {
 		Map<String, Object> result = new HashMap<>();
@@ -48,4 +50,25 @@ public class ChatRestController {
 
 		return result;
 	}
+
+	@GetMapping("/create_chat_room")
+	public Map<String, Object> createChatRoom(@RequestParam("memberString") String members,
+			@RequestParam(value = "roomName", required = false) String roomName, HttpSession session) {
+		Map<String, Object> result = new HashMap<>();
+
+		int rowCount = chatBO.createChatRoom(members, roomName, session);
+
+		if (rowCount > 0) {
+			result.put("code", 1);
+
+			int newChat = chatBO.getRecentChatRoomId();
+			result.put("roomId", newChat);
+		} else {
+			result.put("code", 500);
+			result.put("errorMessage", "Error while creating chatRoom");
+		}
+
+		return result;
+	}
+
 }

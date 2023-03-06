@@ -79,6 +79,36 @@
 		FROM
 		`chatroom`
 		WHERE
-		`members` like CONCAT('/',#{email},'/')
+		`members` like CONCAT('%',#{email},'/%')
+		ORDER BY
+		`createdAt` DESC
+	</select>
+
+	<insert id="insertChatRoom" parameterType="map">
+		INSERT INTO `chatroom`
+		(
+		`members`,
+		`roomName`,
+		`createdAt`,
+		`updatedAt`
+		)
+		VALUES
+		(
+		#{memberString},
+		#{roomName},
+		NOW(),
+		NOW()
+		)
+	</insert>
+
+	<select id="selectRecentChatRoomId" resultType="int">
+		SELECT
+		`id`
+		FROM
+		`chatroom`
+		ORDER BY
+		`createdAt`
+		DESC
+		LIMIT 1
 	</select>
 </mapper>

@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import com.univ.chat.dao.ChatDAO;
 import com.univ.chat.model.Chat;
 import com.univ.chat.model.ChatRoom;
+import com.univ.user.model.User;
+
+import jakarta.servlet.http.HttpSession;
 
 @Service
 public class ChatBO {
@@ -33,6 +36,22 @@ public class ChatBO {
 
 	public List<ChatRoom> getChatRoomListByEmail(String loggedEmail) {
 		return chatDAO.selectChatRoomListByEmail(loggedEmail);
+	}
+
+	public int createChatRoom(String members, String roomName, HttpSession session) {
+		User user = (User) session.getAttribute("user");
+
+		String memberString = user.getEmail() + "/" + members;
+
+		if (roomName == "") {
+			roomName = memberString.replace("/", ", ");
+		}
+
+		return chatDAO.insertChatRoom(memberString, roomName);
+	}
+
+	public int getRecentChatRoomId() {
+		return chatDAO.selectRecentChatRoomId();
 	}
 
 }

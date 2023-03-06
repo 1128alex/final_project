@@ -21,4 +21,8 @@ public interface ChatDAO {
 
 	public List<ChatRoom> selectChatRoomListByEmail(String email);
 
+	public int insertChatRoom(@Param("memberString") String memberString, @Param("roomName") String roomName);
+
+	public int selectRecentChatRoomId();
+
 }

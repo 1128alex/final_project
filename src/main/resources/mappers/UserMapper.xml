@@ -160,9 +160,16 @@
 		FROM
 		`user`
 		WHERE
-		`type`=#{type}
+		`type` = #{type}
 		AND
-		CONCAT(`firstName`,' ',`lastName`) LIKE #{name}
-		<!-- (`firstName` LIKE #{name} OR `lastName` LIKE #{name}) -->
+		`email` != #{loggedEmail}
+		AND
+		<if test="search != null">
+			(CONCAT(`firstName`, ' ', `lastName`) LIKE
+			CONCAT('%',#{search},'%')
+			OR
+			`email` LIKE CONCAT('%',#{search},'%'))
+			<!-- (`firstName` LIKE CONCAT('%',#{name},'%') OR `lastName` LIKE CONCAT('%',#{name},'%')) -->
+		</if>
 	</select>
 </mapper>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.univ.chat.bo.ChatBO;
 import com.univ.chat.model.Chat;
 import com.univ.chat.model.ChatRoom;
+import com.univ.user.bo.UserBO;
 import com.univ.user.model.User;
 
 import jakarta.servlet.http.HttpSession;
@@ -21,6 +22,8 @@ import jakarta.servlet.http.HttpSession;
 public class ChatController {
 	@Autowired
 	private ChatBO chatBO;
+	@Autowired
+	private UserBO userBO;
 
 	@GetMapping("/room")
 	public String roomView(@RequestParam(value = "roomId", required = false) Integer roomId, Model model,
@@ -40,6 +43,25 @@ public class ChatController {
 		}
 
 		model.addAttribute("view", "chat/chat");
+
+		return "template/layout";
+	}
+
+	@GetMapping("/create_chat")
+	public String createChatView(@RequestParam(value = "type", required = false) String type,
+			@RequestParam(value = "search", required = false) String search, Model model, HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		String loggedEmail = user.getEmail();
+
+		if (type != null) {
+			List<User> userList = userBO.getUserListByTypeName(type, search, loggedEmail);
+
+			model.addAttribute("type", type);
+			model.addAttribute("userList", userList);
+		}
+
+		model.addAttribute("search", search);
+		model.addAttribute("view", "chat/createNewChat");
 
 		return "template/layout";
 	}

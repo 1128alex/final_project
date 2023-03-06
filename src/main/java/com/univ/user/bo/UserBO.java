@@ -105,7 +105,7 @@ public class UserBO {
 		return userDAO.resetPassword(email, hashedPassword);
 	}
 
-	public List<User> getUserListByTypeName(String type, String name) {
-		return userDAO.selectUserListByTypeName(type, name);
+	public List<User> getUserListByTypeName(String type, String search, String loggedEmail) {
+		return userDAO.selectUserListByTypeName(type, search, loggedEmail);
 	}
 }

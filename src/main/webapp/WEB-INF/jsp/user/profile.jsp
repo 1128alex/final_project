@@ -6,8 +6,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <div class="d-flex">
-	<div class="col-4"></div>
-	<div class="col-4">
+	<div class="col-3"></div>
+	<div class="col-6">
 		<div>
 			<h1 class="mt-3">Profile</h1>
 		</div>
@@ -81,5 +81,5 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-4"></div>
+	<div class="col-3"></div>
 </div>

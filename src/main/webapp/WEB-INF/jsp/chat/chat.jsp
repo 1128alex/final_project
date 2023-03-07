@@ -70,17 +70,6 @@
 				<c:forEach var="chat" items="${chatList}">
 					<c:choose>
 						<c:when test="${chat.writer eq loggedEmail}">
-							<%-- <div class="d-flex justify-content-end my-2">
-								<div class="chatBalloon">
-									<c:set var="currentChatId" value="${chat.id}"></c:set>
-									<div class="d-flex justify-content-end">
-										<b>${chat.writer}</b>
-									</div>
-									<div class="text-right">
-										<span>${chat.content}</span>
-									</div>
-								</div>
-							</div> --%>
 							<div class="d-flex justify-content-end my-2">
 								<div class="d-flex align-items-end mr-1">
 									<fmt:formatDate value="${chat.createdAt}" pattern="H:mm a" />
@@ -180,6 +169,11 @@
 						let currentId = $('#dataHolder').data("current-id");
 						let writer = $('#dataHolder').data("email");
 
+						addEventListener("keydown", function(e) {
+							if (e.key === "Enter") {
+								$('#sendBtn').click();
+							}
+						});
 						$('#sendBtn')
 								.on(
 										'click',
@@ -285,5 +279,6 @@
 							let roomId = $(this).data('room-id');
 							location.href = "/univ/chat/room?roomId=" + roomId;
 						});
+
 					});
 </script>

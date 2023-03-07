@@ -6,6 +6,7 @@
 <div class="d-flex justify-content-center">
 	<div class="col-6">
 		<h2 class="mt-3 font-weight-bold">Add Class</h2>
+		<hr>
 		<form id="addClassForm" action="/course/create_class" method="get">
 			<div class="col-10">
 				<div class="mt-3">

@@ -102,7 +102,11 @@
 								}
 							}
 						}
-
+						addEventListener("keydown", function(e) {
+							if (e.key === "Enter") {
+								$('#searchBtn').click();
+							}
+						});
 						$('#searchBtn')
 								.on(
 										'click',

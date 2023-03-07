@@ -89,7 +89,7 @@ input:focus::placeholder {
 
 .profileImgBox {
 	object-fit: cover;
-	border-radius: 50%;
+	border-radius: 100%;
 }
 
 .dayOfWeek {
@@ -255,7 +255,8 @@ input:focus::placeholder {
 }
 
 #userListBox {
-	max-height: 350px;
+	height: 300px;
+	overflow: auto;
 }
 
 #memberList {

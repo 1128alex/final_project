@@ -7,7 +7,7 @@
 </div>
 <div class="logo col-6">
 	<div class="d-flex justify-content-center">
-		<a href="/univ"> <img alt="logoImg"
+		<a href="/univ/course/class_list"> <img alt="logoImg"
 			src="/static/img/logoFinalized-onlyLogo.png" height="120"
 			class="mt-3">
 		</a>
@@ -15,8 +15,10 @@
 </div>
 <div class="col-3">
 	<div class="d-flex justify-content-center align-items-center h-100">
-		<button type="button" class="ml-5 dropdown-toggle btn button"
-			data-toggle="dropdown">${user.firstName}</button>
+		<a class="ml-5 dropdown-toggle hover-pointer" data-toggle="dropdown">
+			<img alt="" class="profileImgBox" src="${user.profileUrl}"
+			height="50" width="50"> <span class="ml-1">${user.firstName}</span>
+		</a>
 		<div class="dropdown-menu">
 			<a class="dropdown-item"
 				href="/univ/user/profile?email=${user.email}">My profile</a> <a

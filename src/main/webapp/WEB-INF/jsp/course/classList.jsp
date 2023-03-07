@@ -5,10 +5,11 @@
 <!DOCTYPE html>
 <div>
 	<div class="d-flex justify-content-center">
-		<div class="col-9">
+		<div class="col-12">
 			<div>
 				<h1 class="mt-4 ml-4">My Classes</h1>
 			</div>
+			<hr>
 			<div class="box d-flex">
 				<c:forEach var="combined" items="${combinedList}" varStatus="status">
 					<a href="/univ/course/class_detail?classId=${combined._class.id}"
@@ -26,10 +27,6 @@
 				</c:forEach>
 			</div>
 			<div class="my-3"></div>
-		</div>
-		<div class="col-3 classAsideArea">
-			<h1 class="mt-4 ml-4">My Classes</h1>
-			<div class="classAside mt-4 ml-4"></div>
 		</div>
 	</div>
 </div>

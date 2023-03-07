@@ -55,7 +55,7 @@
 				},
 				success : function(data) {
 					if (data.code == 1) {
-						location.href = "/univ";
+						location.href = "/univ/course/class_list";
 					} else if (data.code == 500) {
 						alert(data.errorMessage);
 					}

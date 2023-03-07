@@ -170,7 +170,7 @@ public class CourseController {
 				courseLevel, pageNum);
 
 		int pageLength = (int) Math
-				.ceil(courseBO.countFilteredCourseList(searchKeyword, courseName, subjectCode, courseLevel) / 3.0);
+				.ceil(courseBO.countFilteredCourseList(searchKeyword, courseName, subjectCode, courseLevel) / 5.0);
 		model.addAttribute("pageLength", pageLength);
 		model.addAttribute("pageNum", pageNum);
 

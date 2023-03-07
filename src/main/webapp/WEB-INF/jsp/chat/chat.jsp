@@ -10,7 +10,7 @@
 <div class="d-flex">
 	<div class="col-2"></div>
 	<div class="col-8 d-flex">
-		<div class="col-4 chatRoomList greyBorder mt-4 px-0">
+		<div class="col-4 chatRoomList greyBorder mt-4 px-0 noneSelectable">
 			<div class="d-flex justify-content-between align-items-center">
 				<h2 class="m-3">Chat List</h2>
 				<div>
@@ -54,39 +54,61 @@
 			</div>
 			<div id="chatBox" class="chatRoomBox greyborder px-2">
 				<c:forEach var="chat" items="${chatList}">
+					<fmt:formatDate value="${chat.createdAt}" var="currentDate"
+						pattern="d" />
+					<c:if test="${currentDate ne lastDate}">
+						<div class="d-flex justify-content-center">
+							-----
+							<fmt:formatDate value="${chat.createdAt}" pattern="d MMM yyyy" />
+							-----
+						</div>
+					</c:if>
 					<c:choose>
 						<c:when test="${chat.writer eq loggedEmail}">
 							<div class="d-flex justify-content-end my-2">
 								<div class="d-flex align-items-end mr-1">
 									<fmt:formatDate value="${chat.createdAt}" pattern="h:mm a" />
 								</div>
-								<div class="chatBalloon myChat">
-									<c:set var="currentChatId" value="${chat.id}"></c:set>
-									<div class="d-flex justify-content-end">
+								<div>
+									<%-- <div class="d-flex justify-content-end">
 										<b>${chat.writer}</b>
-									</div>
-									<div>
-										<div>${chat.content}</div>
+									</div> --%>
+									<div class="chatBalloon myChat">
+										<c:set var="currentChatId" value="${chat.id}"></c:set>
+										<div>
+											<div>${chat.content}</div>
+										</div>
 									</div>
 								</div>
 							</div>
 						</c:when>
 						<c:otherwise>
 							<div class="d-flex my-2">
-								<div class="chatBalloon">
-									<c:set var="currentChatId" value="${chat.id}"></c:set>
-									<div>
-										<b>${chat.writer}</b>
-									</div>
-									<div>${chat.content}</div>
+								<div class="mr-2">
+									<img alt="" src="${chat.profileUrl}" class="profileImgBox"
+										height="30px" width="30px">
 								</div>
-								<div class="d-flex align-items-end ml-1">
-									<fmt:formatDate value="${chat.createdAt}" pattern="h:mm a " />
+								<div>
+									<div>
+										<b>${chat.firstName += ' ' += chat.lastName}</b>
+									</div>
+									<div class="d-flex">
+										<div class="chatBalloon">
+											<c:set var="currentChatId" value="${chat.id}"></c:set>
+											<div>${chat.content}</div>
+										</div>
+										<div class="d-flex align-items-end ml-1">
+											<fmt:formatDate value="${chat.createdAt}" pattern="h:mm a" />
+										</div>
+									</div>
 								</div>
 							</div>
 						</c:otherwise>
 					</c:choose>
+
+					<c:set value="${currentDate}" var="lastDate"></c:set>
 				</c:forEach>
+				<div id="currentDateHolder" hidden="hidden">${currentDate}</div>
 			</div>
 			<div class="d-flex justify-content-end">
 				<input type="text" id="content" class="form-control sharpBorder">
@@ -207,6 +229,8 @@
 									if (currentId == '') {
 										currentId = 0;
 									}
+									let currentDate = $('#currentDateHolder')
+											.text();
 									$
 											.ajax({
 												type : "GET",
@@ -218,17 +242,56 @@
 												success : function(data) {
 													if (data.code == 1) {
 														for (let i = 0; i < data.newChatList.length; i++) {
-															let date = new Date(
+															let createdAt = new Date(
 																	data.newChatList[i].createdAt);
-															var hours = date
+															var hours = createdAt
 																	.getHours();
-															var ampm = "am"
+															var ampm = "AM";
 															if (hours >= 12) {
-																ampm = "pm";
+																ampm = "PM"
 																hours -= 12;
 															}
-															var minutes = date
+															if (hours == 0) {
+																hours += 12;
+															}
+
+															var minutes = createdAt
 																	.getMinutes();
+															if (minutes < 10) {
+																minutes = "0"
+																		+ minutes;
+															}
+															var date = createdAt
+																	.getDate();
+
+															const monthNames = [
+																	"Jan",
+																	"Feb",
+																	"Mar",
+																	"Apr",
+																	"May",
+																	"Jun",
+																	"Jul",
+																	"Aug",
+																	"Sep",
+																	"Oct",
+																	"Nov",
+																	"Dec" ];
+															var month = createdAt
+																	.getMonth();
+															var year = createdAt
+																	.getFullYear();
+															if (currentDate != date) {
+																$('#chatBox')
+																		.append(
+																				'<div class="d-flex justify-content-center">-----'
+																						+ date
+																						+ " "
+																						+ monthNames[month]
+																						+ " "
+																						+ year
+																						+ '-----</div>');
+															}
 
 															if (data.newChatList[i].writer == writer) {
 																$('#chatBox')
@@ -237,22 +300,28 @@
 																						+ hours
 																						+ ':'
 																						+ minutes
-																						+ ' '
+																						+ " "
 																						+ ampm
-																						+ '</div></div><div class="chatBalloon myChat"><c:set var="currentChatId" value="${chat.id}"></c:set><div class="d-flex justify-content-end"><b>'
-																						+ data.newChatList[i].writer
-																						+ '</b></div><div>'
+																						+ '</div></div><div class="chatBalloon myChat"><c:set var="currentChatId" value="${chat.id}"></c:set><div>'
 																						+ data.newChatList[i].content
 																						+ '</div></div></div>');
 
 															} else if (data.newChatList[i].writer != writer) {
 																$('#chatBox')
 																		.append(
-																				'<div class="d-flex my-2"><div class="chatBalloon"><c:set var="currentChatId" value="${chat.id}"></c:set><div><b>'
-																						+ data.newChatList[i].writer
-																						+ '</b></div><div>'
+																				'<div class="d-flex my-2"><div class="mr-2"><img alt="" src="'+data.newChatList[i].profileUrl+'" class="profileImgBox" height="30px" width="30px"></div><div><div><b>'
+																						+ data.newChatList[i].firstName
+																						+ ' '
+																						+ data.newChatList[i].lastName
+																						+ '</b></div><div class="d-flex"><div class="chatBalloon"><c:set var="currentChatId" value="${chat.id}"></c:set><div>'
 																						+ data.newChatList[i].content
-																						+ '</div></div><div class="chatBalloon myChat"><c:set var="currentChatId" value="${chat.id}"></c:set><div class="d-flex justify-content-end"><b></div>');
+																						+ '</div></div><div class="d-flex align-items-end ml-1">'
+																						+ hours
+																						+ ':'
+																						+ minutes
+																						+ " "
+																						+ ampm
+																						+ '</div></div></div></div>');
 															}
 															const element = document
 																	.getElementById("chatBox");

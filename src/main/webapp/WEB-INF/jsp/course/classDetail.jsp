@@ -17,6 +17,7 @@
 				</div>
 			</c:if>
 		</div>
+		<hr>
 		<h2 class="mt-3">Description</h2>
 		<div class="d-flex justify-content-between">
 			<span>${currentCourse.description}</span><br>
@@ -89,33 +90,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="mt-4">
-			<h1>
-				<a href="/univ/board/post_list?classId=${currentClass.id}"
-					class="noDecoA">Class Board</a>
-			</h1>
-			<table class="table">
-				<thead class="text-center">
-					<tr>
-						<th style="width: 70%">Title</th>
-						<th>Poster</th>
-						<th>Date</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="post" items="${postList}">
-						<tr class="linkRow" data-class-id="${post.classId}"
-							data-post-id="${post.postId}">
-							<td>${post.title}</td>
-							<td class="text-center">${post.firstName += " " += post.lastName}</td>
-							<td class="text-center"><fmt:formatDate
-									value="${post.updatedAt}" pattern="d MMM yyyy" /></td>
-						</tr>
-					</c:forEach>
-				</tbody>
-
-			</table>
-		</div>
+		<hr>
 		<div class="mt-4">
 			<h1>
 				<a

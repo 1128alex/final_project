@@ -3,7 +3,7 @@
 <!-- Core -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<ul class="nav nav-fill pt-2">
+<ul class="nav nav-fill pt-2 noneSelectable">
 	<li class="nav-item"><h4>
 			<a href="/univ/course/class_list"
 				class="nav-link text-white font-weight-bold">My Classes</a>

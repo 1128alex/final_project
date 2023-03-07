@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.univ.chat.dao.ChatDAO;
-import com.univ.chat.model.Chat;
 import com.univ.chat.model.ChatRoom;
+import com.univ.chat.model.ChatUserCombined;
 import com.univ.user.model.User;
 
 @Service
@@ -22,11 +22,11 @@ public class ChatBO {
 		return chatDAO.insertMessage(roomId, writer, content);
 	}
 
-	public List<Chat> getMessageList(int roomId) {
+	public List<ChatUserCombined> getMessageList(int roomId) {
 		return chatDAO.selectMessageList(roomId);
 	}
 
-	public List<Chat> getNewMessage(int roomId, int currentId) {
+	public List<ChatUserCombined> getNewMessage(int roomId, int currentId) {
 		return chatDAO.selectNewMessage(roomId, currentId);
 	}
 

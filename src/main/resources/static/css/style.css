@@ -136,6 +136,10 @@ input:focus::placeholder {
 	cursor: pointer;
 }
 
+.noneSelectable {
+	user-select: none;
+}
+
 .classBoxTitle {
 	height: 110px;
 	background-color: #008B8B;
@@ -252,6 +256,7 @@ input:focus::placeholder {
 #chatBox {
 	border-top: 1px solid lightgrey;
 	overflow-y: auto;
+	user-select: none;
 }
 
 #userListBox {

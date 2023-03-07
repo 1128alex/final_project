@@ -10,7 +10,7 @@
 				<h1 class="mt-4 ml-4">My Classes</h1>
 			</div>
 			<hr>
-			<div class="box d-flex">
+			<div class="box d-flex noneSelectable">
 				<c:forEach var="combined" items="${combinedList}" varStatus="status">
 					<a href="/univ/course/class_detail?classId=${combined._class.id}"
 						id="classBox${status.count}" class="classBox mx-3 mt-4 mb-2"

@@ -124,7 +124,7 @@
 		ORDER BY b.`courseCode`,a.`id`) AS d, (SELECT
 		@ROWNUM:=0) AS e) f
 		WHERE
-		`rownum` BETWEEN #{pageNum} * 3 - 2 AND #{pageNum} * 3;
+		`rownum` BETWEEN #{pageNum} * 5 - 4 AND #{pageNum} * 5;
 	</select>
 
 	<select id="selectCourseByCourseCode" parameterType="string"

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.univ.chat.bo.ChatBO;
-import com.univ.chat.model.Chat;
+import com.univ.chat.model.ChatUserCombined;
 
 @RequestMapping("/chat")
 @RestController
@@ -43,7 +43,7 @@ public class ChatRestController {
 			@RequestParam("currentId") int currentId) {
 		Map<String, Object> result = new HashMap<>();
 
-		List<Chat> chatList = chatBO.getNewMessage(roomId, currentId);
+		List<ChatUserCombined> chatList = chatBO.getNewMessage(roomId, currentId);
 
 		result.put("code", 1);
 		result.put("newChatList", chatList);

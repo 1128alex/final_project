@@ -23,35 +23,55 @@
 	</insert>
 
 	<select id="selectMessageList" parameterType="int"
-		resultType="com.univ.chat.model.Chat">
+		resultType="com.univ.chat.model.ChatUserCombined">
 		SELECT
-		`id`,
-		`roomId`,
-		`writer`,
-		`content`,
-		`createdAt`,
-		`updatedAt`
+		a.`id`,
+		a.`roomId`,
+		a.`writer`,
+		a.`content`,
+		a.`createdAt`,
+		a.`updatedAt`,
+		b.`studentNum`,
+		b.`type`,
+		b.`firstName`,
+		b.`lastName`,
+		b.`profileUrl`
 		FROM
-		`chat`
+		`chat` as a
+		INNER JOIN
+		`user` as b
+		ON
+		a.`writer` = b.`email`
 		WHERE
-		`roomId` = #{roomId}
+		a.`roomId` = #{roomId}
 	</select>
 
 	<select id="selectNewMessage" parameterType="map"
-		resultType="com.univ.chat.model.Chat">
+		resultType="com.univ.chat.model.ChatUserCombined">
 		SELECT
-		`id`,
-		`roomId`,
-		`writer`,
-		`content`,
-		`createdAt`,
-		`updatedAt`
+		a.`id`,
+		a.`roomId`,
+		a.`writer`,
+		a.`content`,
+		a.`createdAt`,
+		a.`updatedAt`,
+		b.`studentNum`,
+		b.`type`,
+		b.`firstName`,
+		b.`lastName`,
+		b.`profileUrl`
 		FROM
-		`chat`
+		`chat` as a
+		INNER JOIN
+		`user` as b
+		ON
+		a.`writer` =
+		b.`email`
 		WHERE
-		`roomId` = #{roomId}
+		a.`roomId` = #{roomId}
 		AND
-		`id` > #{currentId}
+		a.`id` >
+		#{currentId}
 	</select>
 
 	<select id="selectChatRoomByRoomId" parameterType="int"

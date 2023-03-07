@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.univ.chat.bo.ChatBO;
-import com.univ.chat.model.Chat;
 import com.univ.chat.model.ChatRoom;
+import com.univ.chat.model.ChatUserCombined;
 import com.univ.user.bo.UserBO;
 import com.univ.user.model.User;
 
@@ -37,7 +37,7 @@ public class ChatController {
 
 		if (roomId != null) {
 			ChatRoom currentRoom = chatBO.getChatRoomByRoomId(roomId);
-			List<Chat> chatList = chatBO.getMessageList(roomId);
+			List<ChatUserCombined> chatList = chatBO.getMessageList(roomId);
 			model.addAttribute("currentRoom", currentRoom);
 			model.addAttribute("chatList", chatList);
 		}

@@ -213,8 +213,8 @@ input:focus::placeholder {
 
 .roomListTable>tbody {
 	display: block;
-	overflow-y: scroll;
-	height: 500px;
+	overflow-y: auto;
+	max-height: 460px;
 }
 
 .chatRoomList {

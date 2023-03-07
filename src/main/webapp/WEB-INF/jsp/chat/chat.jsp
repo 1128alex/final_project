@@ -27,26 +27,12 @@
 						<c:choose>
 							<c:when test="${currentRoom.id eq room.id}">
 								<tr class="linkRow selectedChatRoom" data-room-id="${room.id}">
-									<c:choose>
-										<c:when test="${fn:length(room.roomName) > 32}">
-											<td>${fn:substring(room.roomName, 0, 30)}...</td>
-										</c:when>
-										<c:otherwise>
-											<td>${room.roomName}</td>
-										</c:otherwise>
-									</c:choose>
+									<td>${room.roomName}</td>
 								</tr>
 							</c:when>
 							<c:otherwise>
 								<tr class="linkRow" data-room-id="${room.id}">
-									<c:choose>
-										<c:when test="${fn:length(room.roomName) > 32}">
-											<td>${fn:substring(room.roomName, 0, 30)}...</td>
-										</c:when>
-										<c:otherwise>
-											<td>${room.roomName}</td>
-										</c:otherwise>
-									</c:choose>
+									<td>${room.roomName}</td>
 								</tr>
 							</c:otherwise>
 						</c:choose>
@@ -72,7 +58,7 @@
 						<c:when test="${chat.writer eq loggedEmail}">
 							<div class="d-flex justify-content-end my-2">
 								<div class="d-flex align-items-end mr-1">
-									<fmt:formatDate value="${chat.createdAt}" pattern="H:mm a" />
+									<fmt:formatDate value="${chat.createdAt}" pattern="h:mm a" />
 								</div>
 								<div class="chatBalloon myChat">
 									<c:set var="currentChatId" value="${chat.id}"></c:set>
@@ -95,7 +81,7 @@
 									<div>${chat.content}</div>
 								</div>
 								<div class="d-flex align-items-end ml-1">
-									<fmt:formatDate value="${chat.createdAt}" pattern="H:mm a " />
+									<fmt:formatDate value="${chat.createdAt}" pattern="h:mm a " />
 								</div>
 							</div>
 						</c:otherwise>
@@ -232,12 +218,28 @@
 												success : function(data) {
 													if (data.code == 1) {
 														for (let i = 0; i < data.newChatList.length; i++) {
-															let date = Date
-																	.parse(data.newChatList[i].createdAt);
+															let date = new Date(
+																	data.newChatList[i].createdAt);
+															var hours = date
+																	.getHours();
+															var ampm = "am"
+															if (hours >= 12) {
+																ampm = "pm";
+																hours -= 12;
+															}
+															var minutes = date
+																	.getMinutes();
+
 															if (data.newChatList[i].writer == writer) {
 																$('#chatBox')
 																		.append(
-																				'<div class="d-flex justify-content-end my-2"><div class="chatBalloon myChat"><c:set var="currentChatId" value="${chat.id}"></c:set><div class="d-flex justify-content-end"><b>'
+																				'<div class="d-flex justify-content-end my-2"><div class="d-flex align-items-end mr-1"><div>'
+																						+ hours
+																						+ ':'
+																						+ minutes
+																						+ ' '
+																						+ ampm
+																						+ '</div></div><div class="chatBalloon myChat"><c:set var="currentChatId" value="${chat.id}"></c:set><div class="d-flex justify-content-end"><b>'
 																						+ data.newChatList[i].writer
 																						+ '</b></div><div>'
 																						+ data.newChatList[i].content

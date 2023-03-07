@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <div>
 	<div class="d-flex justify-content-center">
-		<div class="col-12">
+		<div class="col-11">
 			<div>
 				<h1 class="mt-4 ml-4">My Classes</h1>
 			</div>

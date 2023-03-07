@@ -3,6 +3,8 @@ package com.univ.registry;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,8 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.univ.registry.bo.RegistryBO;
 import com.univ.user.model.User;
-
-import jakarta.servlet.http.HttpSession;
 
 @RequestMapping("/registry")
 @RestController

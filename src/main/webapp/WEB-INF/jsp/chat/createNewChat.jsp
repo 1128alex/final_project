@@ -52,6 +52,7 @@
 				</c:forEach>
 			</table>
 		</div>
+		<h4>Room Name</h4>
 		<div class="d-flex justify-content-center">
 			<input type="text" id="roomName" class="form-control">
 		</div>
@@ -203,7 +204,6 @@
 												memberString += memberList[i]
 														+ '/';
 											}
-											alert(memberString);
 											$
 													.ajax({
 														type : "GET",

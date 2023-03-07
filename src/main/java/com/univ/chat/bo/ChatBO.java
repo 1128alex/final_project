@@ -2,6 +2,8 @@ package com.univ.chat.bo;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,8 +11,6 @@ import com.univ.chat.dao.ChatDAO;
 import com.univ.chat.model.Chat;
 import com.univ.chat.model.ChatRoom;
 import com.univ.user.model.User;
-
-import jakarta.servlet.http.HttpSession;
 
 @Service
 public class ChatBO {
@@ -45,6 +45,7 @@ public class ChatBO {
 
 		if (roomName == "") {
 			roomName = memberString.replace("/", ", ");
+			roomName = roomName.substring(0, roomName.length() - 2);
 		}
 
 		return chatDAO.insertChatRoom(memberString, roomName);

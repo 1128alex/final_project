@@ -3,6 +3,8 @@ package com.univ.course;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,8 +25,6 @@ import com.univ.registry.bo.RegistryBO;
 import com.univ.registry.model.Registry;
 import com.univ.user.bo.UserBO;
 import com.univ.user.model.User;
-
-import jakarta.servlet.http.HttpSession;
 
 @RequestMapping("/univ/course")
 @Controller
@@ -207,14 +207,14 @@ public class CourseController {
 	public String gradeClassListView(Model model, HttpSession session) {
 
 		User user = (User) session.getAttribute("user");
-
 		List<ClassCourseCombined> combinedList = new ArrayList<>();
+
 		List<Registry> registryList = registryBO.getRegistryListByStudentNum(user.getStudentNum());
 		for (Registry registry : registryList) {
-			ClassCourseCombined combined = courseBO.getClassCourseByClassId(registry.getClassId());
+			ClassCourseCombined combined = courseBO.getClassCourseByClassId(registry.getClassId(),
+					user.getStudentNum());
 			combinedList.add(combined);
 		}
-
 		model.addAttribute("combinedList", combinedList);
 		model.addAttribute("view", "course/gradeClassList");
 
@@ -232,7 +232,8 @@ public class CourseController {
 			List<ClassCourseCombined> combinedList = new ArrayList<>();
 			List<Registry> registryList = registryBO.getRegistryListByStudentNum(user.getStudentNum());
 			for (Registry registry : registryList) {
-				ClassCourseCombined combined = courseBO.getClassCourseByClassId(registry.getClassId());
+				ClassCourseCombined combined = courseBO.getClassCourseByClassId(registry.getClassId(),
+						user.getStudentNum());
 				combinedList.add(combined);
 			}
 			model.addAttribute("combinedList", combinedList);

@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +15,6 @@ import com.univ.course.model.Class;
 import com.univ.course.model.ClassCourseCombined;
 import com.univ.course.model.Course;
 import com.univ.user.model.User;
-
-import jakarta.servlet.http.HttpSession;
 
 @Service
 public class CourseBO {
@@ -111,8 +111,8 @@ public class CourseBO {
 		return courseDAO.countFilteredCourseList(searchKeyword, courseName, subjectCode, courseLevel);
 	}
 
-	public ClassCourseCombined getClassCourseByClassId(int classId) {
-		return courseDAO.selectClassCourseByClassId(classId);
+	public ClassCourseCombined getClassCourseByClassId(int classId, String studentNum) {
+		return courseDAO.selectClassCourseByClassId(classId, studentNum);
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.univ.mail;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,8 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.univ.mail.mail.MailService;
 import com.univ.mail.model.MailTo;
-
-import jakarta.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/mail")

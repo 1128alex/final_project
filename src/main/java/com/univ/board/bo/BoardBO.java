@@ -2,6 +2,8 @@ package com.univ.board.bo;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,8 +15,6 @@ import com.univ.board.model.Post;
 import com.univ.board.model.PostUserCombined;
 import com.univ.common.FileManagerService;
 import com.univ.user.model.User;
-
-import jakarta.servlet.http.HttpSession;
 
 @Service
 public class BoardBO {

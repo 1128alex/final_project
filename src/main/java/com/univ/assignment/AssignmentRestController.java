@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,8 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.univ.assignment.bo.AssignmentBO;
 import com.univ.assignment.model.Assignment;
 import com.univ.assignment.model.SubmittedAsgmt;
-
-import jakarta.servlet.http.HttpSession;
 
 @RequestMapping("/assignment")
 @RestController

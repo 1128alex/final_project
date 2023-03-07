@@ -60,7 +60,8 @@
 			</div>
 			<div class="mt-3">
 				<h3 class="mt-3">Timetable</h3>
-				<span>Select class times.(Blue is the selected time)</span>
+				<span>Select class times.(Click on the empty spaces to add
+					your class.)</span>
 				<table
 					class="table table-bordered border-grey colFixedTable smallTimetable">
 					<thead class="text-center">

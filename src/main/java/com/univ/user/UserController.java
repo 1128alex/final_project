@@ -2,6 +2,8 @@ package com.univ.user;
 
 import java.time.LocalDate;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.univ.user.model.User;
-
-import jakarta.servlet.http.HttpSession;
 
 @RequestMapping("/univ/user")
 @Controller
@@ -43,7 +43,7 @@ public class UserController {
 
 	@GetMapping("/find_password")
 	public String findPasswordView(Model model) {
-		model.addAttribute("view", "userVerification");
+		model.addAttribute("view", "user/userVerification");
 
 		return "template/loginLayout";
 	}

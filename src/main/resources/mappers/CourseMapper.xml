@@ -372,7 +372,7 @@
 		ORDER BY b.`courseCode`,a.`id`
 	</select>
 
-	<select id="selectClassCourseByClassId" parameterType="int"
+	<select id="selectClassCourseByClassId" parameterType="map"
 		resultType="com.univ.course.model.ClassCourseCombined">
 		SELECT
 		a.`courseCode`,
@@ -391,6 +391,7 @@
 		b.`createdAt`,
 		b.`updatedAt`,
 		c.`email`,
+		c.`studentNum`,
 		c.`firstName`,
 		c.`lastName`,
 		c.`gender`,
@@ -411,12 +412,16 @@
 		ON
 		b.`profEmail` =
 		c.`email`,
-		(select avg(`perScore`)
+		(select
+		avg(`perScore`)
 		as `averageGrade`
 		from
 		`submittedassignment`
-		where `classId` =
-		#{classId}) as d
+		WHERE
+		`classId` =
+		#{classId}
+		AND `studentNum` =
+		#{studentNum}) as d
 		WHERE
 		b.`id`
 		=

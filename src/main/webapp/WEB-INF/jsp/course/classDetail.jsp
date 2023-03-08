@@ -8,6 +8,10 @@
 <div class="d-flex">
 	<div class="col-3"></div>
 	<div class="col-6">
+		<h4 class="mt-3">
+			<a href="/univ/course/class_list" class="underline noDecoA">Back
+				to class list</a>
+		</h4>
 		<div class="d-flex justify-content-between align-items-end">
 			<h1 class="text-center mt-3">${currentClass.courseCode += " - " += currentCourse.courseName}</h1>
 			<c:if test="${profEmail eq currentClass.profEmail}">
@@ -119,7 +123,10 @@
 		</div>
 	</div>
 	<div class="col-3 classAsideArea">
-		<h1 class="mt-3">Class Board</h1>
+		<h1 class="mt-3">
+			<a href="/univ/board/post_list?classId=${currentClass.id}"
+				class="noDecoA">Class Board</a>
+		</h1>
 		<div class="classAside">
 			<table class="table">
 				<thead class="text-center">

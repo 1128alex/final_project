@@ -9,6 +9,10 @@
 <div class="d-flex">
 	<div class="col-3"></div>
 	<div class="col-6">
+		<h4 class="mt-3">
+			<a href="/univ/course/register_class" class="underline noDecoA">Back
+				to class list</a>
+		</h4>
 		<h1 class="mt-3">Register Class</h1>
 		<div class="d-flex justify-content-end">
 			Due date:

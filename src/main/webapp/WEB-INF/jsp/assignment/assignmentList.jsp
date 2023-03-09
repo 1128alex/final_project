@@ -13,11 +13,13 @@
 				class="underline noDecoA">Back to class detail</a>
 		</h4>
 		<h1 class="mt-4">Assignments for</h1>
-		<h1>${courseName }</h1>
-		<div class="d-flex justify-content-end">
-			<a href="/univ/assignment/add_assignment?classId=${classId}"
-				class="btn button text-white">Add Assignment</a>
-		</div>
+		<h1>${courseName}</h1>
+		<c:if test="${type eq 'professor'}">
+			<div class="d-flex justify-content-end">
+				<a href="/univ/assignment/add_assignment?classId=${classId}"
+					class="btn button text-white">Add Assignment</a>
+			</div>
+		</c:if>
 
 		<table class="table mt-1">
 			<thead>

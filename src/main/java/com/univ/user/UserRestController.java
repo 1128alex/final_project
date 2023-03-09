@@ -61,6 +61,7 @@ public class UserRestController {
 		if (rowCount == 2) {
 			result.put("code", 2);
 			result.put("errorMessage", "The account with this email exists already.");
+			return result;
 		}
 		if (rowCount > 0) {
 			result.put("code", 1);

@@ -104,7 +104,7 @@
 				<option>What is your best friend's name?</option>
 				<option>Who is your childhood hero?</option>
 			</select>
-			<h4>Verification Answer</h4>
+			<h4 class="mt-1">Verification Answer</h4>
 			<input type="text" id="verAns" name="verifyAnswer"
 				class="form-control">
 		</div>

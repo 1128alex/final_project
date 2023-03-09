@@ -47,4 +47,6 @@ public interface CourseDAO {
 	public ClassCourseCombined selectClassCourseByClassId(@Param("classId") int classId,
 			@Param("studentNum") String studentNum);
 
+	public ClassCourseCombined selectClassCourseByClassIdForDetail(int classId);
+
 }

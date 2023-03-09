@@ -115,4 +115,8 @@ public class CourseBO {
 		return courseDAO.selectClassCourseByClassId(classId, studentNum);
 	}
 
+	public ClassCourseCombined getClassCourseByClassIdForDetail(int classId) {
+		return courseDAO.selectClassCourseByClassIdForDetail(classId);
+	}
+
 }

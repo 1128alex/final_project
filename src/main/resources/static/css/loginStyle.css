@@ -37,3 +37,17 @@ input:focus::placeholder {
 	color: white;
 	font-weight: bold;
 }
+
+.noDecoA {
+	text-decoration: none;
+	color: black;
+}
+
+.noDecoA:hover {
+	text-decoration: underline;
+	color: black;
+}
+
+.underline {
+	text-decoration: underline;
+}

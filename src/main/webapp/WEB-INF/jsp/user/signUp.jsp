@@ -5,10 +5,11 @@
 <!DOCTYPE html>
 <div class="d-flex justify-content-center">
 	<div class="col-4">
-		<h2 class="mt-3 font-weight-bold">Sign Up</h2>
-		<div class="mt-2 d-flex justify-content-end">
-			<a href="/univ/user/sign_in">Go back to Login</a>
-		</div>
+		<h4 class="mt-3">
+			<a href="/univ/user/sign_in" class="underline noDecoA">Back to
+				login</a>
+		</h4>
+		<h2 class="mt-3 font-weight-bold text-center">Sign Up</h2>
 		<div>
 			<h4>Type</h4>
 			<label><input id="userTypeRadioStud type" type="radio"

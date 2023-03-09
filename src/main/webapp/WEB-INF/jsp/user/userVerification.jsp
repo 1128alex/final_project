@@ -4,6 +4,10 @@
 <div class="d-flex">
 	<div class="col-4"></div>
 	<div class="col-4">
+		<h4 class="mt-3">
+			<a href="/univ/user/sign_in" class="underline noDecoA">Back to
+				login</a>
+		</h4>
 		<h3>Please input your email.</h3>
 		<input class="form-control" id="email" name="email"
 			placeholder="eg) example@auniv.com">

@@ -13,7 +13,7 @@
 				to class list</a>
 		</h4>
 		<div class="d-flex justify-content-between align-items-end">
-			<h1 class="text-center mt-3">${currentClass.courseCode += " - " += currentCourse.courseName}</h1>
+			<h1 class="text-center mt-3">${currentClass.courseCode += " - " += currentClass.courseName}</h1>
 			<c:if test="${profEmail eq currentClass.profEmail}">
 				<div class="mr-3">
 					<a href="/univ/course/edit_class?classId=${currentClass.id}"
@@ -21,10 +21,12 @@
 				</div>
 			</c:if>
 		</div>
+		<h4 class="mt-2">Professor: ${currentClass.firstName += ' ' +=
+			currentClass.lastName += '(' += currentClass.profEmail += ')'}</h4>
 		<hr>
 		<h2 class="mt-3">Description</h2>
 		<div class="d-flex justify-content-between">
-			<span>${currentCourse.description}</span><br>
+			<span>${currentClass.description}</span><br>
 		</div>
 		<h2 class="mt-3">Class Time</h2>
 		<div class="w-75">

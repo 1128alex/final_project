@@ -105,8 +105,7 @@ public class CourseController {
 	@GetMapping("/class_detail")
 	public String classDetailView(@RequestParam("classId") int classId, Model model, HttpSession session) {
 
-		Class currentClass = courseBO.getClassById(classId);
-		Course currentCourse = courseBO.getCourseByCourseCode(currentClass.getCourseCode());
+		ClassCourseCombined currentClass = courseBO.getClassCourseByClassIdForDetail(classId);
 		List<Assignment> assignmentList = assignmentBO.getAsgmtListByClassId(classId);
 
 		User user = (User) session.getAttribute("user");
@@ -119,7 +118,6 @@ public class CourseController {
 		model.addAttribute("userType", user.getType());
 
 		model.addAttribute("currentClass", currentClass);
-		model.addAttribute("currentCourse", currentCourse);
 		model.addAttribute("assignmentList", assignmentList);
 		model.addAttribute("view", "course/classDetail");
 

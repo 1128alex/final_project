@@ -4,6 +4,10 @@
 <div class="d-flex">
 	<div class="col-4"></div>
 	<div class="col-4">
+		<h4 class="mt-3">
+			<a href="/univ/user/sign_in" class="underline noDecoA">Back to
+				login</a>
+		</h4>
 		<div class="mt-3">
 			<h4>New Password</h4>
 			<input type="password" id="password" name="password"

@@ -76,6 +76,8 @@ public class AssignmentController {
 
 		model.addAttribute("course", course);
 		model.addAttribute("assignment", assignment);
+		model.addAttribute("classId", classId);
+		model.addAttribute("asgmtId", asgmtId);
 		if (type.equals("student")) {
 			model.addAttribute("view", "assignment/assignmentDetail");
 

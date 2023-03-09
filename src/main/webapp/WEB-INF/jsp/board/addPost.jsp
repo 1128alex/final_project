@@ -4,6 +4,10 @@
 <div class="d-flex">
 	<div class="col-3"></div>
 	<div class="col-6">
+		<h4 class="mt-3">
+			<a href="/univ/board/post_list?classId=${classId}"
+				class="underline noDecoA">Back to post list</a>
+		</h4>
 		<h1 class="mt-3">Add post to Class</h1>
 		<h3 class="mt-3">Title</h3>
 		<input type="text" id="title" name="title" class="form-control">

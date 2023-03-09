@@ -17,10 +17,15 @@ public class FileManagerService {
 
 	// Where the files will be saved
 	// Home
-	public static final String FILE_UPLOAD_PATH = "C:\\Users\\이지원\\Documents\\CS\\Final_Project\\Univ_Project\\workspace\\images/";
+	// public static final String FILE_UPLOAD_PATH =
+	// "C:\\Users\\이지원\\Documents\\CS\\Final_Project\\Univ_Project\\workspace\\images/";
+
 	// Camp
 	// public static final String FILE_UPLOAD_PATH =
 	// "D:\\이지원\\7_final_project\\UnivProject\\workspace\\images/";
+
+	// aws
+	public static final String FILE_UPLOAD_PATH = "/home/ec2-user/images/";
 
 	public String saveFile(String email, MultipartFile file) {
 		String directoryName = email + "_" + System.currentTimeMillis() + "/";

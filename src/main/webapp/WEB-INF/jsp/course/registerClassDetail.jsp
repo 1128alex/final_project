@@ -5,7 +5,7 @@
 <!--Formatting-->
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
-<div id="classIdHolder" data-class-id="${combined._class.id}"></div>
+<div id="classIdHolder" data-class-id="${combined.id}"></div>
 <div class="d-flex">
 	<div class="col-3"></div>
 	<div class="col-6">
@@ -16,7 +16,7 @@
 		<h1 class="mt-3">Register Class</h1>
 		<div class="d-flex justify-content-end">
 			Due date:
-			<fmt:formatDate value="${combined._class.registerDueDate}"
+			<fmt:formatDate value="${combined.registerDueDate}"
 				pattern="dd MMM yyyy" />
 		</div>
 		<table class="table table-bordered mt-2">
@@ -29,14 +29,14 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td>${combined.course.courseCode += ' - ' +=combined.course.courseName}</td>
-					<td>${combined.user.firstName += ' ' += combined.user.lastName}</td>
-					<td>${combined._class.maxNum}</td>
+					<td>${combined.courseCode += ' - ' +=combined.courseName}</td>
+					<td>${combined.firstName += ' ' += combined.lastName}</td>
+					<td>${combined.maxNum}</td>
 				</tr>
 			</tbody>
 		</table>
 		<h2>Course Description</h2>
-		<span> ${combined.course.description}</span>
+		<span> ${combined.description}</span>
 		<h2 class="mt-4">Class Schedule</h2>
 		<table class="table table-bordered" id="classTable">
 			<thead>
@@ -51,51 +51,51 @@
 			<tbody>
 				<tr class="text-center">
 					<td><c:choose>
-							<c:when test="${combined._class.monStartTime ne 0}">
+							<c:when test="${combined.monStartTime ne 0}">
 								<c:choose>
-									<c:when test="${combined._class.monStartTime > 12}">${combined._class.monStartTime-12 += ":00 PM"}</c:when>
-									<c:when test="${combined._class.monStartTime eq 12}">12:00 PM</c:when>
-									<c:otherwise>${combined._class.monStartTime += ":00 AM"}</c:otherwise>
+									<c:when test="${combined.monStartTime > 12}">${combined.monStartTime-12 += ":00 PM"}</c:when>
+									<c:when test="${combined.monStartTime eq 12}">12:00 PM</c:when>
+									<c:otherwise>${combined.monStartTime += ":00 AM"}</c:otherwise>
 								</c:choose>
 							</c:when>
 							<c:otherwise>No class</c:otherwise>
 						</c:choose></td>
 					<td><c:choose>
-							<c:when test="${combined._class.tueStartTime ne 0}">
+							<c:when test="${combined.tueStartTime ne 0}">
 								<c:choose>
-									<c:when test="${combined._class.tueStartTime > 12}">${combined._class.tueStartTime-12 += ":00 PM"}</c:when>
-									<c:when test="${combined._class.tueStartTime eq 12}">12:00 PM</c:when>
-									<c:otherwise>${combined._class.tueStartTime += ":00 AM"}</c:otherwise>
+									<c:when test="${combined.tueStartTime > 12}">${combined.tueStartTime-12 += ":00 PM"}</c:when>
+									<c:when test="${combined.tueStartTime eq 12}">12:00 PM</c:when>
+									<c:otherwise>${combined.tueStartTime += ":00 AM"}</c:otherwise>
 								</c:choose>
 							</c:when>
 							<c:otherwise>No class</c:otherwise>
 						</c:choose></td>
 					<td><c:choose>
-							<c:when test="${combined._class.wedStartTime ne 0}">
+							<c:when test="${combined.wedStartTime ne 0}">
 								<c:choose>
-									<c:when test="${combined._class.wedStartTime > 12}">${combined._class.wedStartTime-12 += ":00 PM"}</c:when>
-									<c:when test="${combined._class.wedStartTime eq 12}">12:00 PM</c:when>
-									<c:otherwise>${combined._class.wedStartTime += ":00 AM"}</c:otherwise>
+									<c:when test="${combined.wedStartTime > 12}">${combined.wedStartTime-12 += ":00 PM"}</c:when>
+									<c:when test="${combined.wedStartTime eq 12}">12:00 PM</c:when>
+									<c:otherwise>${combined.wedStartTime += ":00 AM"}</c:otherwise>
 								</c:choose>
 							</c:when>
 							<c:otherwise>No class</c:otherwise>
 						</c:choose></td>
 					<td><c:choose>
-							<c:when test="${combined._class.thuStartTime ne 0}">
+							<c:when test="${combined.thuStartTime ne 0}">
 								<c:choose>
-									<c:when test="${combined._class.thuStartTime > 12}">${combined._class.thuStartTime-12 += ":00 PM"}</c:when>
-									<c:when test="${combined._class.thuStartTime eq 12}">12:00 PM</c:when>
-									<c:otherwise>${combined._class.thuStartTime += ":00 AM"}</c:otherwise>
+									<c:when test="${combined.thuStartTime > 12}">${combined.thuStartTime-12 += ":00 PM"}</c:when>
+									<c:when test="${combined.thuStartTime eq 12}">12:00 PM</c:when>
+									<c:otherwise>${combined.thuStartTime += ":00 AM"}</c:otherwise>
 								</c:choose>
 							</c:when>
 							<c:otherwise>No class</c:otherwise>
 						</c:choose></td>
 					<td><c:choose>
-							<c:when test="${combined._class.friStartTime ne 0}">
+							<c:when test="${combined.friStartTime ne 0}">
 								<c:choose>
-									<c:when test="${combined._class.friStartTime > 12}">${combined._class.friStartTime-12 += ":00 PM"}</c:when>
-									<c:when test="${combined._class.friStartTime eq 12}">12:00 PM</c:when>
-									<c:otherwise>${combined._class.friStartTime += ":00 AM"}</c:otherwise>
+									<c:when test="${combined.friStartTime > 12}">${combined.friStartTime-12 += ":00 PM"}</c:when>
+									<c:when test="${combined.friStartTime eq 12}">12:00 PM</c:when>
+									<c:otherwise>${combined.friStartTime += ":00 AM"}</c:otherwise>
 								</c:choose>
 							</c:when>
 							<c:otherwise>No class</c:otherwise>
@@ -105,7 +105,7 @@
 		</table>
 		<div class="d-flex justify-content-between">
 			<span>Price: <fmt:formatNumber type="currency"
-					currencySymbol="$">${combined.course.price}</fmt:formatNumber>
+					currencySymbol="$">${combined.price}</fmt:formatNumber>
 			</span>
 			<button type="button" id="registerBtn" class="btn button mt-2">Register</button>
 		</div>

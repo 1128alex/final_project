@@ -16,23 +16,22 @@
 				class="form-control">
 		</div>
 		<div class="mt-1">
-			<h4>Password Check</h4>
+			<h4>Re-enter Password</h4>
 			<input type="password" id="passwordCheck" name="passwordCheck"
 				class="form-control">
 		</div>
 		<div class="mt-3">
 			<h4>Profile Image</h4>
-			<input type="file" id="profileUrl" name="profileUrl"
-				class="profileUrl">
+			<input type="file" id="profileUrl" name="profileUrl">
 		</div>
 
-		<div class="d-flex justify-content-between mt-3">
+		<div class="d-flex mt-3">
 			<div class="mt-3">
 				<h4>First Name</h4>
 				<input type="text" id="firstName" name="firstName"
 					class="form-control">
 			</div>
-			<div class="mt-3">
+			<div class="mt-3 ml-3">
 				<h4>Last Name/Given Name</h4>
 				<input type="text" id="lastName" name="lastName"
 					class="form-control">

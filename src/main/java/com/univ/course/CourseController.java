@@ -185,14 +185,16 @@ public class CourseController {
 	@GetMapping("/register_class_detail")
 	public String registerClassDetailView(@RequestParam("classId") int classId, Model model) {
 
-		ClassInfoCombined combined = new ClassInfoCombined();
+		ClassCourseCombined combined = courseBO.getClassCourseByClassIdForDetail(classId);
 
-		Class _class = courseBO.getClassById(classId);
-		combined.set_class(_class);
-		User user = userBO.getUserByEmail(_class.getProfEmail());
-		combined.setUser(user);
-		Course course = courseBO.getCourseByCourseCode(_class.getCourseCode());
-		combined.setCourse(course);
+//		ClassInfoCombined combined = new ClassInfoCombined();
+
+//		Class _class = courseBO.getClassById(classId);
+//		combined.set_class(_class);
+//		User user = userBO.getUserByEmail(_class.getProfEmail());
+//		combined.setUser(user);
+//		Course course = courseBO.getCourseByCourseCode(_class.getCourseCode());
+//		combined.setCourse(course);
 
 		model.addAttribute("combined", combined);
 		model.addAttribute("classId", classId);

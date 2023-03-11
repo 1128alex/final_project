@@ -56,7 +56,7 @@ public class UserBO {
 		// Hash password
 		String hashedPassword = EncryptUtils.md5(user.getPassword());
 
-		String profileUrl = null;
+		String profileUrl = "/images/no_profile/noprofile.png";
 		if (profileFile != null) {
 			profileUrl = fileManagerService.saveFile(user.getEmail(), profileFile);
 		}

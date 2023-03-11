@@ -119,4 +119,8 @@ public class CourseBO {
 		return courseDAO.selectClassCourseByClassIdForDetail(classId);
 	}
 
+	public int addCourse(Course course) {
+		return courseDAO.insertCourse(course);
+	}
+
 }

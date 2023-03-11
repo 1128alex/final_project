@@ -5,11 +5,7 @@
 <!DOCTYPE html>
 <div class="d-flex justify-content-center">
 	<div class="col-4">
-		<h4 class="mt-3">
-			<a href="/univ/user/sign_in" class="underline noDecoA">Back to
-				login</a>
-		</h4>
-		<h2 class="mt-3 font-weight-bold text-center">Sign Up</h2>
+		<h2 class="mt-3 font-weight-bold text-center">Create Account</h2>
 		<div>
 			<h4>Type</h4>
 			<label><input id="userTypeRadioStud type" type="radio"
@@ -19,6 +15,12 @@
 		</div>
 
 		<jsp:include page="../form/form.jsp" />
+		<hr>
+		<div class="d-flex justify-content-center mb-2">
+			<div>Already have an account?</div>
+			<a href="/univ/user/sign_in" class="underline noDecoA ml-1">Sign
+				in</a>
+		</div>
 	</div>
 </div>
 

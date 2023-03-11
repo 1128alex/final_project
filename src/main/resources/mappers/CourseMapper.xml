@@ -474,4 +474,26 @@
 		=
 		#{classId}
 	</select>
+
+	<insert id="insertCourse"
+		parameterType="com.univ.course.model.Course">
+		INSERT INTO `course`
+		(
+		`courseCode`,
+		`courseName`,
+		`description`,
+		`price`,
+		`createdAt`,
+		`updatedAt`
+		)
+		VALUES
+		(
+		#{courseCode},
+		#{courseName},
+		#{description},
+		#{price},
+		NOW(),
+		NOW()
+		)
+	</insert>
 </mapper>

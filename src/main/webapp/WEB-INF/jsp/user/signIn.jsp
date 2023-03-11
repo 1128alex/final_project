@@ -3,17 +3,17 @@
 <!DOCTYPE html>
 <div class="d-flex justify-content-center">
 	<div class="col-4">
-		<h2 class="mt-4 font-weight-bold">Login</h2>
+		<h2 class="mt-4 font-weight-bold">Sign-In</h2>
 		<form id="signInForm" method="post" action="/user/sign_in">
 			<div class="mt-3">
 				<label>Student Number / Email Adress</label> <input type="text"
 					name="userId" id="userId" class="form-control"
-					placeholder="Input your Id/Email">
+					placeholder="Enter your Id/Email">
 			</div>
 			<div class="mt-2">
 				<label>Password</label> <input type="password" name="password"
 					id="password" class="form-control"
-					placeholder="Input your Password">
+					placeholder="Enter your Password">
 			</div>
 			<div class="d-flex justify-content-between">
 				<div class="mt-2">
@@ -24,8 +24,8 @@
 		</form>
 		<hr>
 		<div class="mt-2 d-flex justify-content-center">
-			Don't have an Id?<a href="/univ/user/sign_up" class="ml-2">Sign
-				Up</a>
+			Don't have Alex University Account?<a href="/univ/user/sign_up"
+				class="ml-2">Create your account</a>
 		</div>
 	</div>
 </div>
@@ -55,7 +55,11 @@
 				},
 				success : function(data) {
 					if (data.code == 1) {
-						location.href = "/univ/course/class_list";
+						if (data.type == 'admin') {
+							location.href = "/univ/admin";
+						} else {
+							location.href = "/univ/course/class_list";
+						}
 					} else if (data.code == 500) {
 						alert(data.errorMessage);
 					}

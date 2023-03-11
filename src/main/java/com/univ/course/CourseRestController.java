@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.univ.course.bo.CourseBO;
 import com.univ.course.model.Class;
+import com.univ.course.model.Course;
 
 @RequestMapping("/course")
 @RestController
@@ -73,6 +75,22 @@ public class CourseRestController {
 		Map<String, Object> result = new HashMap<>();
 
 		int rowCount = courseBO.deleteClass(classId);
+
+		if (rowCount > 0) {
+			result.put("code", 1);
+		} else {
+			result.put("code", 500);
+			result.put("errorMessage", "Error while deleting class.");
+		}
+
+		return result;
+	}
+
+	@PostMapping("/add_course")
+	public Map<String, Object> addCourse(@ModelAttribute Course course) {
+		Map<String, Object> result = new HashMap<>();
+
+		int rowCount = courseBO.addCourse(course);
 
 		if (rowCount > 0) {
 			result.put("code", 1);

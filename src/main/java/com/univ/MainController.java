@@ -33,8 +33,24 @@ public class MainController {
 		return "template/layout";
 	}
 
+	@GetMapping("/admin")
+	public String adminView(Model model) {
+		model.addAttribute("view", "admin/main");
+		model.addAttribute("type", "admin");
+
+		return "template/layout";
+	}
+
+	@GetMapping("/admin/add_course")
+	public String addCourseView(Model model) {
+		model.addAttribute("view", "admin/addCourse");
+		model.addAttribute("type", "admin");
+
+		return "template/layout";
+	}
+
 	@GetMapping("/citations")
-	public String showCitationsView(Model model) {
+	public String citationsView(Model model) {
 		model.addAttribute("view", "main/citation");
 		return "template/layout";
 	}

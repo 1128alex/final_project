@@ -49,4 +49,6 @@ public interface CourseDAO {
 
 	public ClassCourseCombined selectClassCourseByClassIdForDetail(int classId);
 
+	public int insertCourse(Course course);
+
 }

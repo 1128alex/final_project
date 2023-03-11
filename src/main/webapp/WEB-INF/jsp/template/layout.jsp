@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<!-- Core -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,9 +39,11 @@
 		<header class="d-flex">
 			<jsp:include page="../include/header.jsp" />
 		</header>
-		<nav>
-			<jsp:include page="../include/nav.jsp" />
-		</nav>
+		<c:if test="${type ne 'admin'}">
+			<nav>
+				<jsp:include page="../include/nav.jsp" />
+			</nav>
+		</c:if>
 		<section>
 			<jsp:include page="../${view}.jsp" />
 		</section>

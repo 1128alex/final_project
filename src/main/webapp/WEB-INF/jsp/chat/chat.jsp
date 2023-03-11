@@ -42,7 +42,7 @@
 
 		</div>
 		<div class="col-8 greyBorder mt-4 px-0">
-			<div class="ml-2 py-2 chatRoomTitle">
+			<div class="ml-2 py-2 chatRoomTitle unselectable">
 				<c:choose>
 					<c:when test="${fn:length(currentRoom.roomName) > 50}">
 						<h3>${fn:substring(currentRoom.roomName, 0, 48)}...</h3>
@@ -66,14 +66,14 @@
 					<c:choose>
 						<c:when test="${chat.writer eq loggedEmail}">
 							<div class="d-flex justify-content-end my-2">
-								<div class="d-flex align-items-end mr-1">
+								<div class="d-flex align-items-end mr-1 unselectable">
 									<fmt:formatDate value="${chat.createdAt}" pattern="h:mm a" />
 								</div>
 								<div>
 									<%-- <div class="d-flex justify-content-end">
 										<b>${chat.writer}</b>
 									</div> --%>
-									<div class="chatBalloon myChat">
+									<div class="chatBalloon myChat px-2">
 										<c:set var="currentChatId" value="${chat.id}"></c:set>
 										<div>
 											<div>${chat.content}</div>
@@ -84,20 +84,20 @@
 						</c:when>
 						<c:otherwise>
 							<div class="d-flex my-2">
-								<div class="mr-2">
+								<div class="mr-2 unselectable">
 									<img alt="" src="${chat.profileUrl}" class="profileImgBox"
 										height="30px" width="30px">
 								</div>
 								<div>
 									<div>
-										<b>${chat.firstName += ' ' += chat.lastName}</b>
+										<b class="unselectable">${chat.firstName += ' ' += chat.lastName}</b>
 									</div>
 									<div class="d-flex">
-										<div class="chatBalloon">
+										<div class="chatBalloon px-2">
 											<c:set var="currentChatId" value="${chat.id}"></c:set>
 											<div>${chat.content}</div>
 										</div>
-										<div class="d-flex align-items-end ml-1">
+										<div class="d-flex align-items-end ml-1 unselectable">
 											<fmt:formatDate value="${chat.createdAt}" pattern="h:mm a" />
 										</div>
 									</div>
@@ -291,31 +291,36 @@
 																						+ " "
 																						+ year
 																						+ '-----</div>');
+
+																$(
+																		'#currentDateHolder')
+																		.text(
+																				date);
 															}
 
 															if (data.newChatList[i].writer == writer) {
 																$('#chatBox')
 																		.append(
-																				'<div class="d-flex justify-content-end my-2"><div class="d-flex align-items-end mr-1"><div>'
+																				'<div class="d-flex justify-content-end my-2"><div class="d-flex align-items-end mr-1 unselectable"><div>'
 																						+ hours
 																						+ ':'
 																						+ minutes
 																						+ " "
 																						+ ampm
-																						+ '</div></div><div class="chatBalloon myChat"><c:set var="currentChatId" value="${chat.id}"></c:set><div>'
+																						+ '</div></div><div class="chatBalloon myChat px-2"><c:set var="currentChatId" value="${chat.id}"></c:set><div>'
 																						+ data.newChatList[i].content
 																						+ '</div></div></div>');
 
 															} else if (data.newChatList[i].writer != writer) {
 																$('#chatBox')
 																		.append(
-																				'<div class="d-flex my-2"><div class="mr-2"><img alt="" src="'+data.newChatList[i].profileUrl+'" class="profileImgBox" height="30px" width="30px"></div><div><div><b>'
+																				'<div class="d-flex my-2"><div class="mr-2 unselectable"><img alt="" src="'+data.newChatList[i].profileUrl+'" class="profileImgBox" height="30px" width="30px"></div><div><div><b class="unselectable">'
 																						+ data.newChatList[i].firstName
 																						+ ' '
 																						+ data.newChatList[i].lastName
-																						+ '</b></div><div class="d-flex"><div class="chatBalloon"><c:set var="currentChatId" value="${chat.id}"></c:set><div>'
+																						+ '</b></div><div class="d-flex"><div class="chatBalloon px-2"><c:set var="currentChatId" value="${chat.id}"></c:set><div>'
 																						+ data.newChatList[i].content
-																						+ '</div></div><div class="d-flex align-items-end ml-1">'
+																						+ '</div></div><div class="d-flex align-items-end ml-1 unselectable">'
 																						+ hours
 																						+ ':'
 																						+ minutes

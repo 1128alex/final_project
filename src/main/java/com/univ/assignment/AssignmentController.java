@@ -32,9 +32,12 @@ public class AssignmentController {
 	private AssignmentBO assignmentBO;
 
 	@GetMapping("/assignment_list")
-	public String assignmentListView(@RequestParam("classId") int classId, Model model) {
+	public String assignmentListView(@RequestParam("classId") int classId, Model model, HttpSession session) {
 		model.addAttribute("view", "assignment/assignmentList");
 		model.addAttribute("classId", classId);
+
+		User user = (User) session.getAttribute("user");
+		model.addAttribute("type", user.getType());
 
 		Class newClass = courseBO.getClassById(classId);
 

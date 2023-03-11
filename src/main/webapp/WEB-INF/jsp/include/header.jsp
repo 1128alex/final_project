@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<!-- Core -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <div class="col-3">
 	<a href="/univ/citations" class="text-white">See the image
@@ -7,10 +9,18 @@
 </div>
 <div class="logo col-6">
 	<div class="d-flex justify-content-center">
-		<a href="/univ/course/class_list"> <img alt="logoImg"
-			src="/static/img/logoFinalized-onlyLogo.png" height="120"
-			class="mt-3">
-		</a>
+		<c:if test="${type ne 'admin'}">
+			<a href="/univ/course/class_list"> <img alt="logoImg"
+				src="/static/img/logoFinalized-onlyLogo.png" height="120"
+				class="mt-3">
+			</a>
+		</c:if>
+		<c:if test="${type eq 'admin'}">
+			<a href="/univ/admin"> <img alt="logoImg"
+				src="/static/img/logoFinalized-onlyLogo.png" height="120"
+				class="mt-3">
+			</a>
+		</c:if>
 	</div>
 </div>
 <div class="col-3">

@@ -123,4 +123,8 @@ public class CourseBO {
 		return courseDAO.insertCourse(course);
 	}
 
+	public List<ClassCourseCombined> getClassCourseListByStudentNum(String studentNum) {
+		return courseDAO.selectClassCourseListByStudentNum(studentNum);
+	}
+
 }

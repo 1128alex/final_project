@@ -17,51 +17,70 @@ import com.univ.assignment.model.AssignmentUserCombined;
 import com.univ.assignment.model.SubmittedAsgmt;
 import com.univ.course.bo.CourseBO;
 import com.univ.course.model.Class;
+import com.univ.course.model.ClassCourseCombined;
 import com.univ.course.model.Course;
-import com.univ.user.bo.UserBO;
 import com.univ.user.model.User;
 
 @RequestMapping("/univ/assignment")
 @Controller
 public class AssignmentController {
 	@Autowired
-	private UserBO userBO;
-	@Autowired
 	private CourseBO courseBO;
 	@Autowired
 	private AssignmentBO assignmentBO;
 
 	@GetMapping("/assignment_list")
-	public String assignmentListView(@RequestParam("classId") int classId, Model model, HttpSession session) {
+	public String assignmentListView(@RequestParam(value = "classId", required = false) Integer classId, Model model,
+			HttpSession session) {
 		model.addAttribute("view", "assignment/assignmentList");
-		model.addAttribute("classId", classId);
 
 		User user = (User) session.getAttribute("user");
 		model.addAttribute("type", user.getType());
 
-		Class newClass = courseBO.getClassById(classId);
+		if (user.getType().equals("student")) {
+			List<ClassCourseCombined> combinedList = courseBO.getClassCourseListByStudentNum(user.getStudentNum());
+			model.addAttribute("combinedList", combinedList);
+		} else if (user.getType().equals("professor")) {
+			List<ClassCourseCombined> combinedList = courseBO.getCombinedListByEmail(user.getEmail());
+			model.addAttribute("combinedList", combinedList);
+		}
 
-		User prof = userBO.getUserByEmail(newClass.getProfEmail());
-		String profName = prof.getFirstName() + " " + prof.getLastName();
-		model.addAttribute("professorName", profName);
+		model.addAttribute("classId", classId);
+		if (classId == 0) {
+			if (user.getType().equals("student")) {
 
-		Course course = courseBO.getCourseByCourseCode(newClass.getCourseCode());
-		model.addAttribute("courseName", course.getCourseCode() + " - " + course.getCourseName());
+				List<Assignment> assignmentList = assignmentBO.getAsgmtListByEmail(user.getEmail());
+				model.addAttribute("assignmentList", assignmentList);
 
-		List<Assignment> assignments = assignmentBO.getAsgmtListByClassId(classId);
+			} else if (user.getType().equals("professor")) {
 
-		model.addAttribute("assignments", assignments);
+				List<Assignment> assignmentList = assignmentBO.getAsgmtListByEmailProf(user.getEmail());
+				model.addAttribute("assignmentList", assignmentList);
+
+			}
+		} else {
+
+			List<Assignment> assignmentList = assignmentBO.getAsgmtListByClassId(classId);
+			model.addAttribute("assignmentList", assignmentList);
+		}
 
 		return "template/layout";
 	}
 
 	@GetMapping("/add_assignment")
-	public String addAssignmentView(@RequestParam("classId") int classId, Model model) {
+	public String addAssignmentView(@RequestParam("classId") int classId, Model model, HttpSession session) {
 		model.addAttribute("view", "assignment/addAssignment");
 
-		Class _class = courseBO.getClassById(classId);
-		Course course = courseBO.getCourseByCourseCode(_class.getCourseCode());
-		model.addAttribute("course", course);
+		User user = (User) session.getAttribute("user");
+
+		if (user.getType().equals("student")) {
+			List<ClassCourseCombined> combinedList = courseBO.getClassCourseListByStudentNum(user.getStudentNum());
+			model.addAttribute("combinedList", combinedList);
+		} else if (user.getType().equals("professor")) {
+			List<ClassCourseCombined> combinedList = courseBO.getCombinedListByEmail(user.getEmail());
+			model.addAttribute("combinedList", combinedList);
+		}
+
 		model.addAttribute("classId", classId);
 
 		return "template/layout";

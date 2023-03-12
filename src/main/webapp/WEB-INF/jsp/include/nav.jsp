@@ -15,8 +15,16 @@
 			</h4></li>
 	</c:if>
 	<li class="nav-item"><h4>
+			<a href="/univ/assignment/assignment_list?classId=0"
+				class="nav-link text-white font-weight-bold">Assignments</a>
+		</h4></li>
+	<li class="nav-item"><h4>
+			<a href="/univ/board/post_list?classId=0"
+				class="nav-link text-white font-weight-bold">Board</a>
+		</h4></li>
+	<li class="nav-item"><h4>
 			<a href="/univ/course/timetable"
-				class="nav-link text-white font-weight-bold">Timetable</a>
+				class="nav-link text-white font-weight-bold">Class Management</a>
 		</h4></li>
 	<!-- <li class="nav-item"><h4>
 			<a href="#" class="nav-link text-white font-weight-bold">Programs</a>
@@ -24,16 +32,4 @@
 	<li class="nav-item"><h4>
 			<a href="#" class="nav-link text-white font-weight-bold">Professors</a>
 		</h4></li> -->
-	<li class="nav-item"><h4>
-			<c:choose>
-				<c:when test="${user.type eq 'student'}">
-					<a href="/univ/course/register_class"
-						class="nav-link text-white font-weight-bold">Register Class</a>
-				</c:when>
-				<c:when test="${user.type eq 'professor'}">
-					<a href="/univ/course/create_class"
-						class="nav-link text-white font-weight-bold">Create Class</a>
-				</c:when>
-			</c:choose>
-		</h4></li>
 </ul>

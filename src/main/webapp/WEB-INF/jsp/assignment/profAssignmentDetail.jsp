@@ -8,6 +8,11 @@
 <div class="d-flex">
 	<div class="col-3"></div>
 	<div class="col-6">
+		<h4 class="mt-3">
+			<a
+				href="/univ/assignment/assignment_list?classId=${assignment.classId}"
+				class="underline noDecoA">Back to assignment list</a>
+		</h4>
 		<div class="d-flex justify-content-between align-items-end">
 			<h1 class="my-3">Assignment Detail</h1>
 			<div class="mr-3">
@@ -16,6 +21,7 @@
 					class="btn button text-white">Edit</a>
 			</div>
 		</div>
+		<hr>
 		<h2 class="text-center mt-3">${assignment.asgmtName}</h2>
 		<div class="d-flex justify-content-end">
 			<span>${assignment.asgmtType}</span>

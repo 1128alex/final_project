@@ -70,4 +70,16 @@ public class BoardBO {
 	public List<CommentUserCombined> getCommentListByClassIdPostId(int classId, int postId) {
 		return boardDAO.selectCommentListByClassIdPostId(classId, postId);
 	}
+
+	public List<PostUserCombined> getBoardListByEmail(String email) {
+		return boardDAO.selectBoardListByEmail(email);
+	}
+
+	public List<PostUserCombined> getBoardListByEmailProf(String email) {
+		return boardDAO.selectBoardListByEmailProf(email);
+	}
+
+	public List<PostUserCombined> getBoardListByClassId(int classId) {
+		return boardDAO.selectBoardListByClassId(classId);
+	}
 }

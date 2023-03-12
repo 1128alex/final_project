@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<!-- Core -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <div class="d-flex">
 	<div class="col-3"></div>
@@ -9,6 +11,16 @@
 				class="underline noDecoA">Back to post list</a>
 		</h4>
 		<h1 class="mt-3">Add post to Class</h1>
+
+		<select id="classId" name="classId" class="form-control sharpBorder">
+			<option value="0">--- Course ---</option>
+			<c:forEach var="combined" items="${combinedList}">
+				<option value="${combined.id}">${combined.courseCode += ' - ' +=
+						combined.courseName}</option>
+			</c:forEach>
+		</select>
+
+
 		<h3 class="mt-3">Title</h3>
 		<input type="text" id="title" name="title" class="form-control">
 		<h4 class="mt-2">Content</h4>
@@ -44,6 +56,11 @@
 	$(document)
 			.ready(
 					function() {
+						let classId = $('#classIdHolder').data("class-id");
+						$('#classId').val(classId).prop("selected", true);
+						$('#classId').on('change', function() {
+							classId = $('#classId').val();
+						})
 						$('#postBtn')
 								.on(
 										'click',

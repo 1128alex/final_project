@@ -103,10 +103,7 @@
 				</tr>
 			</tbody>
 		</table>
-		<div class="d-flex justify-content-between">
-			<span>Price: <fmt:formatNumber type="currency"
-					currencySymbol="$">${combined.price}</fmt:formatNumber>
-			</span>
+		<div class="d-flex justify-content-end">
 			<button type="button" id="registerBtn" class="btn button mt-2">Register</button>
 		</div>
 	</div>

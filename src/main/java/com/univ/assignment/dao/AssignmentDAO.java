@@ -36,4 +36,10 @@ public interface AssignmentDAO {
 	public int updateGradeSubmittedAsgmt(@Param("id") int id, @Param("score") Integer score,
 			@Param("feedback") String feedback, @Param("access") boolean access);
 
+	public List<Assignment> selectAsgmtListByEmailByDueDate(String email);
+
+	public List<Assignment> selectAsgmtListByEmail(String email);
+
+	public List<Assignment> selectAsgmtListByEmailProf(String email);
+
 }

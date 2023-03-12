@@ -167,4 +167,16 @@ public class AssignmentBO {
 		return assignmentDAO.updateGradeSubmittedAsgmt(subAsgmtId, score, feedback, access);
 	}
 
+	public List<Assignment> getAsgmtListByEmailByDueDate(String email) {
+		return assignmentDAO.selectAsgmtListByEmailByDueDate(email);
+	}
+
+	public List<Assignment> getAsgmtListByEmail(String email) {
+		return assignmentDAO.selectAsgmtListByEmail(email);
+	}
+
+	public List<Assignment> getAsgmtListByEmailProf(String email) {
+		return assignmentDAO.selectAsgmtListByEmailProf(email);
+	}
+
 }

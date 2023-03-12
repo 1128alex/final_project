@@ -51,4 +51,6 @@ public interface CourseDAO {
 
 	public int insertCourse(Course course);
 
+	public List<ClassCourseCombined> selectClassCourseListByStudentNum(String studentNum);
+
 }

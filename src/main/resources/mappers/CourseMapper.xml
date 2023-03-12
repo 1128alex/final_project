@@ -9,7 +9,6 @@
 		`courseCode`,
 		`courseName`,
 		`description`,
-		`price`,
 		`createdAt`,
 		`updatedAt`
 		FROM
@@ -25,7 +24,6 @@
 		`courseCode`,
 		`courseName`,
 		`description`,
-		`price`,
 		`createdAt`,
 		`updatedAt`
 		FROM
@@ -85,7 +83,6 @@
 		b.`courseCode`,
 		b.`courseName`,
 		b.`description`,
-		b.`price`,
 		c.`email`,
 		c.`firstName`,
 		c.`lastName`,
@@ -133,7 +130,6 @@
 		`courseCode`,
 		`courseName`,
 		`description`,
-		`price`,
 		`createdAt`,
 		`updatedAt`
 		FROM
@@ -258,7 +254,6 @@
 		b.`courseCode`,
 		b.`courseName`,
 		b.`description`,
-		b.`price`,
 		c.`email`,
 		c.`firstName`,
 		c.`lastName`,
@@ -281,6 +276,8 @@
 		c.`email`
 		WHERE
 		c.`email` = #{email}
+		ORDER BY
+		b.`courseCode`
 	</select>
 
 	<select id="selectClassListByEmail" parameterType="string"
@@ -378,7 +375,6 @@
 		a.`courseCode`,
 		a.`courseName`,
 		a.`description`,
-		a.`price`,
 		b.`id`,
 		b.`profEmail`,
 		b.`maxNum`,
@@ -391,7 +387,6 @@
 		b.`createdAt`,
 		b.`updatedAt`,
 		c.`email`,
-		c.`studentNum`,
 		c.`firstName`,
 		c.`lastName`,
 		c.`gender`,
@@ -435,7 +430,6 @@
 		a.`courseCode`,
 		a.`courseName`,
 		a.`description`,
-		a.`price`,
 		b.`id`,
 		b.`profEmail`,
 		b.`maxNum`,
@@ -448,7 +442,6 @@
 		b.`createdAt`,
 		b.`updatedAt`,
 		c.`email`,
-		c.`studentNum`,
 		c.`firstName`,
 		c.`lastName`,
 		c.`gender`,
@@ -482,7 +475,6 @@
 		`courseCode`,
 		`courseName`,
 		`description`,
-		`price`,
 		`createdAt`,
 		`updatedAt`
 		)
@@ -491,9 +483,59 @@
 		#{courseCode},
 		#{courseName},
 		#{description},
-		#{price},
 		NOW(),
 		NOW()
 		)
 	</insert>
+
+	<select id="selectClassCourseListByStudentNum"
+		parameterType="string"
+		resultType="com.univ.course.model.ClassCourseCombined">
+		SELECT
+		a.`courseCode`,
+		a.`courseName`,
+		a.`description`,
+		b.`id`,
+		b.`profEmail`,
+		b.`maxNum`,
+		b.`registerDueDate`,
+		b.`monStartTime`,
+		b.`tueStartTime`,
+		b.`wedStartTime`,
+		b.`thuStartTime`,
+		b.`friStartTime`,
+		b.`createdAt`,
+		b.`updatedAt`,
+		c.`email`,
+		c.`firstName`,
+		c.`lastName`,
+		c.`gender`,
+		c.`subject`
+		FROM
+		`course` as a
+		LEFT
+		JOIN
+		`class`
+		as
+		b
+		ON
+		a.`courseCode` =
+		b.`courseCode`
+		LEFT
+		JOIN
+		`user` as c
+		ON
+		b.`profEmail`
+		=
+		c.`email`
+		LEFT JOIN
+		`registry` as d
+		ON
+		b.`id` = d.`classId`
+		WHERE
+		d.`studentNum` =
+		#{studentNum}
+		ORDER BY
+		a.`courseCode`
+	</select>
 </mapper>

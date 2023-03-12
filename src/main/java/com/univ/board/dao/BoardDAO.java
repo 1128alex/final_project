@@ -22,4 +22,10 @@ public interface BoardDAO {
 
 	public List<CommentUserCombined> selectCommentListByClassIdPostId(@Param("classId") int classId,
 			@Param("postId") int postId);
+
+	public List<PostUserCombined> selectBoardListByEmail(String email);
+
+	public List<PostUserCombined> selectBoardListByEmailProf(String email);
+
+	public List<PostUserCombined> selectBoardListByClassId(int classId);
 }

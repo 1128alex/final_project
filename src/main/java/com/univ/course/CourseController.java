@@ -19,18 +19,14 @@ import com.univ.board.model.PostUserCombined;
 import com.univ.course.bo.CourseBO;
 import com.univ.course.model.Class;
 import com.univ.course.model.ClassCourseCombined;
-import com.univ.course.model.ClassInfoCombined;
 import com.univ.course.model.Course;
 import com.univ.registry.bo.RegistryBO;
 import com.univ.registry.model.Registry;
-import com.univ.user.bo.UserBO;
 import com.univ.user.model.User;
 
 @RequestMapping("/univ/course")
 @Controller
 public class CourseController {
-	@Autowired
-	private UserBO userBO;
 	@Autowired
 	private CourseBO courseBO;
 	@Autowired
@@ -66,36 +62,16 @@ public class CourseController {
 		User user = (User) session.getAttribute("user");
 		String userType = user.getType();
 
-		List<ClassInfoCombined> combinedList = new ArrayList<>();
 		if (userType.equals("student")) {
-			List<Registry> registryList = registryBO.getRegistryListByStudentNum(user.getStudentNum());
-
-			for (Registry registry : registryList) {
-				ClassInfoCombined combined = new ClassInfoCombined();
-
-				Class _class = courseBO.getClassById(registry.getClassId());
-				Course course = courseBO.getCourseByCourseCode(_class.getCourseCode());
-				combined.setUser(user);
-				combined.set_class(_class);
-				combined.setCourse(course);
-
-				combinedList.add(combined);
-			}
+			List<ClassCourseCombined> combinedList = courseBO.getClassCourseListByStudentNum(user.getStudentNum());
+			model.addAttribute("combinedList", combinedList);
 		} else if (userType.equals("professor")) {
-
-			List<Class> classList = courseBO.getClassListByEmail(user.getEmail());
-			for (Class _class : classList) {
-				ClassInfoCombined combined = new ClassInfoCombined();
-
-				combined.setUser(user);
-				Course course = courseBO.getCourseByCourseCode(_class.getCourseCode());
-				combined.set_class(_class);
-				combined.setCourse(course);
-
-				combinedList.add(combined);
-			}
+			List<ClassCourseCombined> combinedList = courseBO.getCombinedListByEmail(user.getEmail());
+			model.addAttribute("combinedList", combinedList);
 		}
-		model.addAttribute("combinedList", combinedList);
+
+		List<Assignment> assignmentList = assignmentBO.getAsgmtListByEmailByDueDate(userType);
+		model.addAttribute("assignmentList", assignmentList);
 		model.addAttribute("userType", userType);
 		model.addAttribute("view", "course/classList");
 
@@ -127,6 +103,15 @@ public class CourseController {
 	@GetMapping("/edit_class")
 	public String editClassView(@RequestParam("classId") int classId, Model model, HttpSession session) {
 
+		// timetable information
+		User user = (User) session.getAttribute("user");
+		String type = user.getType();
+		model.addAttribute("type", type);
+
+		List<ClassCourseCombined> combinedList = courseBO.getCombinedListByEmail(user.getEmail());
+		model.addAttribute("combinedList", combinedList);
+		model.addAttribute("classId", classId);
+
 		Class classInfo = courseBO.getClassById(classId);
 
 		List<Course> courseList = courseBO.getCourseList();
@@ -150,7 +135,7 @@ public class CourseController {
 			@RequestParam(value = "courseName", required = false) String courseName,
 			@RequestParam(value = "subjectCode", required = false) String subjectCode,
 			@RequestParam(value = "courseLevel", required = false) String courseLevel,
-			@RequestParam(value = "pageNum", required = false) Integer pageNum, Model model, HttpSession session) {
+			@RequestParam(value = "pageNum", required = false) Integer pageNum, Model model) {
 
 		List<Course> courseList = courseBO.getCourseList();
 		model.addAttribute("courseList", courseList);
@@ -186,15 +171,6 @@ public class CourseController {
 	public String registerClassDetailView(@RequestParam("classId") int classId, Model model) {
 
 		ClassCourseCombined combined = courseBO.getClassCourseByClassIdForDetail(classId);
-
-//		ClassInfoCombined combined = new ClassInfoCombined();
-
-//		Class _class = courseBO.getClassById(classId);
-//		combined.set_class(_class);
-//		User user = userBO.getUserByEmail(_class.getProfEmail());
-//		combined.setUser(user);
-//		Course course = courseBO.getCourseByCourseCode(_class.getCourseCode());
-//		combined.setCourse(course);
 
 		model.addAttribute("combined", combined);
 		model.addAttribute("classId", classId);

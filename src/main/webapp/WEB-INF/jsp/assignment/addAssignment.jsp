@@ -7,10 +7,18 @@
 	<div class="col-4">
 		<h4 class="mt-3">
 			<a href="/univ/assignment/assignment_list?classId=${classId}"
-				class="underline noDecoA">Back to assignment list</a>
+				class="underline noDecoA" id="classIdHolder"
+				data-class-id="${classId}">Back to assignment list</a>
 		</h4>
-		<h2 class="mt-3 font-weight-bold">Add Assignment for
-			${course.courseCode += " - " += course.courseName}</h2>
+
+		<select id="classId" name="classId" class="form-control sharpBorder">
+			<option value="0">--- Course ---</option>
+			<c:forEach var="combined" items="${combinedList}">
+				<option value="${combined.id}">${combined.courseCode += ' - ' +=
+						combined.courseName}</option>
+			</c:forEach>
+		</select>
+
 		<form id="assignmentAddForm" action="/assignment/add_assignment">
 			<div class="mt-3">
 				<h4>Assignment Name</h4>
@@ -60,6 +68,12 @@
 	$(document)
 			.ready(
 					function() {
+						let classId = $('#classIdHolder').data("class-id");
+						$('#classId').val(classId).prop("selected", true);
+						$('#classId').on('change', function() {
+							classId = $('#classId').val();
+						})
+						
 						$('#dueDate').datepicker({
 							dateFormat : 'yy/mm/dd',
 							minDate : 0

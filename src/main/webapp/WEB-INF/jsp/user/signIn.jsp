@@ -6,9 +6,9 @@
 		<h2 class="mt-4 font-weight-bold">Sign-In</h2>
 		<form id="signInForm" method="post" action="/user/sign_in">
 			<div class="mt-3">
-				<label>Student Number / Email Adress</label> <input type="text"
+				<label>Email / Student Number</label> <input type="text"
 					name="userId" id="userId" class="form-control"
-					placeholder="Enter your Id/Email">
+					placeholder="Enter your Email or Student Number">
 			</div>
 			<div class="mt-2">
 				<label>Password</label> <input type="password" name="password"
@@ -17,15 +17,15 @@
 			</div>
 			<div class="d-flex justify-content-between">
 				<div class="mt-2">
-					<a href="/univ/user/find_password">Forgot password?</a>
+					<a href="/univ/user/find_password">Forgot your password?</a>
 				</div>
-				<button type="submit" class="btn button mt-3" id="loginBtn">Login</button>
+				<button type="submit" class="btn button mt-3" id="signInBtn">SignIn</button>
 			</div>
 		</form>
 		<hr>
 		<div class="mt-2 d-flex justify-content-center">
-			Don't have Alex University Account?<a href="/univ/user/sign_up"
-				class="ml-2">Create your account</a>
+			New to Alex University?<a href="/univ/user/sign_up" class="ml-2">Create
+				your account</a>
 		</div>
 	</div>
 </div>

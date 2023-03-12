@@ -8,14 +8,23 @@
 <div class="d-flex">
 	<div class="col-3"></div>
 	<div class="col-6">
-		<h4 class="mt-3">
-			<a href="/univ/course/class_detail?classId=${classId}"
-				class="underline noDecoA">Back to class detail</a>
-		</h4>
-		<h1 class="mt-3">Post List</h1>
+		<h1 class="mt-3">Board for</h1>
+
+		<div class="d-flex justify-content-between">
+			<select id="classId" name="classId" class="form-control sharpBorder">
+				<option value="0">--- Course ---</option>
+				<c:forEach var="combined" items="${combinedList}">
+					<option value="${combined.id}">${combined.courseCode += ' - ' +=
+						combined.courseName}</option>
+				</c:forEach>
+			</select>
+			<button type="button" id="searchBtn" class="btn button sharpBorder">Search</button>
+		</div>
+
+
 		<div class="d-flex justify-content-end">
 			<a href="/univ/board/add_post?classId=${classId}"
-				class="btn button text-white">Add Post</a>
+				class="btn button text-white my-2">Add Post</a>
 		</div>
 		<table class="table">
 			<thead class="text-center">
@@ -37,14 +46,24 @@
 				</c:forEach>
 			</tbody>
 		</table>
-
 	</div>
 	<div class="col-3"></div>
+	<div id="classIdHolder" hidden="hidden" data-class-id="${classId}"></div>
+
 </div>
 
 <script>
 	$(document).ready(
 			function() {
+				let classId = $('#classIdHolder').data("class-id");
+				$('#classId').val(classId).prop("selected", true);
+				$('#classId').on('change', function() {
+					classId = $('#classId').val();
+				})
+				$('#searchBtn').on('click', function() {
+					classId = $('#classId').val();
+					location.href = "/univ/board/post_list?classId=" + classId;
+				})
 				$('.linkRow').on(
 						'click',
 						function() {

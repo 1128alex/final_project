@@ -36,6 +36,15 @@ input:focus::placeholder {
 	color: transparent;
 }
 
+.logoText {
+	color: #008B8B;
+	text-decoration: none;
+}
+
+.logoText:hover {
+	text-decoration: none;
+}
+
 .contentBox {
 	min-height: 200px;
 }
@@ -92,6 +101,11 @@ input:focus::placeholder {
 	border-radius: 100%;
 }
 
+#courseNameBox {
+	height: 60px;
+	overflow-y: auto;
+}
+
 .dayOfWeek {
 	text-align: center;
 }
@@ -141,7 +155,7 @@ input:focus::placeholder {
 }
 
 .classBoxTitle {
-	height: 110px;
+	height: 120px;
 	background-color: #008B8B;
 }
 
@@ -188,23 +202,23 @@ input:focus::placeholder {
 }
 
 .classFilledTime {
-	background-color: #ffa3a3;
-}
-
-.classAvailableTime:hover {
-	background-color: #ccedcc;
-}
-
-.classFilledTimeHover:hover {
-	background-color: #fc8686;
-}
-
-.classSelectedTime {
 	background-color: #b9c8fa;
 }
 
-.classSelectedTime:hover {
+.classAvailableTime:hover {
+	background-color: lightgrey;
+}
+
+.classFilledTimeHover:hover {
 	background-color: #7e9af7;
+}
+
+.classSelectedTime {
+	background-color: #ffa3a3;
+}
+
+.classSelectedTime:hover {
+	background-color: #fc8686;
 }
 
 .greyBorder {

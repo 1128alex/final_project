@@ -8,6 +8,10 @@
 <div class="d-flex">
 	<div class="col-3"></div>
 	<div class="col-6">
+		<h4 class="mt-3">
+			<a href="/univ/board/post_list?classId=${classId}"
+				class="underline noDecoA">Back to post list</a>
+		</h4>
 		<div class="d-flex justify-content-between align-items-end">
 			<div>
 				<h3 class="mt-3">${postCombined.title}</h3>
@@ -32,6 +36,7 @@
 		<c:forEach var="comment" items="${commentList}">
 			<b>${comment.firstName += " " += comment.lastName}</b>
 			<span>${comment.content}</span>
+			<br>
 		</c:forEach>
 
 		<hr>
@@ -44,7 +49,6 @@
 
 		<hr>
 
-		<h3 class="mt-3">Post List</h3>
 		<table class="table">
 			<thead class="text-center">
 				<tr>
@@ -83,6 +87,12 @@
 							location.href = "/univ/board/post_detail?classId="
 									+ classId + "&postId=" + postId;
 						});
+
+				addEventListener("keydown", function(e) {
+					if (e.key === "Enter") {
+						$('#commentBtn').click();
+					}
+				});
 				$('#commentBtn').on(
 						'click',
 						function() {
@@ -100,7 +110,6 @@
 								},
 								success : function(data) {
 									if (data.code == 1) {
-										alert("success");
 										location.reload();
 									} else {
 										alert("error " + data.code + ": "

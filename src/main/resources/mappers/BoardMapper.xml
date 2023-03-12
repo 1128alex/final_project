@@ -146,4 +146,73 @@
 		a.`updatedAt` DESC
 	</select>
 
+	<select id="selectBoardListByClassId" parameterType="int"
+		resultType="com.univ.board.model.PostUserCombined">
+		SELECT
+		a.`classId`,
+		a.`postId`,
+		a.`writerEmail`,
+		a.`title`,
+		a.`content`,
+		a.`filePath`,
+		a.`createdAt`,
+		a.`updatedAt`,
+		b.`courseCode`
+		FROM
+		`post` as a INNER JOIN
+		`class` as b
+		ON
+		a.`classId` =
+		b.`id`
+		WHERE
+		`classId` =
+		#{classId}
+		ORDER BY `updatedAt`
+		DESC;
+	</select>
+	<select id="selectBoardListByEmail" parameterType="string"
+		resultType="com.univ.board.model.PostUserCombined">
+		SELECT
+		a.`classId`,
+		a.`postId`,
+		a.`writerEmail`,
+		a.`title`,
+		a.`content`,
+		a.`filePath`,
+		a.`createdAt`,
+		a.`updatedAt`
+		FROM
+		`post` as a
+		INNER JOIN
+		`registry` as b
+		ON
+		a.`classId` = b.`classId`
+		<!-- WHERE b.`email`=#{email} -->
+		ORDER BY
+		a.`updatedAt`
+		DESC;
+	</select>
+	<select id="selectBoardListByEmailProf" parameterType="string"
+		resultType="com.univ.board.model.PostUserCombined">
+		SELECT
+		a.`classId`,
+		a.`postId`,
+		a.`writerEmail`,
+		a.`title`,
+		a.`content`,
+		a.`filePath`,
+		a.`createdAt`,
+		a.`updatedAt`,
+		b.`courseCode`
+		FROM
+		`post` as a
+		INNER JOIN `class` as b
+		ON
+		a.`classId`=b.`id`
+		WHERE
+		b.`profEmail`=#{email}
+		ORDER BY
+		a.`updatedAt`
+		DESC;
+	</select>
 </mapper>

@@ -13,6 +13,7 @@ public class Assignment {
 	private Date dueDate;
 	private Date createdAt;
 	private Date updatedAt;
+	private String courseCode;
 
 	public int getClassId() {
 		return classId;
@@ -92,6 +93,14 @@ public class Assignment {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public String getCourseCode() {
+		return courseCode;
+	}
+
+	public void setCourseCode(String courseCode) {
+		this.courseCode = courseCode;
 	}
 
 }

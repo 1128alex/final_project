@@ -6,23 +6,29 @@
 	<select id="selectAsgmtListByClassId"
 		resultType="com.univ.assignment.model.Assignment" parameterType="int">
 		SELECT
-		`classId`,
-		`asgmtId`,
-		`asgmtType`,
-		`asgmtName`,
-		`content`,
-		`filePath`,
-		`maxScore`,
-		`dueDate`,
-		`createdAt`,
-		`updatedAt`
+		a.`classId`,
+		a.`asgmtId`,
+		a.`asgmtType`,
+		a.`asgmtName`,
+		a.`content`,
+		a.`filePath`,
+		a.`maxScore`,
+		a.`dueDate`,
+		a.`createdAt`,
+		a.`updatedAt`,
+		b.`courseCode`
 		FROM
-		`assignment`
+		`assignment` as a
+		JOIN
+		`class` as b
+		ON
+		a.`classId` =
+		b.`id`
 		WHERE
 		`classId` =
 		#{classId}
-		ORDER BY `updatedAt` DESC;
-
+		ORDER BY `updatedAt`
+		DESC;
 	</select>
 
 	<insert id="insertAssignment"
@@ -285,4 +291,79 @@
 		WHERE
 		`id` = #{id}
 	</update>
+
+	<select id="selectAsgmtListByEmailByDueDate"
+		resultType="com.univ.assignment.model.Assignment"
+		parameterType="string">
+		SELECT
+		a.`classId`,
+		a.`asgmtId`,
+		a.`asgmtType`,
+		a.`asgmtName`,
+		a.`content`,
+		a.`filePath`,
+		a.`maxScore`,
+		a.`dueDate`,
+		a.`createdAt`,
+		a.`updatedAt`
+		FROM
+		`assignment` a INNER JOIN `registry` b
+		ON
+		a.`classId`=b.`classId`
+		<!-- WHERE b.`email`=#{email} -->
+		ORDER BY
+		a.`dueDate`
+		DESC;
+	</select>
+	<select id="selectAsgmtListByEmail"
+		resultType="com.univ.assignment.model.Assignment"
+		parameterType="string">
+		SELECT
+		a.`classId`,
+		a.`asgmtId`,
+		a.`asgmtType`,
+		a.`asgmtName`,
+		a.`content`,
+		a.`filePath`,
+		a.`maxScore`,
+		a.`dueDate`,
+		a.`createdAt`,
+		a.`updatedAt`
+		FROM
+		`assignment` a INNER JOIN `registry` b
+		ON
+		a.`classId`=b.`classId`
+		<!-- WHERE b.`email`=#{email} -->
+		ORDER BY
+		a.`updatedAt`
+		DESC;
+	</select>
+	<select id="selectAsgmtListByEmailProf"
+		resultType="com.univ.assignment.model.Assignment"
+		parameterType="string">
+		SELECT
+		a.`classId`,
+		a.`asgmtId`,
+		a.`asgmtType`,
+		a.`asgmtName`,
+		a.`content`,
+		a.`filePath`,
+		a.`maxScore`,
+		a.`dueDate`,
+		a.`createdAt`,
+		a.`updatedAt`,
+		b.`courseCode`
+		FROM
+		`assignment` as a INNER
+		JOIN `class`
+		as
+		b
+		ON
+		a.`classId`=b.`id`
+		WHERE b.`profEmail`=#{email}
+		ORDER
+		BY
+		a.`updatedAt`
+		DESC;
+	</select>
 </mapper>

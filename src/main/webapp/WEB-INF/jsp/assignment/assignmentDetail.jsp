@@ -7,8 +7,7 @@
 	<div class="col-3"></div>
 	<div class="col-6">
 		<h4 class="mt-3">
-			<a
-				href="/univ/assignment/assignment_list?classId=${classId}&asgmtId=${asgmtId}"
+			<a href="/univ/assignment/assignment_list?classId=${classId}"
 				class="underline noDecoA">Back to assignment list</a>
 		</h4>
 		<form id="assignmentSubmitForm" action="/assignment/submit_assignment"

@@ -8,7 +8,24 @@
 <div class="d-flex">
 	<div class="col-3"></div>
 	<div class="col-6">
-		<h1 class="mt-3">Timetable</h1>
+		<div id="typeHolder" data-type="${type}"></div>
+		<div class="d-flex justify-content-between align-items-end">
+			<h1 class="mt-3">Timetable</h1>
+			<c:choose>
+				<c:when test="${type eq 'student'}">
+					<div>
+						<a href="/univ/course/register_class" class="btn button mb-2">Register
+							Class</a>
+					</div>
+				</c:when>
+				<c:when test="${type eq 'professor'}">
+					<div>
+						<a href="/univ/course/create_class" class="btn button mb-2">Create
+							Class</a>
+					</div>
+				</c:when>
+			</c:choose>
+		</div>
 		<table class="table table-bordered border-grey colFixedTable">
 			<thead class="text-center">
 				<tr>
@@ -169,9 +186,12 @@
 
 <script>
 	$(document).ready(function() {
-		$('.classFilledTime').on('click', function() {
-			let classId = $(this).data('class-id');
-			location.href = "/univ/course/class_detail?classId=" + classId;
-		});
+		let typeHolder = $('#typeHolder').data('type');
+		if (type != 'student') {
+			$('.classFilledTime').on('click', function() {
+				let classId = $(this).data('class-id');
+				location.href = "/univ/course/edit_class?classId=" + classId;
+			});
+		}
 	});
 </script>

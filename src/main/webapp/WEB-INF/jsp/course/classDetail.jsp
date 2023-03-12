@@ -98,11 +98,11 @@
 		</div>
 		<hr>
 		<div class="mt-4">
-			<h1>
+			<h2>
 				<a
 					href="/univ/assignment/assignment_list?classId=${currentClass.id}"
 					class="noDecoA">Assignments</a>
-			</h1>
+			</h2>
 			<table class="table">
 				<thead>
 					<tr>
@@ -125,10 +125,10 @@
 		</div>
 	</div>
 	<div class="col-3 classAsideArea">
-		<h1 class="mt-3">
+		<h2 class="mt-3">
 			<a href="/univ/board/post_list?classId=${currentClass.id}"
 				class="noDecoA">Class Board</a>
-		</h1>
+		</h2>
 		<div class="classAside">
 			<table class="table">
 				<thead class="text-center">

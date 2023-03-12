@@ -6,7 +6,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <div class="d-flex justify-content-center">
-	<div class="col-4">
+	<div class="col-6">
 		<h2 class="mt-3 font-weight-bold">Edit Class</h2>
 		<form id="editClassForm" action="/course/edit_class" method="post">
 			<div class="mt-3">
@@ -63,7 +63,152 @@
 				</div>
 			</div>
 			<div class="mt-3">
-				<h4>Class Schedule</h4>
+				<h3 class="mt-3">Timetable</h3>
+				<span>Select class times.(Click on the empty spaces to add
+					your class.)</span>
+				<table
+					class="table table-bordered border-grey colFixedTable smallTimetable">
+					<thead class="text-center">
+						<tr>
+							<th>Time</th>
+							<th>Monday</th>
+							<th>Tuesday</th>
+							<th>Wednesday</th>
+							<th>Thursday</th>
+							<th>Friday</th>
+						</tr>
+					</thead>
+					<tbody class="text-center">
+						<c:forEach var="i" begin="6" end="20">
+							<tr>
+								<td>
+									<div class="h-100">
+										<div
+											class="h-100 d-flex justify-content-center align-items-center">${i}:00</div>
+									</div>
+								</td>
+								<td class="p-0"><c:set var="count" value="0" />
+									<div class="h-100">
+										<c:forEach var="combined" items="${combinedList}">
+											<c:if test="${combined.monStartTime eq i}">
+												<c:set var="count" value="1"></c:set>
+												<c:choose>
+													<c:when test="${combined.id eq classId}">
+														<div id="mon${i}" data-time="mon${i}"
+															class="classAvailableTime classSelectedTime hover-pointer h-100 d-flex justify-content-center align-items-center">${combined.courseCode}</div>
+													</c:when>
+													<c:otherwise>
+														<div id="mon${i}"
+															class="classFilledTime h-100 d-flex justify-content-center align-items-center">${combined.courseCode}</div>
+													</c:otherwise>
+												</c:choose>
+											</c:if>
+										</c:forEach>
+										<c:if test="${count eq 0}">
+											<div id="mon${i}"
+												class="classAvailableTime hover-pointer h-100 d-flex justify-content-center align-items-center"
+												data-time="mon${i}"></div>
+										</c:if>
+									</div></td>
+								<td class="p-0"><c:set var="count" value="0" />
+									<div class="h-100">
+										<c:forEach var="combined" items="${combinedList}">
+											<c:if test="${combined.tueStartTime eq i}">
+												<c:set var="count" value="1"></c:set>
+												<c:choose>
+													<c:when test="${combined.id eq classId}">
+														<div id="tue${i}" data-time="tue${i}"
+															class="classAvailableTime classSelectedTime hover-pointer h-100 d-flex justify-content-center align-items-center">${combined.courseCode}</div>
+													</c:when>
+													<c:otherwise>
+														<div id="tue${i}"
+															class="classFilledTime h-100 d-flex justify-content-center align-items-center">${combined.courseCode}</div>
+													</c:otherwise>
+												</c:choose>
+											</c:if>
+										</c:forEach>
+										<c:if test="${count eq 0}">
+											<div id="tue${i}"
+												class="classAvailableTime hover-pointer h-100 d-flex justify-content-center align-items-center"
+												data-time="tue${i}"></div>
+										</c:if>
+									</div></td>
+								<td class="p-0"><c:set var="count" value="0" />
+									<div class="h-100">
+										<c:forEach var="combined" items="${combinedList}">
+											<c:if test="${combined.wedStartTime eq i}">
+												<c:set var="count" value="1"></c:set>
+												<c:choose>
+													<c:when test="${combined.id eq classId}">
+														<div id="wed${i}" data-time="wed${i}"
+															class="classAvailableTime classSelectedTime hover-pointer h-100 d-flex justify-content-center align-items-center">${combined.courseCode}</div>
+													</c:when>
+													<c:otherwise>
+														<div id="wed${i}"
+															class="classFilledTime h-100 d-flex justify-content-center align-items-center">${combined.courseCode}</div>
+													</c:otherwise>
+												</c:choose>
+											</c:if>
+										</c:forEach>
+										<c:if test="${count eq 0}">
+											<div id="wed${i}"
+												class="classAvailableTime hover-pointer h-100 d-flex justify-content-center align-items-center"
+												data-time="wed${i}"></div>
+										</c:if>
+									</div></td>
+								<td class="p-0"><c:set var="count" value="0" />
+									<div class="h-100">
+										<c:forEach var="combined" items="${combinedList}">
+											<c:if test="${combined.thuStartTime eq i}">
+												<c:set var="count" value="1"></c:set>
+												<c:choose>
+													<c:when test="${combined.id eq classId}">
+														<div id="thu${i}" data-time="thu${i}"
+															class="classAvailableTime classSelectedTime hover-pointer h-100 d-flex justify-content-center align-items-center">${combined.courseCode}</div>
+													</c:when>
+													<c:otherwise>
+														<div id="thu${i}"
+															class="classFilledTime h-100 d-flex justify-content-center align-items-center">${combined.courseCode}</div>
+													</c:otherwise>
+												</c:choose>
+											</c:if>
+										</c:forEach>
+										<c:if test="${count eq 0}">
+											<div id="thu${i}"
+												class="classAvailableTime hover-pointer h-100 d-flex justify-content-center align-items-center"
+												data-time="thu${i}"></div>
+										</c:if>
+									</div></td>
+								<td class="p-0"><c:set var="count" value="0" />
+									<div class="h-100">
+										<c:forEach var="combined" items="${combinedList}">
+											<c:if test="${combined.friStartTime eq i}">
+												<c:set var="count" value="1"></c:set>
+												<c:choose>
+													<c:when test="${combined.id eq classId}">
+														<div id="fri${i}" data-time="fri${i}"
+															class="classAvailableTime classSelectedTime hover-pointer h-100 d-flex justify-content-center align-items-center">${combined.courseCode}</div>
+													</c:when>
+													<c:otherwise>
+														<div id="fri${i}"
+															class="classFilledTime h-100 d-flex justify-content-center align-items-center">${combined.courseCode}</div>
+													</c:otherwise>
+												</c:choose>
+											</c:if>
+										</c:forEach>
+										<c:if test="${count eq 0}">
+											<div id="fri${i}"
+												class="classAvailableTime hover-pointer h-100 d-flex justify-content-center align-items-center"
+												data-time="fri${i}"></div>
+										</c:if>
+									</div></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+			<div class="mt-3 mb-3">
+				<%-- <h4>Class Schedule</h4>
 				<table class="table table-bordered">
 					<thead>
 						<tr>
@@ -135,7 +280,7 @@
 							</c:forEach>
 						</tr>
 					</tbody>
-				</table>
+				</table> --%>
 				<div class="d-flex justify-content-between">
 					<div>
 						<button type="button" id="deleteClassBtn" class="btn delButton">Delete</button>
@@ -181,6 +326,46 @@
 						$('#dayOfWeek5').val(friStartTime).prop("selected",
 								true);
 
+						$('.classAvailableTime')
+								.on(
+										'click',
+										function() {
+											let courseName = $('#courseName')
+													.val();
+											if (courseName == "0") {
+												alert("Please select the course that you are going to teach.");
+												return;
+											}
+											let courseCode = courseName
+													.split(' - ')[0];
+
+											let dayOfWeek = $(this)
+													.data("time").substring(0,
+															3);
+											let time = $(this).data("time")
+													.substring(3);
+
+											for (let i = 6; i <= 20; i++) {
+												if ($('#'.concat(dayOfWeek, i))
+														.hasClass(
+																"classSelectedTime")
+														&& i != time) {
+													alert("There is a class already in the same day.");
+													return;
+												}
+											}
+
+											if ($(this).hasClass(
+													"classSelectedTime")) {
+												$(this).removeClass(
+														"classSelectedTime");
+												$(this).text("");
+											} else {
+												$(this).addClass(
+														"classSelectedTime");
+												$(this).text(courseCode);
+											}
+										});
 						$('#subjectLevel').on('click', function() {
 							if ($('#subjectCode').val() == "0") {
 								alert("Please select the subject code.");

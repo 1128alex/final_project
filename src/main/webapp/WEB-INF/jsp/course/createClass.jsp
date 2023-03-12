@@ -196,6 +196,7 @@
 										function() {
 											let courseName = $('#courseName')
 													.val();
+											alert(courseName);
 											if (courseName == "0") {
 												alert("Please select the course that you are going to teach.");
 												return;

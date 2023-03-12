@@ -9,16 +9,40 @@
 </div>
 <div class="logo col-6">
 	<div class="d-flex justify-content-center">
-		<c:if test="${type ne 'admin'}">
-			<a href="/univ/course/class_list"> <img alt="logoImg"
-				src="/static/img/logoFinalized-onlyLogo.png" height="120"
-				class="mt-3">
+		<c:if test="${user.type eq 'student'}">
+			<a href="/univ/course/class_list">
+				<div class="d-flex align-items-center logoText">
+					<div>
+						<h1>University of Alex</h1>
+						<h4>For Student</h4>
+					</div>
+					<img alt="logoImg" src="/static/img/logoFinalized-onlyLogo.png"
+						height="120" class="mt-3">
+				</div>
 			</a>
 		</c:if>
-		<c:if test="${type eq 'admin'}">
-			<a href="/univ/admin"> <img alt="logoImg"
-				src="/static/img/logoFinalized-onlyLogo.png" height="120"
-				class="mt-3">
+		<c:if test="${user.type eq 'professor'}">
+			<a href="/univ/course/class_list">
+				<div class="d-flex align-items-center logoText">
+					<div>
+						<h1>University of Alex</h1>
+						<h4>For Professor</h4>
+					</div>
+					<img alt="logoImg" src="/static/img/logoFinalized-onlyLogo.png"
+						height="120" class="mt-3">
+				</div>
+			</a>
+		</c:if>
+		<c:if test="${user.type eq 'admin'}">
+			<a href="/univ/admin">
+				<div class="d-flex align-items-center logoText">
+					<div>
+						<h1>University of Alex</h1>
+						<h4>For Admin</h4>
+					</div>
+					<img alt="logoImg" src="/static/img/logoFinalized-onlyLogo.png"
+						height="120" class="mt-3">
+				</div>
 			</a>
 		</c:if>
 	</div>

@@ -64,7 +64,6 @@
 						<th>Course Name</th>
 						<th>Professor</th>
 						<th>Time</th>
-						<th>Price</th>
 						<th>Register Due Date</th>
 					</tr>
 				</thead>
@@ -153,8 +152,6 @@
 
 									</tbody>
 								</table></td>
-							<td><fmt:formatNumber value="${combined.price}"
-									type="currency" currencySymbol="$" /></td>
 							<td><fmt:formatDate value="${combined.registerDueDate}"
 									pattern="dd/MM/YYYY" /></td>
 						</tr>
@@ -168,8 +165,7 @@
 				<c:forEach var="i" begin="1" end="${pageLength}">
 					<c:choose>
 						<c:when test="${i eq pageNum }">
-							<span
-								class="coursePage mx-2 underline font-weight-bold"
+							<span class="coursePage mx-2 underline font-weight-bold"
 								id="coursePage${i}" data-course-page="${i}">${i}</span>
 						</c:when>
 						<c:otherwise>

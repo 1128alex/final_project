@@ -123,7 +123,7 @@
 				success : function(data) {
 					if (data.code == 1) {
 						alert("Success!");
-						location.href = "/univ/course/class_list";
+						location.href = "/univ/course/timetable";
 					} else {
 						alert("error " + data.code + ": " + data.errorMessage);
 					}

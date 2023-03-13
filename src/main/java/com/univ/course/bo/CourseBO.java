@@ -120,6 +120,8 @@ public class CourseBO {
 	}
 
 	public int addCourse(Course course) {
+		course.setCourseCode(course.getCourseCode().replace(" ", ""));
+
 		return courseDAO.insertCourse(course);
 	}
 

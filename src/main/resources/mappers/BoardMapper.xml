@@ -180,13 +180,19 @@
 		a.`content`,
 		a.`filePath`,
 		a.`createdAt`,
-		a.`updatedAt`
+		a.`updatedAt`,
+		c.`firstName`,
+		c.`lastName`
 		FROM
 		`post` as a
 		INNER JOIN
 		`registry` as b
 		ON
 		a.`classId` = b.`classId`
+		INNER JOIN
+		`user` as c
+		ON
+		a.`writerEmail` = c.`email`
 		<!-- WHERE b.`email`=#{email} -->
 		ORDER BY
 		a.`updatedAt`
@@ -203,12 +209,18 @@
 		a.`filePath`,
 		a.`createdAt`,
 		a.`updatedAt`,
-		b.`courseCode`
+		b.`courseCode`,
+		c.`firstName`,
+		c.`lastName`
 		FROM
 		`post` as a
 		INNER JOIN `class` as b
 		ON
 		a.`classId`=b.`id`
+		INNER JOIN
+		`user` as c
+		ON
+		a.`writerEmail` = c.`email`
 		WHERE
 		b.`profEmail`=#{email}
 		ORDER BY

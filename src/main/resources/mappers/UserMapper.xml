@@ -142,7 +142,8 @@
 		SET
 		`password` = #{password}
 		WHERE
-		`email` = #{email}
+		`email` = #{email},
+		`updatedAt` = NOW();
 	</update>
 
 	<select id="selectUserListByTypeName" parameterType="map"
@@ -172,4 +173,21 @@
 			<!-- (`firstName` LIKE CONCAT('%',#{name},'%') OR `lastName` LIKE CONCAT('%',#{name},'%')) -->
 		</if>
 	</select>
+
+	<update id="updateUser" parameterType="com.univ.user.model.User">
+		UPDATE `user`
+		SET
+		`email`=#{user.email},
+		`profileUrl` = #{user.profileUrl},
+		`firstName` =
+		#{user.firstName},
+		`lastName` = #{user.lastName},
+		`birth` =
+		#{user.birth},
+		`gender` =
+		#{user.gender},
+		`updatedAt` = NOW()
+		WHERE
+		`email` = #{prevEmail}
+	</update>
 </mapper>

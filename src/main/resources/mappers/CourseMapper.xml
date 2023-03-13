@@ -104,6 +104,11 @@
 		a.`profEmail` =
 		c.`email`
 		WHERE
+		a.`maxNum` > (SELECT COUNT(*) FROM `registry` WHERE `classId` =
+		a.`id`)
+		AND
+		a.`registerDueDate` > NOW()
+		AND
 		(b.`courseCode`
 		LIKE
 		CONCAT('%',#{searchKeyword},'%')
@@ -352,6 +357,12 @@
 		a.`profEmail` =
 		c.`email`
 		WHERE
+		a.`maxNum` > (SELECT COUNT(*) FROM `registry` WHERE
+		`classId` =
+		a.`id`)
+		AND
+		a.`registerDueDate` > NOW()
+		AND
 		(b.`courseCode`
 		LIKE
 		CONCAT('%',#{searchKeyword},'%')
@@ -537,5 +548,20 @@
 		#{studentNum}
 		ORDER BY
 		a.`courseCode`
+	</select>
+
+	<select id="selectCourseListWOFull"
+		resultType="com.univ.course.model.Course">
+		SELECT
+		`courseCode`,
+		`courseName`,
+		`description`,
+		`createdAt`,
+		`updatedAt`
+		FROM
+		`course`
+		ORDER BY
+		`courseCode`
+		ASC
 	</select>
 </mapper>

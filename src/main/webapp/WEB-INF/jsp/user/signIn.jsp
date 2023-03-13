@@ -8,12 +8,16 @@
 			<div class="mt-3">
 				<label>Email / Student Number</label> <input type="text"
 					name="userId" id="userId" class="form-control"
-					placeholder="Enter your Email or Student Number">
+					placeholder="Enter your Email or Student Number"> <small
+					id="enterEmailAlert" class="text-danger d-none">"Please
+					write your email or student number."</small>
 			</div>
 			<div class="mt-2">
 				<label>Password</label> <input type="password" name="password"
 					id="password" class="form-control"
-					placeholder="Enter your Password">
+					placeholder="Enter your Password"> <small
+					id="enterPasswordAlert" class="text-danger d-none">Please
+					enter your password.</small>
 			</div>
 			<div class="d-flex justify-content-between">
 				<div class="mt-2">
@@ -32,17 +36,24 @@
 
 <script>
 	$(document).ready(function() {
+		$("#userId").keyup(function() {
+			$('#enterEmailAlert').addClass('d-none');
+		});
+		$("#password").keyup(function() {
+			$('#enterPasswordAlert').addClass('d-none');
+		});
+
 		$('#signInForm').on('submit', function(e) {
 			e.preventDefault();
 			let userId = $('#userId').val().trim();
 			if (userId == '') {
-				alert("Please write your ID.");
+				$('#enterEmailAlert').removeClass('d-none');
 				return false;
 			}
 
 			let password = $('#password').val().trim();
 			if (password == '') {
-				alert("Please write your password.");
+				$('#enterPasswordAlert').removeClass('d-none');
 				return false;
 			}
 

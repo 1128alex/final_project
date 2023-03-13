@@ -8,7 +8,12 @@
 		<div class="mt-3">
 			<h4>Email</h4>
 			<input type="text" id="email" name="email" class="form-control"
-				placeholder="example@univ.com">
+				placeholder="example@univ.com"> <small id="emailUsableAlert"
+				class="text-success d-none">Available email</small><small
+				id="invalidEmailAlert" class="text-danger d-none">Please
+				check if the email is a valid email.</small> <small id="emailDupAlert"
+				class="text-danger d-none">The account with this email
+				already exists.</small>
 		</div>
 		<div class="mt-3">
 			<h4>Password</h4>

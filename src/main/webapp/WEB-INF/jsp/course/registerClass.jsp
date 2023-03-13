@@ -16,9 +16,14 @@
 				<select id="subjectCode" name="subjectCode"
 					class="form-control col-5 mr-2">
 					<option value="0">-- Subject --</option>
-					<option value="CS">Computer Science</option>
-					<option value="ECON">Economics</option>
-					<option value="MATH">Math</option>
+					<option value="COMMST">Communication(COMMST)</option>
+					<option value="CS">Computer Science(CS)</option>
+					<option value="ECON">Economics(ECON)</option>
+					<option value="EMLS">English for Multilingual
+						Speakers(EMLS)</option>
+					<option value="ENGL">English(ECNGL)</option>
+					<option value="MATH">Math(MATH)</option>
+					<option value="STAT">Statistics(STAT)</option>
 				</select>
 				<div id="courseLevelHolder" data-course-level="${courseLevel}"></div>
 				<select id="courseLevel" name="courseLevel"

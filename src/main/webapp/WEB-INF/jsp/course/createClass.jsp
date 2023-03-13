@@ -15,9 +15,14 @@
 						<select id="subjectCode" name="subjectCode"
 							class="form-control col-5 mr-2">
 							<option value="0">-- Subject --</option>
-							<option value="CS">Computer Science</option>
-							<option value="ECON">Economics</option>
-							<option value="MATH">Math</option>
+							<option value="COMMST">Communication(COMMST)</option>
+							<option value="CS">Computer Science(CS)</option>
+							<option value="ECON">Economics(ECON)</option>
+							<option value="EMLS">English for Multilingual
+								Speakers(EMLS)</option>
+							<option value="ENGL">English(ECNGL)</option>
+							<option value="MATH">Math(MATH)</option>
+							<option value="STAT">Statistics(STAT)</option>
 						</select> <select id="subjectLevel" name="subjectLevel"
 							class="form-control col-5 ml-2">
 							<option value="0">-- Level --</option>
@@ -196,7 +201,6 @@
 										function() {
 											let courseName = $('#courseName')
 													.val();
-											alert(courseName);
 											if (courseName == "0") {
 												alert("Please select the course that you are going to teach.");
 												return;
@@ -392,7 +396,7 @@
 														success : function(data) {
 															if (data.code == 1) {
 																alert("success");
-																location.href = "/univ/course/class_list";
+																location.href = "/univ/course/timetable";
 															} else {
 																alert("error "
 																		+ data.code

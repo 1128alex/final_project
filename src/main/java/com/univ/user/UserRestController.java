@@ -1,6 +1,7 @@
 package com.univ.user;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,6 +52,21 @@ public class UserRestController {
 		return result;
 	}
 
+	@GetMapping("/check_email_dup")
+	public Map<String, Object> checkEmailDup(@RequestParam("email") String email) {
+		Map<String, Object> result = new HashMap<>();
+
+		int emailRowCount = userBO.checkDuplicate(email);
+
+		if (emailRowCount == 0) {
+			result.put("code", 1);
+		} else if (emailRowCount != 0) {
+			result.put("code", 500);
+		}
+
+		return result;
+	}
+
 	@PostMapping("/sign_up")
 	public Map<String, Object> signUp(@ModelAttribute User user, @RequestParam("birthYear") int birthYear,
 			@RequestParam("birthMonth") int birthMonthInfo, @RequestParam("birthDay") int birthDay,
@@ -58,11 +75,6 @@ public class UserRestController {
 		Map<String, Object> result = new HashMap<>();
 
 		int rowCount = userBO.addUser(user, birthYear, birthMonthInfo, birthDay, profileFile);
-		if (rowCount == 2) {
-			result.put("code", 2);
-			result.put("errorMessage", "The account with this email exists already.");
-			return result;
-		}
 		if (rowCount > 0) {
 			result.put("code", 1);
 
@@ -87,7 +99,8 @@ public class UserRestController {
 			result.put("question", user.getVerifyQuestion());
 		} else {
 			result.put("code", 500);
-			result.put("errorMessage", "Error while getting verification question.");
+			result.put("errorMessage",
+					"Error while getting verification question. Account with this email does not exist.");
 		}
 		return result;
 	}
@@ -120,6 +133,44 @@ public class UserRestController {
 		} else {
 			result.put("code", 500);
 			result.put("errorMessage", "Error while getting verification question.");
+		}
+
+		return result;
+	}
+
+	@PostMapping("/edit_profile")
+	public Map<String, Object> editProfile(@ModelAttribute User user, @RequestParam("prevEmail") String prevEmail,
+			@RequestParam("birthYear") int birthYear, @RequestParam("birthMonth") int birthMonthInfo,
+			@RequestParam("birthDay") int birthDay,
+			@RequestParam(value = "profileFile", required = false) MultipartFile profileFile, HttpSession session,
+			HttpServletRequest request) throws ParseException {
+		Map<String, Object> result = new HashMap<>();
+
+		int rowCount = userBO.updateUser(prevEmail, user, birthYear, birthMonthInfo, birthDay, profileFile);
+		if (rowCount == 2) {
+			result.put("code", 2);
+			result.put("errorMessage", "The account with this email exists already.");
+			return result;
+		}
+		if (rowCount > 0) {
+			result.put("code", 1);
+
+			User sessionUser = (User) session.getAttribute("user");
+			sessionUser.setEmail(user.getEmail());
+			Date birth = UserBO.toDate(birthDay, birthMonthInfo, birthYear);
+			sessionUser.setBirth(birth);
+			sessionUser.setFirstName(user.getFirstName());
+			sessionUser.setLastName(user.getLastName());
+			sessionUser.setGender(user.getGender());
+			if (profileFile != null) {
+				sessionUser.setProfileUrl(user.getProfileUrl());
+			}
+
+			HttpSession newSession = request.getSession();
+			newSession.setAttribute("user", sessionUser);
+		} else {
+			result.put("code", 500);
+			result.put("errorMessage", "failed to sign up");
 		}
 
 		return result;

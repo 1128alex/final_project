@@ -24,26 +24,31 @@
 								<div class="d-flex justify-content-center">
 									<h4 id="courseNameBox" class="text-center text-white m-0">${combined.courseName}</h4>
 								</div>
-								<div class="text-right text-white mr-3">${combined.firstName += ' ' += combined.lastName}</div>
+								<c:if test="${type eq 'student'}">
+									<div class="text-right text-white mr-3">${combined.firstName += ' ' += combined.lastName}</div>
+								</c:if>
 							</div>
 						</a>
-						<div class="m-2">
-							<c:set var="loop_flag" value="false" />
-							<c:forEach var="assignment" items="${assignmentList}">
-								<c:if test="${not loop_flag}">
-									<c:if test="${assignment.classId eq combined.id}">
-										<div class="noDecoA lastAssignment hover-pointer"
-											data-class-id="${assignment.classId}"
-											data-asgmt-id="${assignment.asgmtId}">
-											Due:
-											<fmt:formatDate value="${assignment.dueDate}" pattern="d MMM" />
-											<div class="ml-2">${assignment.asgmtName}</div>
-										</div>
-										<c:set var="loop_flag" value="true" />
+						<c:if test="${type eq 'student'}">
+							<div class="m-2">
+								<c:set var="loop_flag" value="false" />
+								<c:forEach var="assignment" items="${assignmentList}">
+									<c:if test="${not loop_flag}">
+										<c:if test="${assignment.classId eq combined.id}">
+											<div class="noDecoA lastAssignment hover-pointer"
+												data-class-id="${assignment.classId}"
+												data-asgmt-id="${assignment.asgmtId}">
+												Due:
+												<fmt:formatDate value="${assignment.dueDate}"
+													pattern="d MMM" />
+												<div class="ml-2">${assignment.asgmtName}</div>
+											</div>
+											<c:set var="loop_flag" value="true" />
+										</c:if>
 									</c:if>
-								</c:if>
-							</c:forEach>
-						</div>
+								</c:forEach>
+							</div>
+						</c:if>
 					</div>
 				</c:forEach>
 			</div>

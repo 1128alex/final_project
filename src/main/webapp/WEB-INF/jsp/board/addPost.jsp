@@ -65,8 +65,11 @@
 								.on(
 										'click',
 										function() {
-											let classId = $('#classIdHolder')
-													.data("class-id");
+
+											if (classId == 0) {
+												alert('Please specify the class you are going to post at.')
+												return;
+											}
 
 											let title = $('#title').val();
 											if (title == '') {

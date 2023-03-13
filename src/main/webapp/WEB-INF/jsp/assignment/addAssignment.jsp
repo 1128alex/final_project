@@ -97,9 +97,6 @@
 										function(e) {
 											e.preventDefault();
 
-											let classId = $('#classIdHolder')
-													.data("class-id");
-
 											let asgmtName = $('#asgmtName')
 													.val();
 											if (asgmtName == '') {

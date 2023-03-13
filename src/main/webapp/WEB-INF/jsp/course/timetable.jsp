@@ -26,6 +26,9 @@
 				</c:when>
 			</c:choose>
 		</div>
+		<c:if test="${type eq 'professor'}">
+			<div>* To edit class, click the course box in the timetable.</div>
+		</c:if>
 		<table class="table table-bordered border-grey colFixedTable">
 			<thead class="text-center">
 				<tr>
@@ -186,7 +189,7 @@
 
 <script>
 	$(document).ready(function() {
-		let typeHolder = $('#typeHolder').data('type');
+		let type = $('#typeHolder').data('type');
 		if (type != 'student') {
 			$('.classFilledTime').on('click', function() {
 				let classId = $(this).data('class-id');

@@ -60,19 +60,19 @@ public class CourseController {
 	public String classListView(Model model, HttpSession session) {
 
 		User user = (User) session.getAttribute("user");
-		String userType = user.getType();
+		String type = user.getType();
 
-		if (userType.equals("student")) {
+		if (type.equals("student")) {
 			List<ClassCourseCombined> combinedList = courseBO.getClassCourseListByStudentNum(user.getStudentNum());
 			model.addAttribute("combinedList", combinedList);
-		} else if (userType.equals("professor")) {
+		} else if (type.equals("professor")) {
 			List<ClassCourseCombined> combinedList = courseBO.getCombinedListByEmail(user.getEmail());
 			model.addAttribute("combinedList", combinedList);
 		}
 
-		List<Assignment> assignmentList = assignmentBO.getAsgmtListByEmailByDueDate(userType);
+		List<Assignment> assignmentList = assignmentBO.getAsgmtListByEmailByDueDate(type);
 		model.addAttribute("assignmentList", assignmentList);
-		model.addAttribute("userType", userType);
+		model.addAttribute("type", type);
 		model.addAttribute("view", "course/classList");
 
 		return "template/layout";
@@ -189,7 +189,9 @@ public class CourseController {
 		for (Registry registry : registryList) {
 			ClassCourseCombined combined = courseBO.getClassCourseByClassId(registry.getClassId(),
 					user.getStudentNum());
-			combinedList.add(combined);
+			if (combined != null) {
+				combinedList.add(combined);
+			}
 		}
 		model.addAttribute("combinedList", combinedList);
 		model.addAttribute("view", "course/gradeClassList");

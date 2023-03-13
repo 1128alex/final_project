@@ -61,12 +61,6 @@ public class UserBO {
 			profileUrl = fileManagerService.saveFile(user.getEmail(), profileFile);
 		}
 
-		int emailRowCount = userDAO.checkDuplicate(user.getEmail());
-
-		if (emailRowCount >= 1) {
-			return 2;
-		}
-
 		// Set the model values
 		user.setBirth(birth);
 		user.setPassword(hashedPassword);
@@ -84,7 +78,7 @@ public class UserBO {
 		return userDAO.selectUserByEmail(email);
 	}
 
-	public Date toDate(int birthDay, int birthMonth, int birthYear) throws ParseException {
+	public static Date toDate(int birthDay, int birthMonth, int birthYear) throws ParseException {
 		String birthStr = birthDay + "/" + birthMonth + "/" + birthYear;
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
@@ -107,5 +101,29 @@ public class UserBO {
 
 	public List<User> getUserListByTypeName(String type, String search, String loggedEmail) {
 		return userDAO.selectUserListByTypeName(type, search, loggedEmail);
+	}
+
+	public int updateUser(String prevEmail, User user, int birthYear, int birthMonthInfo, int birthDay,
+			MultipartFile profileFile) throws ParseException {
+
+		// Combining Birth Information
+		Date birth = toDate(birthDay, birthMonthInfo, birthYear);
+
+		String profileUrl = "/images/no_profile/noprofile.png";
+		if (profileFile != null) {
+			profileUrl = fileManagerService.saveFile(user.getEmail(), profileFile);
+		}
+
+		// Set the model values
+		user.setBirth(birth);
+		user.setProfileUrl(profileUrl);
+
+		// Add the information to Database
+		return userDAO.updateUser(prevEmail, user);
+
+	}
+
+	public int checkDuplicate(String email) {
+		return userDAO.checkDuplicate(email);
 	}
 }

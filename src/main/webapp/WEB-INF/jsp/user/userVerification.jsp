@@ -11,12 +11,12 @@
 		<h3>Please input your email.</h3>
 		<input class="form-control" id="email" name="email"
 			placeholder="eg) example@auniv.com">
-		<button id="nextBtn" class="btn button">Next</button>
+		<button id="nextBtn" class="btn button mt-2">Next</button>
 
-		<div class="question d-none">
+		<div class="question mt-3 d-none">
 			<h4 id="questionBox"></h4>
 			<input type="text" id="answerSlot" class="form-control">
-			<button type="button" id="verifyBtn" class="btn button">Verify</button>
+			<button type="button" id="verifyBtn" class="btn button mt-2">Verify</button>
 		</div>
 	</div>
 	<div class="col-4"></div>

@@ -15,7 +15,8 @@
 			<div class="d-flex justify-content-between align-items-end">
 				<h2 class="my-3">${course.courseCode += " - " += course.courseName}</h2>
 			</div>
-			<h2 class="text-center">${assignment.asgmtName += " Submission"}</h2>
+			<hr>
+			<h2 class="text-center">${assignment.asgmtName}</h2>
 			<div class="d-flex justify-content-end">
 				<span>${assignment.asgmtType}</span>
 			</div>

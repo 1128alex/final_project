@@ -5,8 +5,13 @@
 <!--Formatting-->
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
-<div class="d-flex justify-content-center">
+<div class="d-flex">
+	<div class="col-3"></div>
 	<div class="col-6">
+		<h4 class="mt-3">
+			<a href="/univ/course/timetable" class="underline noDecoA"
+				id="classIdHolder" data-class-id="${classId}">Back to timetable</a>
+		</h4>
 		<h2 class="mt-3 font-weight-bold">Edit Class</h2>
 		<form id="editClassForm" action="/course/edit_class" method="post">
 			<div class="mt-3">
@@ -64,8 +69,8 @@
 			</div>
 			<div class="mt-3">
 				<h3 class="mt-3">Timetable</h3>
-				<span>Select class times.(Click on the empty spaces to add
-					your class.)</span>
+				<div>* Select class times.(Click on the empty spaces to add
+					your class.)</div>
 				<table
 					class="table table-bordered border-grey colFixedTable smallTimetable">
 					<thead class="text-center">
@@ -294,6 +299,7 @@
 			</div>
 		</form>
 	</div>
+	<div class="col-3"></div>
 	<div id="classIdDataHolder" data-class-id="${classInfo.id}"></div>
 </div>
 
@@ -413,7 +419,7 @@
 							minDate : 0
 						});
 						let classId = $('#classIdDataHolder').data("class-id");
-						$('#editClassCancelBtn')
+						$('#editClassCancelBtn, #classIdHolder')
 								.on(
 										'click',
 										function() {

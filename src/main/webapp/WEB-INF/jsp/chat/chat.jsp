@@ -221,130 +221,139 @@
 													});
 										});
 
+						let pause = false;
 						setInterval(
 								function() {
-									if (roomId == '') {
-										return;
-									}
-									if (currentId == '') {
-										currentId = 0;
-									}
-									let currentDate = $('#currentDateHolder')
-											.text();
-									$
-											.ajax({
-												type : "GET",
-												url : "/chat/get_new_message",
-												data : {
-													"roomId" : roomId,
-													"currentId" : currentId
-												},
-												success : function(data) {
-													if (data.code == 1) {
-														for (let i = 0; i < data.newChatList.length; i++) {
-															let createdAt = new Date(
-																	data.newChatList[i].createdAt);
-															var hours = createdAt
-																	.getHours();
-															var ampm = "AM";
-															if (hours >= 12) {
-																ampm = "PM"
-																hours -= 12;
-															}
-															if (hours == 0) {
-																hours += 12;
-															}
+									if (pause == false) {
+										if (roomId == '') {
+											return;
+										}
+										pause = true;
+										if (currentId == '') {
+											currentId = 0;
+										}
+										let currentDate = $(
+												'#currentDateHolder').text();
 
-															var minutes = createdAt
-																	.getMinutes();
-															if (minutes < 10) {
-																minutes = "0"
-																		+ minutes;
+										$
+												.ajax({
+													type : "GET",
+													url : "/chat/get_new_message",
+													data : {
+														"roomId" : roomId,
+														"currentId" : currentId
+													},
+													success : function(data) {
+														if (data.code == 1) {
+															for (let i = 0; i < data.newChatList.length; i++) {
+																let createdAt = new Date(
+																		data.newChatList[i].createdAt);
+																var hours = createdAt
+																		.getHours();
+																var ampm = "AM";
+																if (hours >= 12) {
+																	ampm = "PM"
+																	hours -= 12;
+																}
+																if (hours == 0) {
+																	hours += 12;
+																}
+
+																var minutes = createdAt
+																		.getMinutes();
+																if (minutes < 10) {
+																	minutes = "0"
+																			+ minutes;
+																}
+																var date = createdAt
+																		.getDate();
+
+																const monthNames = [
+																		"Jan",
+																		"Feb",
+																		"Mar",
+																		"Apr",
+																		"May",
+																		"Jun",
+																		"Jul",
+																		"Aug",
+																		"Sep",
+																		"Oct",
+																		"Nov",
+																		"Dec" ];
+																var month = createdAt
+																		.getMonth();
+																var year = createdAt
+																		.getFullYear();
+																if (currentDate != date) {
+																	$(
+																			'#chatBox')
+																			.append(
+																					'<div class="d-flex justify-content-center">-----'
+																							+ date
+																							+ " "
+																							+ monthNames[month]
+																							+ " "
+																							+ year
+																							+ '-----</div>');
+
+																	$(
+																			'#currentDateHolder')
+																			.text(
+																					date);
+																}
+
+																if (data.newChatList[i].writer == writer) {
+																	$(
+																			'#chatBox')
+																			.append(
+																					'<div class="d-flex justify-content-end my-2"><div class="d-flex align-items-end mr-1 unselectable"><div>'
+																							+ hours
+																							+ ':'
+																							+ minutes
+																							+ " "
+																							+ ampm
+																							+ '</div></div><div class="chatBalloon myChat px-2"><c:set var="currentChatId" value="${chat.id}"></c:set><div>'
+																							+ data.newChatList[i].content
+																							+ '</div></div></div>');
+
+																} else if (data.newChatList[i].writer != writer) {
+																	$(
+																			'#chatBox')
+																			.append(
+																					'<div class="d-flex my-2"><div class="mr-2 unselectable"><img alt="" src="'+data.newChatList[i].profileUrl+'" class="profileImgBox" height="30px" width="30px"></div><div><div><b class="unselectable">'
+																							+ data.newChatList[i].firstName
+																							+ ' '
+																							+ data.newChatList[i].lastName
+																							+ '</b></div><div class="d-flex"><div class="chatBalloon px-2"><c:set var="currentChatId" value="${chat.id}"></c:set><div>'
+																							+ data.newChatList[i].content
+																							+ '</div></div><div class="d-flex align-items-end ml-1 unselectable">'
+																							+ hours
+																							+ ':'
+																							+ minutes
+																							+ " "
+																							+ ampm
+																							+ '</div></div></div></div>');
+																}
+																const element = document
+																		.getElementById("chatBox");
+																element.scrollTop = element.scrollHeight;
+																currentId = data.newChatList[i].id;
 															}
-															var date = createdAt
-																	.getDate();
-
-															const monthNames = [
-																	"Jan",
-																	"Feb",
-																	"Mar",
-																	"Apr",
-																	"May",
-																	"Jun",
-																	"Jul",
-																	"Aug",
-																	"Sep",
-																	"Oct",
-																	"Nov",
-																	"Dec" ];
-															var month = createdAt
-																	.getMonth();
-															var year = createdAt
-																	.getFullYear();
-															if (currentDate != date) {
-																$('#chatBox')
-																		.append(
-																				'<div class="d-flex justify-content-center">-----'
-																						+ date
-																						+ " "
-																						+ monthNames[month]
-																						+ " "
-																						+ year
-																						+ '-----</div>');
-
-																$(
-																		'#currentDateHolder')
-																		.text(
-																				date);
-															}
-
-															if (data.newChatList[i].writer == writer) {
-																$('#chatBox')
-																		.append(
-																				'<div class="d-flex justify-content-end my-2"><div class="d-flex align-items-end mr-1 unselectable"><div>'
-																						+ hours
-																						+ ':'
-																						+ minutes
-																						+ " "
-																						+ ampm
-																						+ '</div></div><div class="chatBalloon myChat px-2"><c:set var="currentChatId" value="${chat.id}"></c:set><div>'
-																						+ data.newChatList[i].content
-																						+ '</div></div></div>');
-
-															} else if (data.newChatList[i].writer != writer) {
-																$('#chatBox')
-																		.append(
-																				'<div class="d-flex my-2"><div class="mr-2 unselectable"><img alt="" src="'+data.newChatList[i].profileUrl+'" class="profileImgBox" height="30px" width="30px"></div><div><div><b class="unselectable">'
-																						+ data.newChatList[i].firstName
-																						+ ' '
-																						+ data.newChatList[i].lastName
-																						+ '</b></div><div class="d-flex"><div class="chatBalloon px-2"><c:set var="currentChatId" value="${chat.id}"></c:set><div>'
-																						+ data.newChatList[i].content
-																						+ '</div></div><div class="d-flex align-items-end ml-1 unselectable">'
-																						+ hours
-																						+ ':'
-																						+ minutes
-																						+ " "
-																						+ ampm
-																						+ '</div></div></div></div>');
-															}
-															const element = document
-																	.getElementById("chatBox");
-															element.scrollTop = element.scrollHeight;
-															currentId = data.newChatList[i].id;
+															pause = false;
+														} else {
+															alert("error "
+																	+ data.code
+																	+ ": "
+																	+ data.errorMessage);
 														}
-													} else {
-														alert("error "
-																+ data.code
-																+ ": "
-																+ data.errorMessage);
+													},
+													error : function(e) {
+														alert("error: " + e);
 													}
-												},
-												error : function(e) {
-													alert("error: " + e);
-												}
-											});
-								}, 200);
+												});
+									}
+								}, 1);
 
 						$('#createChatBtn').on('click', function() {
 							let nameSearch = $('#nameSearch').val();

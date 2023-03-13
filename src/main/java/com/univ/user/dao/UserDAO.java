@@ -29,4 +29,6 @@ public interface UserDAO {
 
 	public List<User> selectUserListByTypeName(@Param("type") String type, @Param("search") String search,
 			@Param("loggedEmail") String loggedEmail);
+
+	public int updateUser(@Param("prevEmail") String prevEmail, @Param("user") User user);
 }

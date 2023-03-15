@@ -87,8 +87,10 @@
 		c.`firstName`,
 		c.`lastName`,
 		c.`gender`,
-		c.`subject`
-		<!-- , d.`registerCount` -->
+		c.`subject`,
+		(SELECT COUNT(*) FROM `registry` WHERE `classId`
+		= a.`id`)
+		as `registerCount`
 		FROM
 		`class` as a
 		LEFT
@@ -97,7 +99,8 @@
 		as
 		b
 		ON
-		a.`courseCode` =
+		a.`courseCode`
+		=
 		b.`courseCode`
 		LEFT JOIN
 		`user` as c
@@ -107,15 +110,6 @@
 		<!-- , (SELECT COUNT(*) as `registerCount` FROM `registry` WHERE `classId` 
 			= a.`id`) as d -->
 		WHERE
-		a.`maxNum` > (SELECT COUNT(*) FROM `registry` WHERE `classId` =
-		a.`id`)
-		AND a.`registerDueDate` > NOW()
-		AND
-		(SELECT COUNT(*) FROM
-		`registry`
-		WHERE
-		`classId` = a.`id`)
-		AND
 		(b.`courseCode`
 		LIKE
 		CONCAT('%',#{searchKeyword},'%')
@@ -366,11 +360,6 @@
 		<!-- , (SELECT COUNT(*) as `registerCount` FROM `registry` WHERE `classId` 
 			= a.`id`) as d -->
 		WHERE
-		a.`maxNum` > (SELECT COUNT(*) FROM
-		`registry` WHERE `classId` =
-		a.`id`)
-		AND a.`registerDueDate` > NOW()
-		AND
 		(b.`courseCode`
 		LIKE
 		CONCAT('%',#{searchKeyword},'%')
@@ -434,8 +423,9 @@
 		WHERE
 		`classId` =
 		#{classId}
-		AND `studentNum` =
-		#{studentNum}) as d
+		AND `email` =
+		#{email})
+		as d
 		WHERE
 		b.`id`
 		=
@@ -464,7 +454,11 @@
 		c.`firstName`,
 		c.`lastName`,
 		c.`gender`,
-		c.`subject`
+		c.`subject`,
+		(SELECT COUNT(*) FROM `registry` WHERE
+		`classId`
+		= b.`id`)
+		as `registerCount`
 		FROM
 		`course` as a
 		LEFT
@@ -479,7 +473,8 @@
 		JOIN
 		`user` as c
 		ON
-		b.`profEmail` =
+		b.`profEmail`
+		=
 		c.`email`
 		WHERE
 		b.`id`
@@ -507,8 +502,7 @@
 		)
 	</insert>
 
-	<select id="selectClassCourseListByStudentNum"
-		parameterType="string"
+	<select id="selectClassCourseListByEmail" parameterType="string"
 		resultType="com.univ.course.model.ClassCourseCombined">
 		SELECT
 		a.`courseCode`,
@@ -552,8 +546,9 @@
 		ON
 		b.`id` = d.`classId`
 		WHERE
-		d.`studentNum` =
-		#{studentNum}
+		d.`email`
+		=
+		#{email}
 		ORDER BY
 		a.`courseCode`
 	</select>

@@ -5,7 +5,7 @@ import java.util.Date;
 public class Registry {
 	private int classId;
 	private int registerId;
-	private String studentNum;
+	private String email;
 	private Date createdAt;
 	private Date updatedAt;
 
@@ -25,12 +25,12 @@ public class Registry {
 		this.registerId = registerId;
 	}
 
-	public String getStudentNum() {
-		return studentNum;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setStudentNum(String studentNum) {
-		this.studentNum = studentNum;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public Date getCreatedAt() {

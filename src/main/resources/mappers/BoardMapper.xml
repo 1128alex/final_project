@@ -188,12 +188,14 @@
 		INNER JOIN
 		`registry` as b
 		ON
-		a.`classId` = b.`classId`
+		a.`classId` =
+		b.`classId`
 		INNER JOIN
 		`user` as c
 		ON
 		a.`writerEmail` = c.`email`
-		<!-- WHERE b.`email`=#{email} -->
+		WHERE
+		b.`email` = #{email}
 		ORDER BY
 		a.`updatedAt`
 		DESC;
@@ -222,7 +224,7 @@
 		ON
 		a.`writerEmail` = c.`email`
 		WHERE
-		b.`profEmail`=#{email}
+		b.`profEmail` = #{email}
 		ORDER BY
 		a.`updatedAt`
 		DESC;

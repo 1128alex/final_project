@@ -198,7 +198,8 @@
 									}
 
 									if (email.includes('@') == false
-											|| email.includes('.') == false) {
+											|| email.includes('.') == false
+											|| email.includes('/')) {
 										$('#invalidEmailAlert').removeClass(
 												'd-none');
 										return;

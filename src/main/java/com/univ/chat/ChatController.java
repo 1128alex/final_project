@@ -48,10 +48,13 @@ public class ChatController {
 			model.addAttribute("offset", offset);
 
 			ChatRoom currentRoom = chatBO.getChatRoomByRoomId(roomId);
+			List<User> memberList = userBO.getChatMemberList(currentRoom.getMembers());
+			model.addAttribute("memberList", memberList);
+
 			List<ChatUserCombined> chatList = chatBO.getMessageList(roomId, offset);
 			model.addAttribute("currentRoom", currentRoom);
 			model.addAttribute("chatList", chatList);
-			
+
 		}
 
 		model.addAttribute("view", "chat/chat");
@@ -73,7 +76,7 @@ public class ChatController {
 		}
 
 		model.addAttribute("search", search);
-		model.addAttribute("view", "chat/createNewChat");
+		model.addAttribute("view", "chat/newChat");
 
 		return "template/layout";
 	}

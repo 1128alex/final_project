@@ -4,8 +4,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!--Formatting-->
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!-- Function -->
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <div class="d-flex">
 	<div class="col-2"></div>
@@ -42,25 +40,36 @@
 
 		</div>
 		<div class="col-8 greyBorder mt-4 px-0">
-			<div class="ml-2 py-2 chatRoomTitle unselectable">
-				<c:choose>
-					<c:when test="${fn:length(currentRoom.roomName) > 50}">
-						<h3>${fn:substring(currentRoom.roomName, 0, 48)}...</h3>
-					</c:when>
-					<c:otherwise>
-						<h3>${currentRoom.roomName}</h3>
-					</c:otherwise>
-				</c:choose>
+			<div class="ml-2 py-2 chatRoomTitle d-flex justify-content-between">
+				<div class="col-9 unselectable">
+					<h3>${currentRoom.roomName}</h3>
+				</div>
+				<c:if test="${currentRoom.roomName ne null}">
+					<a class="dropdown-toggle hover-pointer mr-2"
+						data-toggle="dropdown"> <img class="profileImgBox"
+						src="/static/img/noprofile.png" height="30" width="30">
+					</a>
+					<div class="dropdown-menu col-3">
+						<c:forEach var="member" items="${memberList}">
+							<div class="dropdown-item px-0">
+								<div class="d-flex align-items-center">
+									<img alt="profile" class="profileImgBox mx-2"
+										src="${member.profileUrl}" height="30" width="30">
+									<div>${member.firstName += ' ' += member.lastName}</div>
+								</div>
+							</div>
+						</c:forEach>
+					</div>
+				</c:if>
 			</div>
 			<div id="chatBox" class="chatRoomBox greyborder px-2">
-				${offset}${timezone}
 				<c:forEach var="chat" items="${chatList}">
 					<fmt:formatDate value="${chat.createdAt}" var="currentDate"
 						pattern="d" />
 					<c:if test="${currentDate ne lastDate}">
 						<div class="d-flex justify-content-center">
 							-----
-							<fmt:formatDate value="${chat.createdAt}" pattern="d MMM yyyy" />
+							<fmt:formatDate value="${chat.createdAt}" pattern="MMMM d, yyyy" />
 							-----
 						</div>
 					</c:if>
@@ -111,10 +120,17 @@
 				</c:forEach>
 				<div id="currentDateHolder" hidden="hidden">${currentDate}</div>
 			</div>
-			<div class="d-flex justify-content-end">
-				<input type="text" id="content" class="form-control sharpBorder">
-				<button type="button" id="sendBtn" class="btn button sharpBorder">Send</button>
+			<div id="timezoneStatus">
+				<div>Timezone: ${timezone}</div>
+				<div>Offset: ${offset}</div>
+				<div id="timezoneStatusJS">JavaScript:</div>
 			</div>
+			<c:if test="${currentRoom.roomName ne null}">
+				<div class="d-flex">
+					<input type="text" id="content" class="form-control sharpBorder">
+					<button type="button" id="sendBtn" class="btn button sharpBorder">Send</button>
+				</div>
+			</c:if>
 		</div>
 	</div>
 	<div class="col-2"></div>
@@ -172,6 +188,7 @@
 			.ready(
 					function() {
 						var offset = new Date().getTimezoneOffset();
+						$('#timezoneStatusJS').append(offset);
 
 						const element = document.getElementById("chatBox");
 						element.scrollTop = element.scrollHeight;
@@ -272,18 +289,18 @@
 																		.getDate();
 
 																const monthNames = [
-																		"Jan",
-																		"Feb",
-																		"Mar",
-																		"Apr",
+																		"January",
+																		"Febuary",
+																		"March",
+																		"April",
 																		"May",
-																		"Jun",
-																		"Jul",
-																		"Aug",
-																		"Sep",
-																		"Oct",
-																		"Nov",
-																		"Dec" ];
+																		"June",
+																		"July",
+																		"August",
+																		"September",
+																		"October",
+																		"November",
+																		"December" ];
 																var month = createdAt
 																		.getMonth();
 																var year = createdAt
@@ -293,10 +310,10 @@
 																			'#chatBox')
 																			.append(
 																					'<div class="d-flex justify-content-center">-----'
-																							+ date
-																							+ " "
 																							+ monthNames[month]
 																							+ " "
+																							+ date
+																							+ ", "
 																							+ year
 																							+ '-----</div>');
 

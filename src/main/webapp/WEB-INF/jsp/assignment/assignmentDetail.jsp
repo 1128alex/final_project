@@ -78,7 +78,7 @@
 				</div>
 			</c:if>
 			<c:if test="${submittedAsgmt eq null}">
-				<div class="d-flex justify-content-end mt-2">
+				<div class="d-flex justify-content-end mt-2 mb-3">
 					<div id="reHolder" data-re="nr"></div>
 					<button type="submit" id="assignmentSubmitBtn" class="btn button">Submit</button>
 				</div>

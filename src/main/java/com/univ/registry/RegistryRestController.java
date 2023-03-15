@@ -25,9 +25,8 @@ public class RegistryRestController {
 		Map<String, Object> result = new HashMap<>();
 
 		User user = (User) session.getAttribute("user");
-		String studentNum = user.getStudentNum();
 
-		int rowCount = registryBO.registerToClass(classId, studentNum);
+		int rowCount = registryBO.registerToClass(classId, user.getEmail());
 
 		if (rowCount == 2) {
 			result.put("code", 2);

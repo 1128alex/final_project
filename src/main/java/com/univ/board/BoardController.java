@@ -32,7 +32,7 @@ public class BoardController {
 		model.addAttribute("type", user.getType());
 
 		if (user.getType().equals("student")) {
-			List<ClassCourseCombined> combinedList = courseBO.getClassCourseListByStudentNum(user.getStudentNum());
+			List<ClassCourseCombined> combinedList = courseBO.getClassCourseListByEmail(user.getEmail());
 			model.addAttribute("combinedList", combinedList);
 		} else if (user.getType().equals("professor")) {
 			List<ClassCourseCombined> combinedList = courseBO.getCombinedListByEmail(user.getEmail());
@@ -63,7 +63,7 @@ public class BoardController {
 		User user = (User) session.getAttribute("user");
 
 		if (user.getType().equals("student")) {
-			List<ClassCourseCombined> combinedList = courseBO.getClassCourseListByStudentNum(user.getStudentNum());
+			List<ClassCourseCombined> combinedList = courseBO.getClassCourseListByEmail(user.getEmail());
 			model.addAttribute("combinedList", combinedList);
 		} else if (user.getType().equals("professor")) {
 			List<ClassCourseCombined> combinedList = courseBO.getCombinedListByEmail(user.getEmail());

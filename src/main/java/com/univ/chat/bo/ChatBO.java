@@ -41,11 +41,11 @@ public class ChatBO {
 	public int createChatRoom(String members, String roomName, HttpSession session) {
 		User user = (User) session.getAttribute("user");
 
-		String memberString = user.getEmail() + "/" + members;
+		String memberString = "/" + user.getEmail() + "/" + members;
 
 		if (roomName == "") {
 			roomName = memberString.replace("/", ", ");
-			roomName = roomName.substring(0, roomName.length() - 2);
+			roomName = roomName.substring(2, roomName.length() - 2);
 		}
 
 		return chatDAO.insertChatRoom(memberString, roomName);

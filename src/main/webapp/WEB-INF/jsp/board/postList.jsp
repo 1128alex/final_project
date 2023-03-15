@@ -41,7 +41,7 @@
 						<td>${post.title}</td>
 						<td class="text-center">${post.firstName += ' ' += post.lastName}</td>
 						<td class="text-center"><fmt:formatDate
-								value="${post.updatedAt}" pattern="d MMM yyyy" /></td>
+								value="${post.updatedAt}" pattern="MMMM d, yyyy" /></td>
 					</tr>
 				</c:forEach>
 			</tbody>

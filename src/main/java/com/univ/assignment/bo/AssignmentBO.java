@@ -109,8 +109,7 @@ public class AssignmentBO {
 	public int submitAssignment(boolean re, SubmittedAsgmt submittedAsgmt, List<MultipartFile> files,
 			HttpSession session) {
 		User user = (User) session.getAttribute("user");
-		String studentNum = user.getStudentNum();
-		submittedAsgmt.setStudentNum(studentNum);
+		submittedAsgmt.setEmail(user.getEmail());
 
 		if (files != null) {
 			String[] filePaths = new String[files.size()];
@@ -146,8 +145,8 @@ public class AssignmentBO {
 
 	}
 
-	public SubmittedAsgmt getSubmittedAsgmt(int classId, int asgmtId, String studentNum) {
-		return assignmentDAO.selectSubmittedAsgmt(classId, asgmtId, studentNum);
+	public SubmittedAsgmt getSubmittedAsgmt(int classId, int asgmtId, String email) {
+		return assignmentDAO.selectSubmittedAsgmt(classId, asgmtId, email);
 	}
 
 	public List<AssignmentUserCombined> getSubmittedAsgmtUserList(int classId, int asgmtId) {

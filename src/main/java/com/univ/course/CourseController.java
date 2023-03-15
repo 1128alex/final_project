@@ -1,6 +1,7 @@
 package com.univ.course;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -63,15 +64,16 @@ public class CourseController {
 		String type = user.getType();
 
 		if (type.equals("student")) {
-			List<ClassCourseCombined> combinedList = courseBO.getClassCourseListByStudentNum(user.getStudentNum());
+			List<ClassCourseCombined> combinedList = courseBO.getClassCourseListByEmail(user.getEmail());
 			model.addAttribute("combinedList", combinedList);
+
+			List<Assignment> assignmentList = assignmentBO.getAsgmtListByEmailByDueDate(user.getEmail());
+			model.addAttribute("assignmentList", assignmentList);
 		} else if (type.equals("professor")) {
 			List<ClassCourseCombined> combinedList = courseBO.getCombinedListByEmail(user.getEmail());
 			model.addAttribute("combinedList", combinedList);
 		}
 
-		List<Assignment> assignmentList = assignmentBO.getAsgmtListByEmailByDueDate(type);
-		model.addAttribute("assignmentList", assignmentList);
 		model.addAttribute("type", type);
 		model.addAttribute("view", "course/classList");
 
@@ -160,6 +162,10 @@ public class CourseController {
 		if (courseName != null) {
 			model.addAttribute("courseName", courseName);
 		}
+
+		Date today = new Date();
+
+		model.addAttribute("today", today);
 		model.addAttribute("searchKeyword", searchKeyword);
 		model.addAttribute("combinedList", combinedList);
 		model.addAttribute("view", "course/registerClass");
@@ -173,6 +179,10 @@ public class CourseController {
 		ClassCourseCombined combined = courseBO.getClassCourseByClassIdForDetail(classId);
 
 		model.addAttribute("combined", combined);
+
+		Date today = new Date();
+
+		model.addAttribute("today", today);
 		model.addAttribute("classId", classId);
 		model.addAttribute("view", "course/registerClassDetail");
 
@@ -185,10 +195,9 @@ public class CourseController {
 		User user = (User) session.getAttribute("user");
 		List<ClassCourseCombined> combinedList = new ArrayList<>();
 
-		List<Registry> registryList = registryBO.getRegistryListByStudentNum(user.getStudentNum());
+		List<Registry> registryList = registryBO.getRegistryListByEmail(user.getEmail());
 		for (Registry registry : registryList) {
-			ClassCourseCombined combined = courseBO.getClassCourseByClassId(registry.getClassId(),
-					user.getStudentNum());
+			ClassCourseCombined combined = courseBO.getClassCourseByClassId(registry.getClassId(), user.getEmail());
 			if (combined != null) {
 				combinedList.add(combined);
 			}
@@ -208,10 +217,9 @@ public class CourseController {
 
 		if (type.equals("student")) {
 			List<ClassCourseCombined> combinedList = new ArrayList<>();
-			List<Registry> registryList = registryBO.getRegistryListByStudentNum(user.getStudentNum());
+			List<Registry> registryList = registryBO.getRegistryListByEmail(user.getEmail());
 			for (Registry registry : registryList) {
-				ClassCourseCombined combined = courseBO.getClassCourseByClassId(registry.getClassId(),
-						user.getStudentNum());
+				ClassCourseCombined combined = courseBO.getClassCourseByClassId(registry.getClassId(), user.getEmail());
 				combinedList.add(combined);
 			}
 			model.addAttribute("combinedList", combinedList);

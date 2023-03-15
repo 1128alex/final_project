@@ -111,8 +111,8 @@ public class CourseBO {
 		return courseDAO.countFilteredCourseList(searchKeyword, courseName, subjectCode, courseLevel);
 	}
 
-	public ClassCourseCombined getClassCourseByClassId(int classId, String studentNum) {
-		return courseDAO.selectClassCourseByClassId(classId, studentNum);
+	public ClassCourseCombined getClassCourseByClassId(int classId, String email) {
+		return courseDAO.selectClassCourseByClassId(classId, email);
 	}
 
 	public ClassCourseCombined getClassCourseByClassIdForDetail(int classId) {
@@ -125,8 +125,8 @@ public class CourseBO {
 		return courseDAO.insertCourse(course);
 	}
 
-	public List<ClassCourseCombined> getClassCourseListByStudentNum(String studentNum) {
-		return courseDAO.selectClassCourseListByStudentNum(studentNum);
+	public List<ClassCourseCombined> getClassCourseListByEmail(String email) {
+		return courseDAO.selectClassCourseListByEmail(email);
 	}
 
 }

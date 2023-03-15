@@ -70,6 +70,7 @@
 						<th>Professor</th>
 						<th>Time</th>
 						<th>Register Due Date</th>
+						<th>Status</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -77,9 +78,7 @@
 						varStatus="status">
 						<tr class="linkRow" id="classIdHolder"
 							data-class-id="${combined.id}">
-							<td>${combined.courseCode}<br>
-								${combined.registerCount}/${combined.maxNum }
-							</td>
+							<td>${combined.courseCode}</td>
 							<td>${combined.courseName}</td>
 							<td>${combined.firstName += " " += combined.lastName}</td>
 							<td><table id="smallClassTimeTable">
@@ -160,7 +159,22 @@
 									</tbody>
 								</table></td>
 							<td><fmt:formatDate value="${combined.registerDueDate}"
-									pattern="dd/MM/YYYY" /></td>
+									pattern="MMMM d, YYYY" /></td>
+							<td><c:choose>
+									<c:when test="${today > combined.registerDueDate}">
+										<div class="text-danger">Closed</div>
+									</c:when>
+									<c:otherwise>
+										<c:choose>
+											<c:when test="${combined.registerCount < combined.maxNum}">
+										${combined.registerCount}/${combined.maxNum}
+									</c:when>
+											<c:otherwise>
+												<div class="text-warning">Full</div>
+											</c:otherwise>
+										</c:choose>
+									</c:otherwise>
+								</c:choose></td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -171,7 +185,7 @@
 				<div id="pageLengthHolder" data-page-length="${pageLength}"></div>
 				<c:forEach var="i" begin="1" end="${pageLength}">
 					<c:choose>
-						<c:when test="${i eq pageNum }">
+						<c:when test="${i eq pageNum}">
 							<span class="coursePage mx-2 underline font-weight-bold"
 								id="coursePage${i}" data-course-page="${i}">${i}</span>
 						</c:when>

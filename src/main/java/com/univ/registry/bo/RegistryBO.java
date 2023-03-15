@@ -13,18 +13,18 @@ public class RegistryBO {
 	@Autowired
 	private RegistryDAO registryDAO;
 
-	public int registerToClass(int classId, String studentNum) {
+	public int registerToClass(int classId, String email) {
 
-		int dupCount = registryDAO.selectDuplicatedClass(classId, studentNum);
+		int dupCount = registryDAO.selectDuplicatedClass(classId, email);
 		if (dupCount > 0) {
 			return 2;
 		}
 
-		return registryDAO.insertToClass(classId, studentNum);
+		return registryDAO.insertToClass(classId, email);
 	}
 
-	public List<Registry> getRegistryListByStudentNum(String studentNum) {
-		return registryDAO.selectRegistryListByStudentNum(studentNum);
+	public List<Registry> getRegistryListByEmail(String email) {
+		return registryDAO.selectRegistryListByEmail(email);
 	}
 
 	public int countRegistryByClassId(int classId) {

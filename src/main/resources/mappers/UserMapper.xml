@@ -196,4 +196,19 @@
 		WHERE
 		`email` = #{email};
 	</delete>
+
+	<select id="selectChatMemberList"
+		resultType="com.univ.user.model.User" parameterType="string">
+		SELECT
+		`email`,
+		`firstName`,
+		`lastName`,
+		`profileUrl`
+		FROM
+		`user`
+		WHERE
+		#{members}
+		LIKE
+		CONCAT('%/',`email`,'/%')
+	</select>
 </mapper>

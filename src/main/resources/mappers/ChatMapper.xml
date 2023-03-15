@@ -29,7 +29,7 @@
 		a.`roomId`,
 		a.`writer`,
 		a.`content`,
-		a.`createdAt`,
+		DATE_ADD(a.`createdAt`, INTERVAL ${offset} hour) as `createdAt`,
 		a.`updatedAt`,
 		b.`studentNum`,
 		b.`type`,
@@ -41,9 +41,10 @@
 		INNER JOIN
 		`user` as b
 		ON
-		a.`writer` = b.`email`
+		a.`writer` =
+		b.`email`
 		WHERE
-		a.`roomId` = #{roomId}
+		a.`roomId` = #{roomId};
 	</select>
 
 	<select id="selectNewMessage" parameterType="map"

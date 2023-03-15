@@ -31,4 +31,6 @@ public interface UserDAO {
 			@Param("loggedEmail") String loggedEmail);
 
 	public int updateUser(@Param("prevEmail") String prevEmail, @Param("user") User user);
+
+	public int deleteUser(String email);
 }

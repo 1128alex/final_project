@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -139,14 +140,15 @@ public class UserRestController {
 	}
 
 	@PostMapping("/edit_profile")
-	public Map<String, Object> editProfile(@ModelAttribute User user, @RequestParam("prevEmail") String prevEmail,
-			@RequestParam("birthYear") int birthYear, @RequestParam("birthMonth") int birthMonthInfo,
-			@RequestParam("birthDay") int birthDay,
+	public Map<String, Object> editProfile(@ModelAttribute User user, @RequestParam("prevProfile") String prevProfile,
+			@RequestParam("prevEmail") String prevEmail, @RequestParam("birthYear") int birthYear,
+			@RequestParam("birthMonth") int birthMonthInfo, @RequestParam("birthDay") int birthDay,
 			@RequestParam(value = "profileFile", required = false) MultipartFile profileFile, HttpSession session,
 			HttpServletRequest request) throws ParseException {
 		Map<String, Object> result = new HashMap<>();
 
-		int rowCount = userBO.updateUser(prevEmail, user, birthYear, birthMonthInfo, birthDay, profileFile);
+		int rowCount = userBO.updateUser(prevProfile, prevEmail, user, birthYear, birthMonthInfo, birthDay,
+				profileFile);
 		if (rowCount == 2) {
 			result.put("code", 2);
 			result.put("errorMessage", "The account with this email exists already.");
@@ -162,15 +164,29 @@ public class UserRestController {
 			sessionUser.setFirstName(user.getFirstName());
 			sessionUser.setLastName(user.getLastName());
 			sessionUser.setGender(user.getGender());
-			if (profileFile != null) {
-				sessionUser.setProfileUrl(user.getProfileUrl());
-			}
+			sessionUser.setProfileUrl(user.getProfileUrl());
 
 			HttpSession newSession = request.getSession();
 			newSession.setAttribute("user", sessionUser);
 		} else {
 			result.put("code", 500);
 			result.put("errorMessage", "failed to sign up");
+		}
+
+		return result;
+	}
+
+	@DeleteMapping("delete_user")
+	public Map<String, Object> deleteUser(@RequestParam("email") String email) {
+		Map<String, Object> result = new HashMap<>();
+
+		int rowCount = userBO.deleteUser(email);
+
+		if (rowCount == 1) {
+			result.put("code", 1);
+		} else {
+			result.put("code", 500);
+			result.put("errorMessage", "Error while deleting account.");
 		}
 
 		return result;

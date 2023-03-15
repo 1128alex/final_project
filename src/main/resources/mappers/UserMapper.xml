@@ -190,4 +190,10 @@
 		WHERE
 		`email` = #{prevEmail}
 	</update>
+
+	<delete id="deleteUser" parameterType="string">
+		DELETE FROM `user`
+		WHERE
+		`email` = #{email};
+	</delete>
 </mapper>

@@ -1,6 +1,9 @@
 package com.univ.chat;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.servlet.http.HttpSession;
 
@@ -36,10 +39,19 @@ public class ChatController {
 		model.addAttribute("roomList", roomList);
 
 		if (roomId != null) {
+			Calendar now = Calendar.getInstance();
+			String timeZone = now.getTimeZone().getID();
+			model.addAttribute("timezone", timeZone);
+
+			TimeZone tz = TimeZone.getTimeZone(timeZone);
+			int offset = tz.getOffset(new Date().getTime()) / 1000 / 60 / 60;
+			model.addAttribute("offset", offset);
+
 			ChatRoom currentRoom = chatBO.getChatRoomByRoomId(roomId);
-			List<ChatUserCombined> chatList = chatBO.getMessageList(roomId);
+			List<ChatUserCombined> chatList = chatBO.getMessageList(roomId, offset);
 			model.addAttribute("currentRoom", currentRoom);
 			model.addAttribute("chatList", chatList);
+			
 		}
 
 		model.addAttribute("view", "chat/chat");

@@ -24,6 +24,7 @@ public class ClassCourseCombined {
 	private String gender;
 	private String subject;
 	private Integer averageGrade;
+	private Integer registerCount;
 
 	public String getCourseCode() {
 		return courseCode;
@@ -191,6 +192,14 @@ public class ClassCourseCombined {
 
 	public void setAverageGrade(Integer averageGrade) {
 		this.averageGrade = averageGrade;
+	}
+
+	public Integer getRegisterCount() {
+		return registerCount;
+	}
+
+	public void setRegisterCount(Integer registerCount) {
+		this.registerCount = registerCount;
 	}
 
 }

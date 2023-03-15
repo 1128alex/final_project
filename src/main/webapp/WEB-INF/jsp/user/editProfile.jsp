@@ -108,16 +108,21 @@
 					</select>
 				</div>
 
-				<div class="d-flex justify-content-end mb-4">
-					<button type="submit" class="btn button mt-3">Edit</button>
+				<div class="d-flex justify-content-between mt-3 mb-4">
+					<div>
+						<button type="button" id="deleteBtn" class="btn delButton">Delete</button>
+					</div>
+					<div>
+						<button type="submit" class="btn button">Edit</button>
+					</div>
 				</div>
 			</form>
 		</div>
 	</div>
 	<div id="dataHolder" data-type="${user.type}"
-		data-email="${user.email}" data-birth-year="${birthYear}"
-		data-birth-month="${birthMonth}" data-birth-date="${birthDate}"
-		data-gender="${user.gender}"></div>
+		data-email="${user.email}" data-profile="${user.profileUrl}"
+		data-birth-year="${birthYear}" data-birth-month="${birthMonth}"
+		data-birth-date="${birthDate}" data-gender="${user.gender}"></div>
 </div>
 
 <script>
@@ -125,6 +130,7 @@
 			.ready(
 					function() {
 						let type = $('#dataHolder').data('type');
+						let prevProfile = $('#dataHolder').data('profile');
 						let prevEmail = $('#dataHolder').data('email');
 						let year = $('#dataHolder').data('birth-year');
 						let month = $('#dataHolder').data('birth-month');
@@ -294,6 +300,8 @@
 
 											let url = $(this).attr('action');
 											let formData = new FormData();
+											formData.append("prevProfile",
+													prevProfile);
 											formData.append("prevEmail",
 													prevEmail);
 											formData.append("email", email);
@@ -340,5 +348,30 @@
 
 													});
 										});
+						$('#deleteBtn')
+								.on(
+										'click',
+										function() {
+											if (!confirm("Are you sure you want to delete this account? You will not be able to withdraw your choice.")) {
+												return;
+											}
+											$
+													.ajax({
+														type : "DELETE",
+														url : "/user/delete_user",
+														data : {
+															"email" : prevEmail
+														},
+														success : function(data) {
+															alert("Account "
+																	+ prevEmail
+																	+ " deleted!");
+															location.href = "/univ/user/sign_in";
+														},
+														error : function(e) {
+
+														}
+													})
+										})
 					});
 </script>

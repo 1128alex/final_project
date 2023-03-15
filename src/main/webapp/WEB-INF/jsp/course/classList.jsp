@@ -38,9 +38,11 @@
 											<div class="noDecoA lastAssignment hover-pointer"
 												data-class-id="${assignment.classId}"
 												data-asgmt-id="${assignment.asgmtId}">
+												<c:if test="${assignment.dueDate ne null}">
 												Due:
 												<fmt:formatDate value="${assignment.dueDate}"
-													pattern="d MMM" />
+														pattern="d MMM" />
+												</c:if>
 												<div class="ml-2">${assignment.asgmtName}</div>
 											</div>
 											<c:set var="loop_flag" value="true" />

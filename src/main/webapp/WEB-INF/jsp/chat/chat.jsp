@@ -53,6 +53,7 @@
 				</c:choose>
 			</div>
 			<div id="chatBox" class="chatRoomBox greyborder px-2">
+				${offset}${timezone}
 				<c:forEach var="chat" items="${chatList}">
 					<fmt:formatDate value="${chat.createdAt}" var="currentDate"
 						pattern="d" />
@@ -170,6 +171,8 @@
 	$(document)
 			.ready(
 					function() {
+						var offset = new Date().getTimezoneOffset();
+
 						const element = document.getElementById("chatBox");
 						element.scrollTop = element.scrollHeight;
 

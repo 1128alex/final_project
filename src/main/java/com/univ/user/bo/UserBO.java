@@ -56,7 +56,7 @@ public class UserBO {
 		// Hash password
 		String hashedPassword = EncryptUtils.md5(user.getPassword());
 
-		String profileUrl = "/images/no_profile/noprofile.png";
+		String profileUrl = "/static/img/noprofile.png";
 		if (profileFile != null) {
 			profileUrl = fileManagerService.saveFile(user.getEmail(), profileFile);
 		}
@@ -103,14 +103,15 @@ public class UserBO {
 		return userDAO.selectUserListByTypeName(type, search, loggedEmail);
 	}
 
-	public int updateUser(String prevEmail, User user, int birthYear, int birthMonthInfo, int birthDay,
-			MultipartFile profileFile) throws ParseException {
+	public int updateUser(String prevProfile, String prevEmail, User user, int birthYear, int birthMonthInfo,
+			int birthDay, MultipartFile profileFile) throws ParseException {
 
 		// Combining Birth Information
 		Date birth = toDate(birthDay, birthMonthInfo, birthYear);
 
-		String profileUrl = "/images/no_profile/noprofile.png";
+		String profileUrl = "/static/img/noprofile.png";
 		if (profileFile != null) {
+			fileManagerService.deleteFile(prevProfile);
 			profileUrl = fileManagerService.saveFile(user.getEmail(), profileFile);
 		}
 
@@ -125,5 +126,9 @@ public class UserBO {
 
 	public int checkDuplicate(String email) {
 		return userDAO.checkDuplicate(email);
+	}
+
+	public int deleteUser(String email) {
+		return userDAO.deleteUser(email);
 	}
 }

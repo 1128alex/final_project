@@ -77,7 +77,9 @@
 						varStatus="status">
 						<tr class="linkRow" id="classIdHolder"
 							data-class-id="${combined.id}">
-							<td>${combined.courseCode}</td>
+							<td>${combined.courseCode}<br>
+								${combined.registerCount}/${combined.maxNum }
+							</td>
 							<td>${combined.courseName}</td>
 							<td>${combined.firstName += " " += combined.lastName}</td>
 							<td><table id="smallClassTimeTable">

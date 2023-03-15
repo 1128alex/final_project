@@ -88,6 +88,7 @@
 		c.`lastName`,
 		c.`gender`,
 		c.`subject`
+		<!-- , d.`registerCount` -->
 		FROM
 		`class` as a
 		LEFT
@@ -103,11 +104,17 @@
 		ON
 		a.`profEmail` =
 		c.`email`
+		<!-- , (SELECT COUNT(*) as `registerCount` FROM `registry` WHERE `classId` 
+			= a.`id`) as d -->
 		WHERE
 		a.`maxNum` > (SELECT COUNT(*) FROM `registry` WHERE `classId` =
 		a.`id`)
+		AND a.`registerDueDate` > NOW()
 		AND
-		a.`registerDueDate` > NOW()
+		(SELECT COUNT(*) FROM
+		`registry`
+		WHERE
+		`classId` = a.`id`)
 		AND
 		(b.`courseCode`
 		LIKE
@@ -356,12 +363,13 @@
 		ON
 		a.`profEmail` =
 		c.`email`
+		<!-- , (SELECT COUNT(*) as `registerCount` FROM `registry` WHERE `classId` 
+			= a.`id`) as d -->
 		WHERE
-		a.`maxNum` > (SELECT COUNT(*) FROM `registry` WHERE
-		`classId` =
+		a.`maxNum` > (SELECT COUNT(*) FROM
+		`registry` WHERE `classId` =
 		a.`id`)
-		AND
-		a.`registerDueDate` > NOW()
+		AND a.`registerDueDate` > NOW()
 		AND
 		(b.`courseCode`
 		LIKE

@@ -309,8 +309,9 @@
 		FROM
 		`assignment` a INNER JOIN `registry` b
 		ON
-		a.`classId`=b.`classId`
-		<!-- WHERE b.`email`=#{email} -->
+		a.`classId` = b.`classId`
+		WHERE
+		a.`dueDate` IS NOT NULL
 		ORDER BY
 		a.`dueDate`
 		DESC;

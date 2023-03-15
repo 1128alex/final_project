@@ -19,12 +19,12 @@
 			</div>
 			<c:if test="${postCombined.updatedAt eq postCombined.createdAt}">
 				<span>Posted at <fmt:formatDate
-						value="${postCombined.createdAt}" pattern="d MMM yyyy" />
+						value="${postCombined.createdAt}" pattern="MMMM d, yyyy" />
 				</span>
 			</c:if>
 			<c:if test="${postCombined.updatedAt ne postCombined.createdAt}">
 				<span>Updated at <fmt:formatDate
-						value="${postCombined.updatedAt}" pattern="d MMM yyyy" /></span>
+						value="${postCombined.updatedAt}" pattern="MMMM d, yyyy" /></span>
 			</c:if>
 		</div>
 		<hr>
@@ -64,7 +64,7 @@
 						<td>${post.title}</td>
 						<td class="text-center">${post.firstName += " " += post.lastName}</td>
 						<td class="text-center"><fmt:formatDate
-								value="${post.updatedAt}" pattern="d MMM yyyy" /></td>
+								value="${post.updatedAt}" pattern="MMMM d, yyyy" /></td>
 					</tr>
 				</c:forEach>
 			</tbody>

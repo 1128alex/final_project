@@ -157,41 +157,32 @@
 												memberList.push(email);
 											}
 										});
-						$('#memberList')
-								.on(
-										'click',
-										'.deleteBtn',
-										function(e) {
-											e.preventDefault();
+						$('#memberList').on('click', '.deleteBtn', function(e) {
+							e.preventDefault();
 
-											let email = $(this).data('email');
+							let email = $(this).data('email');
 
-											var liElements = document
-													.getElementsByTagName('li');
-											for (let i = 0; i < liElements.length; i++) {
-												if (liElements[i].innerHTML
-														.includes(email)) {
-													liElements[i].remove();
-												}
-											}
+							var liTag = document.getElementsByTagName('li');
+							for (let i = 0; i < liTag.length; i++) {
+								if (liTag[i].innerHTML.includes(email)) {
+									liTag[i].remove();
+								}
+							}
 
-											var trElements = document
-													.getElementsByTagName('tr');
-											for (let j = 0; j < trElements.length; j++) {
-												if (trElements[j].innerHTML
-														.includes(email)) {
-													trElements[j].classList
-															.remove('selectedRow');
-												}
-											}
+							var trTag = document.getElementsByTagName('tr');
+							for (let j = 0; j < trTag.length; j++) {
+								if (trTag[j].innerHTML.includes(email)) {
+									trTag[j].classList.remove('selectedRow');
+								}
+							}
 
-											for (let k = 0; k < memberList.length; k++) {
-												if (memberList[k] == (email)) {
-													memberList.splice(k, 1);
-													k--;
-												}
-											}
-										});
+							for (let k = 0; k < memberList.length; k++) {
+								if (memberList[k] == (email)) {
+									memberList.splice(k, 1);
+									k--;
+								}
+							}
+						});
 
 						$('#createBtn')
 								.on(

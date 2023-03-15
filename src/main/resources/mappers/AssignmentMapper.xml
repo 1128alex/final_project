@@ -110,14 +110,13 @@
 		#{filePath},
 		`maxScore` = #{maxScore},
 		`dueDate` = #{dueDate},
-		`updatedAt`=NOW()
+		`updatedAt` = NOW()
 		WHERE
 		`classId` =
-		#{classId},
+		#{classId} AND
 		`asgmtId`
 		=
-		#{asgmtId},
-		`updatedAt` = NOW()
+		#{asgmtId}
 	</update>
 
 	<delete id="deleteAssignment" parameterType="map">
@@ -135,7 +134,7 @@
 		(
 		`classId`,
 		`asgmtId`,
-		`studentNum`,
+		`email`,
 		`content`,
 		`filePath`,
 		`access`,
@@ -146,7 +145,7 @@
 		(
 		#{classId},
 		#{asgmtId},
-		#{studentNum},
+		#{email},
 		#{content},
 		#{filePath},
 		#{access},
@@ -154,6 +153,7 @@
 		NOW()
 		)
 	</insert>
+
 	<update id="updateSubmittedAssignment"
 		parameterType="com.univ.assignment.model.SubmittedAsgmt">
 		UPDATE `submittedassignment`
@@ -161,7 +161,6 @@
 		`content` =
 		#{content},
 		`filePath` = #{filePath},
-		`score` = NULL,
 		`access` = #{access},
 		`updatedAt` =
 		NOW()
@@ -170,31 +169,16 @@
 		AND
 		`asgmtId` = #{asgmtId}
 		AND
-		`studentNum` =
-		#{studentNum}
+		`email` =
+		#{email}
 	</update>
-
-	<select id="checkDuplicatedSubmittedAsgmt" parameterType="map"
-		resultType="int">
-		SELECT
-		COUNT(*)
-		FROM
-		`submittedassignment`
-		WHERE
-		`classId` =
-		#{classId}
-		AND
-		`asgmtId` = #{asgmtId}
-		AND
-		`studentNum` = #{studentNum}
-	</select>
 
 	<select id="selectSubmittedAsgmt" parameterType="map"
 		resultType="com.univ.assignment.model.SubmittedAsgmt">
 		SELECT
 		`classId`,
 		`asgmtId`,
-		`studentNum`,
+		`email`,
 		`content`,
 		`score`,
 		`feedback`,
@@ -210,8 +194,8 @@
 		`asgmtId` =
 		#{asgmtId}
 		AND
-		`studentNum` =
-		#{studentNum}
+		`email` =
+		#{email}
 	</select>
 
 	<select id="selectSubmittedAsgmtUserList" parameterType="map"
@@ -220,7 +204,7 @@
 		a.`id`,
 		a.`classId`,
 		a.`asgmtId`,
-		a.`studentNum`,
+		a.`email`,
 		a.`content`,
 		a.`filePath`,
 		a.`score`,
@@ -235,8 +219,8 @@
 		INNER JOIN
 		`user`as b
 		ON
-		a.`studentNum` =
-		b.`studentNum`
+		a.`email` =
+		b.`email`
 		WHERE
 		`classId` = #{classId}
 		AND
@@ -249,7 +233,7 @@
 		a.`id`,
 		a.`classId`,
 		a.`asgmtId`,
-		a.`studentNum`,
+		a.`email`,
 		a.`content`,
 		a.`filePath`,
 		a.`score`,
@@ -264,8 +248,8 @@
 		INNER JOIN
 		`user`as b
 		ON
-		a.`studentNum` =
-		b.`studentNum`
+		a.`email` =
+		b.`email`
 		WHERE
 		`id` = #{id}
 	</select>
@@ -312,10 +296,14 @@
 		a.`classId` = b.`classId`
 		WHERE
 		a.`dueDate` IS NOT NULL
+		AND
+		(SELECT
+		COUNT(*) FROM `submittedassignment` WHERE `classId` = a.`classId` AND
+		`asgmtId` = a.`asgmtId` AND `email` = #{email}) = 0
 		ORDER BY
 		a.`dueDate`
-		DESC;
 	</select>
+
 	<select id="selectAsgmtListByEmail"
 		resultType="com.univ.assignment.model.Assignment"
 		parameterType="string">
@@ -329,16 +317,24 @@
 		a.`maxScore`,
 		a.`dueDate`,
 		a.`createdAt`,
-		a.`updatedAt`
+		a.`updatedAt`,
+		(SELECT `courseCode` FROM `course` WHERE
+		`courseCode` =
+		(SELECT `courseCode` FROM `class` as c WHERE c.`id` =
+		a.`classId`)) as
+		`courseCode`
 		FROM
-		`assignment` a INNER JOIN `registry` b
+		`assignment` as a INNER JOIN
+		`registry` as b
 		ON
-		a.`classId`=b.`classId`
-		<!-- WHERE b.`email`=#{email} -->
+		a.`classId` =
+		b.`classId`
+		WHERE b.`email` = #{email}
 		ORDER BY
 		a.`updatedAt`
 		DESC;
 	</select>
+
 	<select id="selectAsgmtListByEmailProf"
 		resultType="com.univ.assignment.model.Assignment"
 		parameterType="string">
@@ -361,7 +357,7 @@
 		b
 		ON
 		a.`classId`=b.`id`
-		WHERE b.`profEmail`=#{email}
+		WHERE b.`profEmail` = #{email}
 		ORDER
 		BY
 		a.`updatedAt`

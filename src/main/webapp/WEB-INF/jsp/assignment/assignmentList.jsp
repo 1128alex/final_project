@@ -30,22 +30,22 @@
 		<table class="table mt-1">
 			<thead>
 				<tr>
-					<th>Created Date</th>
 					<th>Course Code</th>
 					<th>Assignment Name</th>
 					<th>Due Date</th>
+					<th>Date</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach var="assignment" items="${assignmentList}">
 					<tr>
-						<td><fmt:formatDate value="${assignment.createdAt}"
-								pattern="d MMM yyyy" /></td>
 						<td>${assignment.courseCode}</td>
 						<td><a
 							href="/univ/assignment/assignment_detail?classId=${assignment.classId}&asgmtId=${assignment.asgmtId}">${assignment.asgmtName}</a></td>
 						<td><fmt:formatDate value="${assignment.dueDate}"
-								pattern="d MMM yyyy" /></td>
+								pattern="MMMM d, yyyy" /></td>
+						<td><fmt:formatDate value="${assignment.updatedAt}"
+								pattern="MMMM d, yyyy" /></td>
 					</tr>
 				</c:forEach>
 			</tbody>

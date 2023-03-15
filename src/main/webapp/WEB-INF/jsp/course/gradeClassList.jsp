@@ -25,7 +25,7 @@
 								<c:when
 									test="${combined.averageGrade >= 85 and 89 >= combined.averageGrade}">A</c:when>
 								<c:when
-									test="${combined.averageGrade >= 80 and 74 >= combined.averageGrade}">A-</c:when>
+									test="${combined.averageGrade >= 80 and 84 >= combined.averageGrade}">A-</c:when>
 								<c:when
 									test="${combined.averageGrade >= 77 and 79 >= combined.averageGrade}">B+</c:when>
 								<c:when

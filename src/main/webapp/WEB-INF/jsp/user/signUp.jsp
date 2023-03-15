@@ -139,7 +139,8 @@
 												return false;
 											}
 											if (email.includes('@') == false
-													|| email.includes('.') == false) {
+													|| email.includes('.') == false
+													|| email.includes('/')) {
 												alert("Please check if the email is a valid email");
 												return false;
 											}

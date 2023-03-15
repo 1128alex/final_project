@@ -41,7 +41,7 @@
 												<c:if test="${assignment.dueDate ne null}">
 												Due:
 												<fmt:formatDate value="${assignment.dueDate}"
-														pattern="d MMM" />
+														pattern="MMM d" />
 												</c:if>
 												<div class="ml-2">${assignment.asgmtName}</div>
 											</div>

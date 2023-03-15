@@ -6,7 +6,7 @@ public class SubmittedAsgmt {
 	private int id;
 	private int classId;
 	private int asgmtId;
-	private String studentNum;
+	private String email;
 	private String content;
 	private String filePath;
 	private Integer score;
@@ -39,12 +39,12 @@ public class SubmittedAsgmt {
 		this.asgmtId = asgmtId;
 	}
 
-	public String getStudentNum() {
-		return studentNum;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setStudentNum(String studentNum) {
-		this.studentNum = studentNum;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getContent() {

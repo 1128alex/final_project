@@ -26,7 +26,7 @@ public interface AssignmentDAO {
 	public int updateSubmittedAssignment(SubmittedAsgmt submittedAsgmt);
 
 	public SubmittedAsgmt selectSubmittedAsgmt(@Param("classId") int classId, @Param("asgmtId") int asgmtId,
-			@Param("studentNum") String studentNum);
+			@Param("email") String email);
 
 	public List<AssignmentUserCombined> selectSubmittedAsgmtUserList(@Param("classId") int classId,
 			@Param("asgmtId") int asgmtId);

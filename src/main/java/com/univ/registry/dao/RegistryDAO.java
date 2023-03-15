@@ -9,11 +9,11 @@ import com.univ.registry.model.Registry;
 
 @Repository
 public interface RegistryDAO {
-	public int insertToClass(@Param("classId") int classId, @Param("studentNum") String studentNum);
+	public int insertToClass(@Param("classId") int classId, @Param("email") String email);
 
-	public List<Registry> selectRegistryListByStudentNum(String studentNum);
+	public List<Registry> selectRegistryListByEmail(String email);
 
-	public int selectDuplicatedClass(@Param("classId") int classId, @Param("studentNum") String studentNum);
+	public int selectDuplicatedClass(@Param("classId") int classId, @Param("email") String email);
 
 	public int countRegistryByClassId(int classId);
 

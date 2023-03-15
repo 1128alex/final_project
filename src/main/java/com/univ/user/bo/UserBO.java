@@ -131,4 +131,8 @@ public class UserBO {
 	public int deleteUser(String email) {
 		return userDAO.deleteUser(email);
 	}
+
+	public List<User> getChatMemberList(String members) {
+		return userDAO.selectChatMemberList(members);
+	}
 }

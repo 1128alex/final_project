@@ -38,7 +38,7 @@ public class AssignmentController {
 		model.addAttribute("type", user.getType());
 
 		if (user.getType().equals("student")) {
-			List<ClassCourseCombined> combinedList = courseBO.getClassCourseListByStudentNum(user.getStudentNum());
+			List<ClassCourseCombined> combinedList = courseBO.getClassCourseListByEmail(user.getEmail());
 			model.addAttribute("combinedList", combinedList);
 		} else if (user.getType().equals("professor")) {
 			List<ClassCourseCombined> combinedList = courseBO.getCombinedListByEmail(user.getEmail());
@@ -48,15 +48,11 @@ public class AssignmentController {
 		model.addAttribute("classId", classId);
 		if (classId == 0) {
 			if (user.getType().equals("student")) {
-
 				List<Assignment> assignmentList = assignmentBO.getAsgmtListByEmail(user.getEmail());
 				model.addAttribute("assignmentList", assignmentList);
-
 			} else if (user.getType().equals("professor")) {
-
 				List<Assignment> assignmentList = assignmentBO.getAsgmtListByEmailProf(user.getEmail());
 				model.addAttribute("assignmentList", assignmentList);
-
 			}
 		} else {
 
@@ -74,7 +70,7 @@ public class AssignmentController {
 		User user = (User) session.getAttribute("user");
 
 		if (user.getType().equals("student")) {
-			List<ClassCourseCombined> combinedList = courseBO.getClassCourseListByStudentNum(user.getStudentNum());
+			List<ClassCourseCombined> combinedList = courseBO.getClassCourseListByEmail(user.getEmail());
 			model.addAttribute("combinedList", combinedList);
 		} else if (user.getType().equals("professor")) {
 			List<ClassCourseCombined> combinedList = courseBO.getCombinedListByEmail(user.getEmail());
@@ -103,7 +99,7 @@ public class AssignmentController {
 		if (type.equals("student")) {
 			model.addAttribute("view", "assignment/assignmentDetail");
 
-			SubmittedAsgmt submittedAsgmt = assignmentBO.getSubmittedAsgmt(classId, asgmtId, user.getStudentNum());
+			SubmittedAsgmt submittedAsgmt = assignmentBO.getSubmittedAsgmt(classId, asgmtId, user.getEmail());
 			if (submittedAsgmt != null) {
 				model.addAttribute("submittedAsgmt", submittedAsgmt);
 			}

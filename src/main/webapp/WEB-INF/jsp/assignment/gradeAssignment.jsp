@@ -46,10 +46,10 @@
 			</div>
 			<h3>Feedback</h3>
 			<textarea rows="3" cols="" id="feedback" class="form-control">${submittedAsgmt.feedback}</textarea>
-			<div class="d-flex justify-content-end">
+			<div class="d-flex justify-content-end align-items-center">
 				<label><input type="checkbox" id="editAccessCheckbox">Give
 					access to edit</label>
-				<button id="gradeBtn" type="button" class="btn button my-3">Return
+				<button id="gradeBtn" type="button" class="btn button my-3 ml-3">Return
 					Grade</button>
 			</div>
 		</c:if>

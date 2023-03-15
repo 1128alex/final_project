@@ -17,21 +17,32 @@
 		<div class="d-flex justify-content-end">
 			Due date:
 			<fmt:formatDate value="${combined.registerDueDate}"
-				pattern="dd MMM yyyy" />
+				pattern="MMMM d, yyyy" />
 		</div>
 		<table class="table table-bordered mt-2">
 			<thead>
 				<tr>
 					<th>Course</th>
 					<th>Professor</th>
-					<th>Size</th>
+					<th>Status</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
-					<td>${combined.courseCode += ' - ' +=combined.courseName}</td>
+					<td id="dataHolder"
+						data-course-info="${combined.courseCode += ' - ' +=combined.courseName}">${combined.courseCode += ' - ' +=combined.courseName}</td>
 					<td>${combined.firstName += ' ' += combined.lastName}</td>
-					<td>${combined.maxNum}</td>
+					<td><c:choose>
+							<c:when test="${combined.registerCount < combined.maxNum}">
+								${combined.registerCount}/${combined.maxNum}
+							</c:when>
+							<c:otherwise>
+								<div id="fullMessage" class="text-warning">Full</div>
+							</c:otherwise>
+						</c:choose> <c:if test="${today > combined.registerDueDate}">
+							<br>
+							<div id="closedMessage" class="text-danger">Closed</div>
+						</c:if></td>
 				</tr>
 			</tbody>
 		</table>
@@ -111,28 +122,59 @@
 </div>
 
 <script>
-	$(document).ready(function() {
-		$('#registerBtn').on('click', function() {
-			let classId = $('#classIdHolder').data('class-id');
-			$.ajax({
-				type : "GET",
-				url : "/registry/register_class",
-				data : {
-					"classId" : classId
-				},
-				success : function(data) {
-					if (data.code == 1) {
-						alert("Success!");
-						location.href = "/univ/course/timetable";
-					} else {
-						alert("error " + data.code + ": " + data.errorMessage);
-					}
-				},
-				error : function(e) {
-					alert("error: " + e);
-					return;
-				}
-			});
-		});
-	});
+	$(document)
+			.ready(
+					function() {
+						$('#registerBtn')
+								.on(
+										'click',
+										function() {
+											let classInfo = $('#dataHolder')
+													.data("course-info");
+											if (!confirm("Do you want to register class "
+													+ classInfo + "?")) {
+												return;
+											}
+
+											let fullMessage = document
+													.getElementById("fullMessage");
+											let closedMessage = document
+													.getElementById("closedMessage");
+
+											if (fullMessage != null) {
+												alert("The class is full.");
+												return;
+											}
+											if (closedMessage != null) {
+												alert("The class is closed. Registration due date has passed.");
+												return;
+											}
+
+											let classId = $('#classIdHolder')
+													.data('class-id');
+											$
+													.ajax({
+														type : "GET",
+														url : "/registry/register_class",
+														data : {
+															"classId" : classId
+														},
+														success : function(data) {
+															if (data.code == 1) {
+																alert("Success!");
+																location.href = "/univ/course/timetable";
+															} else {
+																alert("error "
+																		+ data.code
+																		+ ": "
+																		+ data.errorMessage);
+															}
+														},
+														error : function(e) {
+															alert("error: " + e);
+															return;
+														}
+													});
+										});
+					});
 </script>

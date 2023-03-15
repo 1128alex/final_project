@@ -44,13 +44,12 @@ public interface CourseDAO {
 			@Param("courseName") String courseName, @Param("subjectCode") String subjectCode,
 			@Param("courseLevel") String courseLevel);
 
-	public ClassCourseCombined selectClassCourseByClassId(@Param("classId") int classId,
-			@Param("studentNum") String studentNum);
+	public ClassCourseCombined selectClassCourseByClassId(@Param("classId") int classId, @Param("email") String email);
 
 	public ClassCourseCombined selectClassCourseByClassIdForDetail(int classId);
 
 	public int insertCourse(Course course);
 
-	public List<ClassCourseCombined> selectClassCourseListByStudentNum(String studentNum);
+	public List<ClassCourseCombined> selectClassCourseListByEmail(String email);
 
 }

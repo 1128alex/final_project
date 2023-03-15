@@ -117,7 +117,7 @@
 								href="/univ/assignment/assignment_detail?classId=${currentClass.id}&asgmtId=${assignment.asgmtId}"
 								class="asmntA">${assignment.asgmtName}</a></td>
 							<td><fmt:formatDate value="${assignment.dueDate}"
-									pattern="d MMM yyyy" /></td>
+									pattern="MMMM d, yyyy" /></td>
 						</tr>
 					</c:forEach>
 				</tbody>

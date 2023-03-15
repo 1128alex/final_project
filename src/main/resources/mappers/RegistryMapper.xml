@@ -8,7 +8,7 @@
 		(
 		`classId`,
 		`registerId`,
-		`studentNum`,
+		`email`,
 		`createdAt`,
 		`updatedAt`
 		)
@@ -20,25 +20,25 @@
 		`registerId` FROM `registry` where `classId` = #{classId}
 		LIMIT 1) TMP)
 		+1),1),
-		#{studentNum},
+		#{email},
 		NOW(),
 		NOW()
 		)
 	</insert>
 
-	<select id="selectRegistryListByStudentNum"
-		parameterType="string" resultType="com.univ.registry.model.Registry">
+	<select id="selectRegistryListByEmail" parameterType="string"
+		resultType="com.univ.registry.model.Registry">
 		SELECT
 		`classId`,
 		`registerId`,
-		`studentNum`,
+		`email`,
 		`createdAt`,
 		`updatedAt`
 		FROM
 		`registry`
 		WHERE
-		`studentNum` =
-		#{studentNum}
+		`email` =
+		#{email}
 	</select>
 
 	<select id="selectDuplicatedClass" parameterType="map"
@@ -50,8 +50,8 @@
 		WHERE
 		`classId` = #{classId}
 		AND
-		`studentNum` =
-		#{studentNum}
+		`email` =
+		#{email}
 	</select>
 
 	<select id="countRegistryByClassId" parameterType="int"

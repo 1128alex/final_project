@@ -33,4 +33,6 @@ public interface UserDAO {
 	public int updateUser(@Param("prevEmail") String prevEmail, @Param("user") User user);
 
 	public int deleteUser(String email);
+
+	public List<User> selectChatMemberList(String members);
 }

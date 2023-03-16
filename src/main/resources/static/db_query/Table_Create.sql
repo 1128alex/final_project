@@ -56,7 +56,7 @@ CREATE TABLE `assignment` (
 CREATE TABLE `registry` (
     `classId` INT NOT NULL,
     `registerId` INT NOT NULL,
-    `studentNum` VARCHAR(8) NOT NULL,
+    `email` VARCHAR(150) NOT NULL,
     `createdAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updatedAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4;
@@ -66,7 +66,7 @@ CREATE TABLE `submittedassignment` (
     `id` INT PRIMARY KEY AUTO_INCREMENT,
     `classId` INT NOT NULL,
     `asgmtId` INT NOT NULL,
-    `studentNum` VARCHAR(8) NOT NULL,
+    `email` VARCHAR(150) NOT NULL,
     `content` TEXT,
     `filePath` TEXT,
     `score` INT,

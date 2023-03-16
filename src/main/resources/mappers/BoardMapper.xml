@@ -157,13 +157,20 @@
 		a.`filePath`,
 		a.`createdAt`,
 		a.`updatedAt`,
-		b.`courseCode`
+		b.`courseCode`,
+		c.`firstName`,
+		c.`lastName`
 		FROM
-		`post` as a INNER JOIN
+		`post` as a
+		INNER JOIN
 		`class` as b
 		ON
 		a.`classId` =
 		b.`id`
+		INNER JOIN
+		`user` as c
+		ON
+		a.`writerEmail` = c.`email`
 		WHERE
 		`classId` =
 		#{classId}

@@ -43,7 +43,7 @@ public class AssignmentBO {
 			User user = (User) session.getAttribute("user");
 			String email = user.getEmail();
 			for (MultipartFile file : files) {
-				filePath += fileManagerService.saveFile(email, file);
+				filePath += fileManagerService.saveFile(email, file) + " ";
 			}
 
 			assignment.setFilePath(filePath);

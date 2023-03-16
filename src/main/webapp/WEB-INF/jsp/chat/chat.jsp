@@ -268,9 +268,11 @@
 															for (let i = 0; i < data.newChatList.length; i++) {
 																let createdAt = new Date(
 																		data.newChatList[i].createdAt);
-																var hours = createdAt
-																		.getHours();
-																var ampm = "AM";
+																let hours = createdAt
+																		.getHours()
+																		- offset
+																		/ 60;
+																let ampm = "AM";
 																if (hours >= 12) {
 																	ampm = "PM"
 																	hours -= 12;

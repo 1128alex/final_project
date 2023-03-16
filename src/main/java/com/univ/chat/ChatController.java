@@ -1,9 +1,9 @@
 package com.univ.chat;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.List;
-import java.util.TimeZone;
 
 import javax.servlet.http.HttpSession;
 
@@ -39,19 +39,31 @@ public class ChatController {
 		model.addAttribute("roomList", roomList);
 
 		if (roomId != null) {
-			Calendar now = Calendar.getInstance();
-			String timeZone = now.getTimeZone().getID();
-			model.addAttribute("timezone", timeZone);
+//			Calendar now = Calendar.getInstance();
+//			String timeZone = now.getTimeZone().getID();
+//			model.addAttribute("timezone", timeZone);
+//
+//			TimeZone tz = TimeZone.getTimeZone(timeZone);
+//			int offset = tz.getOffset(new Date().getTime()) / 1000 / 60 / 60;
+//			model.addAttribute("offset", offset);
 
-			TimeZone tz = TimeZone.getTimeZone(timeZone);
-			int offset = tz.getOffset(new Date().getTime()) / 1000 / 60 / 60;
-			model.addAttribute("offset", offset);
+			// test
+			// Get the client's timezone
+			ZoneId clientZone = ZoneId.systemDefault();
+
+			// Get the client's timezone offset
+			ZoneOffset offset = clientZone.getRules().getOffset(Instant.now());
+
+			// Get the total seconds of the offset
+			int total = offset.getTotalSeconds() / 60 / 60;
+			model.addAttribute("timezone", clientZone.getId());
+			model.addAttribute("offset", total);
 
 			ChatRoom currentRoom = chatBO.getChatRoomByRoomId(roomId);
 			List<User> memberList = userBO.getChatMemberList(currentRoom.getMembers());
 			model.addAttribute("memberList", memberList);
 
-			List<ChatUserCombined> chatList = chatBO.getMessageList(roomId, offset);
+			List<ChatUserCombined> chatList = chatBO.getMessageList(roomId, total);
 			model.addAttribute("currentRoom", currentRoom);
 			model.addAttribute("chatList", chatList);
 

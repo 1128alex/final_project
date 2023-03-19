@@ -101,7 +101,7 @@ public class UserRestController {
 		} else {
 			result.put("code", 500);
 			result.put("errorMessage",
-					"Error while getting verification question. Account with this email does not exist.");
+					"Error while getting verification question. We cannot find an account with that email.");
 		}
 		return result;
 	}
@@ -133,7 +133,7 @@ public class UserRestController {
 			result.put("code", 1);
 		} else {
 			result.put("code", 500);
-			result.put("errorMessage", "Error while getting verification question.");
+			result.put("errorMessage", "Error while resetting password.");
 		}
 
 		return result;
@@ -170,7 +170,7 @@ public class UserRestController {
 			newSession.setAttribute("user", sessionUser);
 		} else {
 			result.put("code", 500);
-			result.put("errorMessage", "failed to sign up");
+			result.put("errorMessage", "Failed to sign up");
 		}
 
 		return result;

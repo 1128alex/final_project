@@ -13,7 +13,7 @@ public interface ChatDAO {
 	public int insertMessage(@Param("roomId") int roomId, @Param("writer") String writer,
 			@Param("content") String content);
 
-	public List<ChatUserCombined> selectMessageList(@Param("roomId") int roomId, @Param("offset") int offset);
+	public List<ChatUserCombined> selectMessageList(@Param("roomId") int roomId);
 
 	public List<ChatUserCombined> selectNewMessage(@Param("roomId") int roomId, @Param("currentId") int currentId);
 

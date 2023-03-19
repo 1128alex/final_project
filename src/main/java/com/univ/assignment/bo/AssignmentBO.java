@@ -25,8 +25,12 @@ public class AssignmentBO {
 	@Autowired
 	private FileManagerService fileManagerService;
 
-	public List<Assignment> getAsgmtListByClassId(int classId) {
-		return assignmentDAO.selectAsgmtListByClassId(classId);
+	public List<Assignment> getAsgmtListByClassId(int classId, int pageNum) {
+		return assignmentDAO.selectAsgmtListByClassId(classId, pageNum);
+	}
+
+	public int countGetAsgmtListByClassId(int classId) {
+		return assignmentDAO.selectCountAsgmtListByClassId(classId);
 	}
 
 	public int addAssignment(Assignment assignment, String maxScoreString, List<MultipartFile> files,
@@ -170,12 +174,20 @@ public class AssignmentBO {
 		return assignmentDAO.selectAsgmtListByEmailByDueDate(email);
 	}
 
-	public List<Assignment> getAsgmtListByEmail(String email) {
-		return assignmentDAO.selectAsgmtListByEmail(email);
+	public List<Assignment> getAsgmtListByEmail(String email, int pageNum) {
+		return assignmentDAO.selectAsgmtListByEmail(email, pageNum);
 	}
 
-	public List<Assignment> getAsgmtListByEmailProf(String email) {
-		return assignmentDAO.selectAsgmtListByEmailProf(email);
+	public int countGetAsgmtListByEmail(String email) {
+		return assignmentDAO.selectCountAsgmtListByEmail(email);
+	}
+
+	public List<Assignment> getAsgmtListByEmailProf(String email, int pageNum) {
+		return assignmentDAO.selectAsgmtListByEmailProf(email, pageNum);
+	}
+
+	public int countGetAsgmtListByEmailProf(String email) {
+		return assignmentDAO.selectCountAsgmtListByEmailProf(email);
 	}
 
 }

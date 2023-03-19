@@ -108,7 +108,7 @@
 														contentType : false,
 														success : function(data) {
 															if (data.code == 1) {
-																alert("success");
+																alert("Post created!");
 																location.href = "/univ/board/post_list?classId="
 																		+ classId;
 															} else {

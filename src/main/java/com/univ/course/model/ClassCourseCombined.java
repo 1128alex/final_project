@@ -6,7 +6,6 @@ public class ClassCourseCombined {
 	private String courseCode;
 	private String courseName;
 	private String description;
-	private int price;
 	private int id;
 	private String profEmail;
 	private int maxNum;
@@ -48,14 +47,6 @@ public class ClassCourseCombined {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public int getPrice() {
-		return price;
-	}
-
-	public void setPrice(int price) {
-		this.price = price;
 	}
 
 	public int getId() {

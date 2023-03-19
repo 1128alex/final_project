@@ -29,7 +29,7 @@
 		a.`roomId`,
 		a.`writer`,
 		a.`content`,
-		DATE_ADD(a.`createdAt`, INTERVAL ${offset} hour) as `createdAt`,
+		a.`createdAt`,
 		a.`updatedAt`,
 		b.`studentNum`,
 		b.`type`,

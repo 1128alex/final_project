@@ -38,7 +38,7 @@
 				<h3 class="mt-4">Birth</h3>
 
 				<div>
-					<fmt:formatDate value="${user.birth}" pattern="d MMM yyyy" />
+					<fmt:formatDate value="${user.birth}" pattern="MMMM d, yyyy" />
 				</div>
 
 				<h3 class="mt-4">Gender</h3>

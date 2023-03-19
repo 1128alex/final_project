@@ -1,3 +1,11 @@
+INSERT INTO `user`
+(`email`,`password`,`type`,`firstName`,`lastName`,`birth`,`gender`,`verifyQuestion`,`verifyAnswer`,`createdAt`,`updatedAt`)
+VALUES
+('admin@auniv.com','b59c67bf196a4758191e42f76670ceba', 'admin','admin','A','2000-01-01','Prefer not to disclose','Who is the founder of Alex University?','Alex Lee',NOW(),NOW());
+
+alter table `course` modify `price` int null;
+
+select*from user;
 INSERT INTO `course`
 (
 `courseCode`,`courseName`,`description`,`price`,`createdAt`,`updatedAt`)

@@ -9,21 +9,22 @@
 				<label>Email / Student Number</label> <input type="text"
 					name="userId" id="userId" class="form-control"
 					placeholder="Enter your Email or Student Number"> <small
-					id="enterEmailAlert" class="text-danger d-none">"Please
-					write your email or student number."</small>
+					id="enterEmailAlert" class="text-danger d-none">Please
+					enter your email or student number.</small>
 			</div>
 			<div class="mt-2">
 				<label>Password</label> <input type="password" name="password"
 					id="password" class="form-control"
 					placeholder="Enter your Password"> <small
-					id="enterPasswordAlert" class="text-danger d-none">Please
-					enter your password.</small>
+					id="enterPasswordAlert" class="text-danger d-none">Your
+					password is incorrect.</small>
 			</div>
 			<div class="d-flex justify-content-between">
 				<div class="mt-2">
 					<a href="/univ/user/find_password">Forgot your password?</a>
 				</div>
-				<button type="submit" class="btn button mt-3" id="signInBtn">SignIn</button>
+				<button type="submit" class="btn button mt-3" id="signInBtn">Sign
+					In</button>
 			</div>
 		</form>
 		<hr>

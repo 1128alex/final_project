@@ -130,6 +130,45 @@
 		`rownum` BETWEEN #{pageNum} * 5 - 4 AND #{pageNum} * 5;
 	</select>
 
+
+	<select id="countFilteredCourseList" parameterType="map"
+		resultType="int">
+		SELECT
+		COUNT(*) as `cnt`
+		FROM
+		`class` as a
+		LEFT
+		JOIN
+		`course`
+		as
+		b
+		ON
+		a.`courseCode` =
+		b.`courseCode`
+		LEFT JOIN
+		`user` as c
+		ON
+		a.`profEmail` =
+		c.`email`
+		<!-- , (SELECT COUNT(*) as `registerCount` FROM `registry` WHERE `classId` 
+			= a.`id`) as d -->
+		WHERE
+		(b.`courseCode`
+		LIKE
+		CONCAT('%',#{searchKeyword},'%')
+		OR
+		b.`courseName`
+		LIKE
+		CONCAT('%',#{searchKeyword},'%'))
+		<choose>
+			<when test="courseName != null">AND b.`courseCode` = #{courseName}</when>
+			<when test="courseLevel != null">AND b.`courseCode` LIKE
+				CONCAT(#{subjectCode},#{courseLevel},'%')</when>
+			<when test="courseLevel == null and subjectCode != null">AND b.`courseCode` LIKE CONCAT(#{subjectCode},'%')
+			</when>
+		</choose>
+	</select>
+
 	<select id="selectCourseByCourseCode" parameterType="string"
 		resultType="com.univ.course.model.Course">
 		SELECT
@@ -337,45 +376,6 @@
 		WHERE
 		`id` = #{classId}
 	</delete>
-
-	<select id="countFilteredCourseList" parameterType="map"
-		resultType="int">
-		SELECT
-		COUNT(*) as `cnt`
-		FROM
-		`class` as a
-		LEFT
-		JOIN
-		`course`
-		as
-		b
-		ON
-		a.`courseCode` =
-		b.`courseCode`
-		LEFT JOIN
-		`user` as c
-		ON
-		a.`profEmail` =
-		c.`email`
-		<!-- , (SELECT COUNT(*) as `registerCount` FROM `registry` WHERE `classId` 
-			= a.`id`) as d -->
-		WHERE
-		(b.`courseCode`
-		LIKE
-		CONCAT('%',#{searchKeyword},'%')
-		OR
-		b.`courseName`
-		LIKE
-		CONCAT('%',#{searchKeyword},'%'))
-		<choose>
-			<when test="courseName != null">AND b.`courseCode` = #{courseName}</when>
-			<when test="courseLevel != null">AND b.`courseCode` LIKE
-				CONCAT(#{subjectCode},#{courseLevel},'%')</when>
-			<when test="courseLevel == null and subjectCode != null">AND b.`courseCode` LIKE CONCAT(#{subjectCode},'%')
-			</when>
-		</choose>
-		ORDER BY b.`courseCode`,a.`id`
-	</select>
 
 	<select id="selectClassCourseByClassId" parameterType="map"
 		resultType="com.univ.course.model.ClassCourseCombined">

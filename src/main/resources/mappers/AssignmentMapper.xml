@@ -4,7 +4,19 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.univ.assignment.dao.AssignmentDAO">
 	<select id="selectAsgmtListByClassId"
-		resultType="com.univ.assignment.model.Assignment" parameterType="int">
+		resultType="com.univ.assignment.model.Assignment" parameterType="map">
+		<!-- SELECT a.`classId`, a.`asgmtId`, a.`asgmtType`, a.`asgmtName`, a.`content`, 
+			a.`filePath`, a.`maxScore`, a.`dueDate`, a.`createdAt`, a.`updatedAt`, b.`courseCode` 
+			FROM `assignment` as a JOIN `class` as b ON a.`classId` = b.`id` WHERE `classId` 
+			= #{classId} ORDER BY `updatedAt` DESC; -->
+
+		SELECT * FROM
+		(SELECT
+		d.*,
+		@ROWNUM := @ROWNUM + 1 AS
+		`rownum`
+		FROM
+		(
 		SELECT
 		a.`classId`,
 		a.`asgmtId`,
@@ -28,7 +40,29 @@
 		`classId` =
 		#{classId}
 		ORDER BY `updatedAt`
-		DESC;
+		DESC
+		) AS d,
+		(SELECT
+		@ROWNUM:=0) AS e) f
+		WHERE
+		`rownum` BETWEEN #{pageNum} * 10 - 9
+		AND #{pageNum} * 10;
+	</select>
+
+	<select id="selectCountAsgmtListByClassId" parameterType="int"
+		resultType="int">
+		SELECT
+		COUNT(*)
+		FROM
+		`assignment` as a
+		JOIN
+		`class` as b
+		ON
+		a.`classId` =
+		b.`id`
+		WHERE
+		`classId` =
+		#{classId}
 	</select>
 
 	<insert id="insertAssignment"
@@ -305,8 +339,21 @@
 	</select>
 
 	<select id="selectAsgmtListByEmail"
-		resultType="com.univ.assignment.model.Assignment"
-		parameterType="string">
+		resultType="com.univ.assignment.model.Assignment" parameterType="map">
+		<!-- SELECT a.`classId`, a.`asgmtId`, a.`asgmtType`, a.`asgmtName`, a.`content`, 
+			a.`filePath`, a.`maxScore`, a.`dueDate`, a.`createdAt`, a.`updatedAt`, (SELECT 
+			`courseCode` FROM `course` WHERE `courseCode` = (SELECT `courseCode` FROM 
+			`class` as c WHERE c.`id` = a.`classId`)) as `courseCode` FROM `assignment` 
+			as a INNER JOIN `registry` as b ON a.`classId` = b.`classId` WHERE b.`email` 
+			= #{email} ORDER BY a.`updatedAt` DESC; -->
+
+		SELECT * FROM
+		(SELECT
+		d.*,
+		@ROWNUM := @ROWNUM + 1 AS
+		`rownum`
+		FROM
+		(
 		SELECT
 		a.`classId`,
 		a.`asgmtId`,
@@ -320,7 +367,8 @@
 		a.`updatedAt`,
 		(SELECT `courseCode` FROM `course` WHERE
 		`courseCode` =
-		(SELECT `courseCode` FROM `class` as c WHERE c.`id` =
+		(SELECT
+		`courseCode` FROM `class` as c WHERE c.`id` =
 		a.`classId`)) as
 		`courseCode`
 		FROM
@@ -332,12 +380,45 @@
 		WHERE b.`email` = #{email}
 		ORDER BY
 		a.`updatedAt`
-		DESC;
+		DESC
+		) AS d,
+		(SELECT
+		@ROWNUM:=0) AS e) f
+		WHERE
+		`rownum`
+		BETWEEN #{pageNum}
+		* 10 - 9
+		AND #{pageNum} * 10;
+	</select>
+
+	<select id="selectCountAsgmtListByEmail" parameterType="string"
+		resultType="int">
+		SELECT
+		COUNT(*)
+		FROM
+		`assignment` as a INNER JOIN
+		`registry` as
+		b
+		ON
+		a.`classId` =
+		b.`classId`
+		WHERE b.`email` = #{email}
 	</select>
 
 	<select id="selectAsgmtListByEmailProf"
-		resultType="com.univ.assignment.model.Assignment"
-		parameterType="string">
+		resultType="com.univ.assignment.model.Assignment" parameterType="map">
+		<!-- SELECT a.`classId`, a.`asgmtId`, a.`asgmtType`, a.`asgmtName`, a.`content`, 
+			a.`filePath`, a.`maxScore`, a.`dueDate`, a.`createdAt`, a.`updatedAt`, b.`courseCode` 
+			FROM `assignment` as a INNER JOIN `class` as b ON a.`classId`=b.`id` WHERE 
+			b.`profEmail` = #{email} ORDER BY a.`updatedAt` DESC; -->
+
+		SELECT * FROM
+		(SELECT
+		d.*,
+		@ROWNUM := @ROWNUM + 1 AS
+		`rownum`
+		FROM
+		(
 		SELECT
 		a.`classId`,
 		a.`asgmtId`,
@@ -356,11 +437,36 @@
 		as
 		b
 		ON
-		a.`classId`=b.`id`
+		a.`classId`
+		= b.`id`
 		WHERE b.`profEmail` = #{email}
 		ORDER
 		BY
 		a.`updatedAt`
-		DESC;
+		DESC
+		) AS d,
+		(SELECT
+		@ROWNUM:=0) AS e) f
+		WHERE
+		`rownum` BETWEEN #{pageNum}
+		* 10 - 9
+		AND
+		#{pageNum} * 10;
+	</select>
+
+	<select id="selectCountAsgmtListByEmailProf"
+		parameterType="string" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM
+		`assignment` as a
+		INNER
+		JOIN
+		`class` as b
+		ON
+		a.`classId` = b.`id`
+		WHERE
+		b.`profEmail` =
+		#{email}
 	</select>
 </mapper>

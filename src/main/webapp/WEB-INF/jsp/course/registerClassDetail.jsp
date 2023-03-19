@@ -161,7 +161,9 @@
 														},
 														success : function(data) {
 															if (data.code == 1) {
-																alert("Success!");
+																alert("You are now registered in "
+																		+ classInfo
+																		+ "!");
 																location.href = "/univ/course/timetable";
 															} else {
 																alert("error "

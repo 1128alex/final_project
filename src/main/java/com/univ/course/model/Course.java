@@ -6,7 +6,6 @@ public class Course {
 	private String courseCode;
 	private String courseName;
 	private String description;
-	private int price;
 	private Date createdAt;
 	private Date updatedAt;
 
@@ -32,14 +31,6 @@ public class Course {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public int getPrice() {
-		return price;
-	}
-
-	public void setPrice(int price) {
-		this.price = price;
 	}
 
 	public Date getCreatedAt() {

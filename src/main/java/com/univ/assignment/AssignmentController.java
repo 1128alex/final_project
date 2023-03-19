@@ -31,7 +31,7 @@ public class AssignmentController {
 
 	@GetMapping("/assignment_list")
 	public String assignmentListView(@RequestParam(value = "classId", required = false) Integer classId, Model model,
-			HttpSession session) {
+			@RequestParam(value = "pageNum", required = false) Integer pageNum, HttpSession session) {
 		model.addAttribute("view", "assignment/assignmentList");
 
 		User user = (User) session.getAttribute("user");
@@ -45,20 +45,33 @@ public class AssignmentController {
 			model.addAttribute("combinedList", combinedList);
 		}
 
-		model.addAttribute("classId", classId);
+		if (pageNum == null) {
+			pageNum = 1;
+		}
 		if (classId == 0) {
 			if (user.getType().equals("student")) {
-				List<Assignment> assignmentList = assignmentBO.getAsgmtListByEmail(user.getEmail());
+				List<Assignment> assignmentList = assignmentBO.getAsgmtListByEmail(user.getEmail(), pageNum);
 				model.addAttribute("assignmentList", assignmentList);
+
+				int pageLength = (int) Math.ceil(assignmentBO.countGetAsgmtListByEmail(user.getEmail()) / 10.0);
+				model.addAttribute("pageLength", pageLength);
 			} else if (user.getType().equals("professor")) {
-				List<Assignment> assignmentList = assignmentBO.getAsgmtListByEmailProf(user.getEmail());
+				List<Assignment> assignmentList = assignmentBO.getAsgmtListByEmailProf(user.getEmail(), pageNum);
 				model.addAttribute("assignmentList", assignmentList);
+
+				int pageLength = (int) Math.ceil(assignmentBO.countGetAsgmtListByEmailProf(user.getEmail()) / 10.0);
+				model.addAttribute("pageLength", pageLength);
 			}
 		} else {
-
-			List<Assignment> assignmentList = assignmentBO.getAsgmtListByClassId(classId);
+			List<Assignment> assignmentList = assignmentBO.getAsgmtListByClassId(classId, pageNum);
 			model.addAttribute("assignmentList", assignmentList);
+
+			int pageLength = (int) Math.ceil(assignmentBO.countGetAsgmtListByClassId(classId) / 10.0);
+			model.addAttribute("pageLength", pageLength);
 		}
+		model.addAttribute("pageNum", pageNum);
+
+		model.addAttribute("classId", classId);
 
 		return "template/layout";
 	}

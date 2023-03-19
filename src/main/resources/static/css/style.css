@@ -126,6 +126,7 @@ input:focus::placeholder {
 	border-left: 1px solid grey;
 	background-color: #f1f3f4;
 	min-height: 700px;
+	overflow-y: auto;
 }
 
 .classAside {
@@ -242,6 +243,7 @@ input:focus::placeholder {
 .selectedChatRoom {
 	background-color: #d2d2d2;
 	overflow-y: auto;
+	font-weight: bold;
 }
 
 .chatRoomTitle {

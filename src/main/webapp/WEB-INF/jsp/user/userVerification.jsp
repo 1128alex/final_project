@@ -8,7 +8,7 @@
 			<a href="/univ/user/sign_in" class="underline noDecoA">Back to
 				login</a>
 		</h4>
-		<h3>Please input your email.</h3>
+		<h3>Please enter your email.</h3>
 		<input class="form-control" id="email" name="email"
 			placeholder="eg) example@auniv.com">
 		<button id="nextBtn" class="btn button mt-2">Next</button>
@@ -34,7 +34,6 @@
 										alert("Please write your email.");
 										return;
 									}
-									$('#nextBtn').addClass("d-none");
 
 									$.ajax({
 										type : "POST",
@@ -48,6 +47,8 @@
 														"d-none");
 												$('#questionBox').append(
 														data.question);
+												$('#nextBtn')
+														.addClass("d-none");
 											} else {
 												alert("error " + data.code
 														+ ": "

@@ -11,7 +11,9 @@ import com.univ.assignment.model.SubmittedAsgmt;
 
 @Repository
 public interface AssignmentDAO {
-	public List<Assignment> selectAsgmtListByClassId(int classId);
+	public List<Assignment> selectAsgmtListByClassId(@Param("classId") int classId, @Param("pageNum") int pageNum);
+
+	public int selectCountAsgmtListByClassId(int classId);
 
 	public int insertAssignment(Assignment assignment);
 
@@ -38,8 +40,12 @@ public interface AssignmentDAO {
 
 	public List<Assignment> selectAsgmtListByEmailByDueDate(String email);
 
-	public List<Assignment> selectAsgmtListByEmail(String email);
+	public List<Assignment> selectAsgmtListByEmail(@Param("email") String email, @Param("pageNum") int pageNum);
 
-	public List<Assignment> selectAsgmtListByEmailProf(String email);
+	public int selectCountAsgmtListByEmail(String email);
+
+	public List<Assignment> selectAsgmtListByEmailProf(@Param("email") String email, @Param("pageNum") int pageNum);
+
+	public int selectCountAsgmtListByEmailProf(String email);
 
 }

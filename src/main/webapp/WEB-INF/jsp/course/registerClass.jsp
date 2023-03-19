@@ -194,8 +194,6 @@
 								data-course-page="${i}">${i}</span>
 						</c:otherwise>
 					</c:choose>
-
-
 				</c:forEach>
 				<button type="button" id="nextBtn" class="btn button ml-4"
 					value="${pageNum + 1}">Next</button>

@@ -71,15 +71,28 @@ public class BoardBO {
 		return boardDAO.selectCommentListByClassIdPostId(classId, postId);
 	}
 
-	public List<PostUserCombined> getBoardListByEmail(String email) {
-		return boardDAO.selectBoardListByEmail(email);
+	public List<PostUserCombined> getBoardListByEmail(String email, int pageNum) {
+		return boardDAO.selectBoardListByEmail(email, pageNum);
 	}
 
-	public List<PostUserCombined> getBoardListByEmailProf(String email) {
-		return boardDAO.selectBoardListByEmailProf(email);
+	public int countGetBoardListByEmail(String email) {
+		return boardDAO.selectCountBoardListByEmail(email);
 	}
 
-	public List<PostUserCombined> getBoardListByClassId(int classId) {
-		return boardDAO.selectBoardListByClassId(classId);
+	public List<PostUserCombined> getBoardListByEmailProf(String email, int pageNum) {
+		return boardDAO.selectBoardListByEmailProf(email, pageNum);
 	}
+
+	public int countGetBoardListByEmailProf(String email) {
+		return boardDAO.selectCountBoardListByEmailProf(email);
+	}
+
+	public List<PostUserCombined> getBoardListByClassId(int classId, int pageNum) {
+		return boardDAO.selectBoardListByClassId(classId, pageNum);
+	}
+
+	public int countGetBoardListByClassId(int classId) {
+		return boardDAO.selectCountBoardListByClassId(classId);
+	}
+
 }

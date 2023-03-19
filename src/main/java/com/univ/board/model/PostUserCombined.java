@@ -15,6 +15,7 @@ public class PostUserCombined {
 	private String firstName;
 	private String lastName;
 	private String profileUrl;
+	private String courseCode;
 
 	public int getClassId() {
 		return classId;
@@ -110,6 +111,14 @@ public class PostUserCombined {
 
 	public void setProfileUrl(String profileUrl) {
 		this.profileUrl = profileUrl;
+	}
+
+	public String getCourseCode() {
+		return courseCode;
+	}
+
+	public void setCourseCode(String courseCode) {
+		this.courseCode = courseCode;
 	}
 
 }

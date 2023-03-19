@@ -81,10 +81,17 @@ public class CourseController {
 	}
 
 	@GetMapping("/class_detail")
-	public String classDetailView(@RequestParam("classId") int classId, Model model, HttpSession session) {
+	public String classDetailView(@RequestParam("classId") int classId,
+			@RequestParam(value = "pageNum", required = false) Integer pageNum, Model model, HttpSession session) {
+		if (pageNum == null) {
+			pageNum = 1;
+		}
 
 		ClassCourseCombined currentClass = courseBO.getClassCourseByClassIdForDetail(classId);
-		List<Assignment> assignmentList = assignmentBO.getAsgmtListByClassId(classId);
+		List<Assignment> assignmentList = assignmentBO.getAsgmtListByClassId(classId, pageNum);
+		int pageLength = (int) Math.ceil(assignmentBO.countGetAsgmtListByClassId(classId) / 10.0);
+		model.addAttribute("pageLength", pageLength);
+		model.addAttribute("pageNum", pageNum);
 
 		User user = (User) session.getAttribute("user");
 

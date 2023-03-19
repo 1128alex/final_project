@@ -50,6 +50,25 @@
 				</c:forEach>
 			</tbody>
 		</table>
+		<div class="d-flex justify-content-center align-items-center my-3">
+			<button type="button" id="prevBtn" class="btn button mr-4"
+				value="${pageNum - 1}">Prev</button>
+			<div id="pageLengthHolder" data-page-length="${pageLength}"></div>
+			<c:forEach var="i" begin="1" end="${pageLength}">
+				<c:choose>
+					<c:when test="${i eq pageNum}">
+						<span class="coursePage mx-2 underline font-weight-bold"
+							id="coursePage${i}" data-course-page="${i}">${i}</span>
+					</c:when>
+					<c:otherwise>
+						<span class="coursePage mx-2" id="coursePage${i}"
+							data-course-page="${i}">${i}</span>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+			<button type="button" id="nextBtn" class="btn button ml-4"
+				value="${pageNum + 1}">Next</button>
+		</div>
 	</div>
 	<div class="col-3"></div>
 	<div id="classIdHolder" hidden="hidden" data-class-id="${classId}"></div>
@@ -72,5 +91,31 @@
 											location.href = "/univ/assignment/assignment_list?classId="
 													+ classId;
 										})
-					})
+
+						$('.coursePage')
+								.on(
+										'click',
+										function() {
+											let pageNum = $(this).data(
+													'course-page');
+											location.href = "/univ/assignment/assignment_list?classId="
+													+ classId
+													+ "&pageNum="
+													+ pageNum;
+										});
+
+						$('#prevBtn,#nextBtn')
+								.on(
+										'click',
+										function() {
+											let pageNum = $(this).val();
+											if (pageNum == 0
+													|| pageNum == $(
+															'#pageLengthHolder')
+															.data('page-length') + 1) {
+												return;
+											}
+											$('#coursePage' + pageNum).click();
+										})
+					});
 </script>

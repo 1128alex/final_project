@@ -23,9 +23,18 @@ public interface BoardDAO {
 	public List<CommentUserCombined> selectCommentListByClassIdPostId(@Param("classId") int classId,
 			@Param("postId") int postId);
 
-	public List<PostUserCombined> selectBoardListByEmail(String email);
+	public List<PostUserCombined> selectBoardListByEmail(@Param("email") String email, @Param("pageNum") int pageNum);
 
-	public List<PostUserCombined> selectBoardListByEmailProf(String email);
+	public int selectCountBoardListByEmail(String email);
 
-	public List<PostUserCombined> selectBoardListByClassId(int classId);
+	public List<PostUserCombined> selectBoardListByEmailProf(@Param("email") String email,
+			@Param("pageNum") int pageNum);
+
+	public int selectCountBoardListByEmailProf(String email);
+
+	public List<PostUserCombined> selectBoardListByClassId(@Param("classId") int classId,
+			@Param("pageNum") int pageNum);
+
+	public int selectCountBoardListByClassId(int classId);
+
 }

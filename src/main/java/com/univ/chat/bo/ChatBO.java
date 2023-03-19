@@ -22,8 +22,8 @@ public class ChatBO {
 		return chatDAO.insertMessage(roomId, writer, content);
 	}
 
-	public List<ChatUserCombined> getMessageList(int roomId, int offset) {
-		return chatDAO.selectMessageList(roomId, offset);
+	public List<ChatUserCombined> getMessageList(int roomId) {
+		return chatDAO.selectMessageList(roomId);
 	}
 
 	public List<ChatUserCombined> getNewMessage(int roomId, int currentId) {

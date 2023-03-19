@@ -465,38 +465,62 @@
 												return false;
 											}
 
+											let monStartTime;
+											let tueStartTime;
+											let wedStartTime;
+											let thuStartTime;
+											let friStartTime;
+
 											let timeCount = 0;
-											let monStartTime = $('#dayOfWeek1')
-													.val();
-											if (monStartTime != "0") {
-												timeCount++;
-											}
-											let tueStartTime = $('#dayOfWeek2')
-													.val();
-											if (tueStartTime != "0") {
-												timeCount++;
-											}
-											let wedStartTime = $('#dayOfWeek3')
-													.val();
-											if (wedStartTime != "0") {
-												timeCount++;
-											}
-											let thuStartTime = $('#dayOfWeek4')
-													.val();
-											if (thuStartTime != "0") {
-												timeCount++;
-											}
-											let friStartTime = $('#dayOfWeek5')
-													.val();
-											if (friStartTime != "0") {
-												timeCount++;
+											for (let i = 6; i <= 20; i++) {
+												if ($('#mon'.concat(i))
+														.hasClass(
+																'classSelectedTime')) {
+													monStartTime = $(
+															'#mon'.concat(i))
+															.data("time")
+															.substring(3);
+													timeCount++;
+												}
+												if ($('#tue'.concat(i))
+														.hasClass(
+																'classSelectedTime')) {
+													tueStartTime = $(
+															'#tue'.concat(i))
+															.data("time")
+															.substring(3);
+													timeCount++;
+												}
+												if ($('#wed'.concat(i))
+														.hasClass(
+																'classSelectedTime')) {
+													wedStartTime = $(
+															'#wed'.concat(i))
+															.data("time")
+															.substring(3);
+													timeCount++;
+												}
+												if ($('#thu'.concat(i))
+														.hasClass(
+																'classSelectedTime')) {
+													thuStartTime = $(
+															'#thu'.concat(i))
+															.data("time")
+															.substring(3);
+													timeCount++;
+												}
+												if ($('#fri'.concat(i))
+														.hasClass(
+																'classSelectedTime')) {
+													friStartTime = $(
+															'#fri'.concat(i))
+															.data("time")
+															.substring(3);
+													timeCount++;
+												}
 											}
 											if (timeCount == 0) {
-												alert("There has to be at least one class time.");
-												return false;
-											}
-
-											if (!confirm("Are you sure you want to edit the class with these information?")) {
+												alert("Please select your class time.");
 												return false;
 											}
 
@@ -516,7 +540,7 @@
 															"tueStartTime" : tueStartTime,
 															"wedStartTime" : wedStartTime,
 															"thuStartTime" : thuStartTime,
-															"friStartTime" : friStartTime,
+															"friStartTime" : friStartTime
 														},
 														success : function(data) {
 															if (data.code == 1) {

@@ -20,6 +20,10 @@ public interface CourseDAO {
 			@Param("courseName") String courseName, @Param("subjectCode") String subjectCode,
 			@Param("courseLevel") String courseLevel, @Param("pageNum") int pageNum);
 
+	public int countFilteredCourseList(@Param("searchKeyword") String searchKeyword,
+			@Param("courseName") String courseName, @Param("subjectCode") String subjectCode,
+			@Param("courseLevel") String courseLevel);
+
 	public Course selectCourseByCourseCode(String courseCode);
 
 	public int selectDuplicated(@Param("courseCode") String courseCode, @Param("profEmail") String profEmail);
@@ -39,10 +43,6 @@ public interface CourseDAO {
 	public Class selectClassByClassId(int classId);
 
 	public int deleteClass(int classId);
-
-	public int countFilteredCourseList(@Param("searchKeyword") String searchKeyword,
-			@Param("courseName") String courseName, @Param("subjectCode") String subjectCode,
-			@Param("courseLevel") String courseLevel);
 
 	public ClassCourseCombined selectClassCourseByClassId(@Param("classId") int classId, @Param("email") String email);
 

@@ -146,8 +146,15 @@
 		a.`updatedAt` DESC
 	</select>
 
-	<select id="selectBoardListByClassId" parameterType="int"
+	<select id="selectBoardListByClassId" parameterType="map"
 		resultType="com.univ.board.model.PostUserCombined">
+		SELECT * FROM
+		(SELECT
+		d.*,
+		@ROWNUM := @ROWNUM + 1 AS
+		`rownum`
+		FROM
+		(
 		SELECT
 		a.`classId`,
 		a.`postId`,
@@ -175,10 +182,46 @@
 		`classId` =
 		#{classId}
 		ORDER BY `updatedAt`
-		DESC;
+		DESC
+		) AS d,
+		(SELECT
+		@ROWNUM:=0) AS e) f
+		WHERE
+		`rownum` BETWEEN #{pageNum} * 10 - 9
+		AND
+		#{pageNum} * 10;
+
 	</select>
-	<select id="selectBoardListByEmail" parameterType="string"
+
+	<select id="selectCountBoardListByClassId" parameterType="int"
+		resultType="int">
+		SELECT
+		COUNT(*)
+		FROM
+		`post` as a
+		INNER JOIN
+		`class` as b
+		ON
+		a.`classId` =
+		b.`id`
+		INNER JOIN
+		`user` as c
+		ON
+		a.`writerEmail` = c.`email`
+		WHERE
+		`classId` =
+		#{classId}
+	</select>
+
+	<select id="selectBoardListByEmail" parameterType="map"
 		resultType="com.univ.board.model.PostUserCombined">
+		SELECT * FROM
+		(SELECT
+		d.*,
+		@ROWNUM := @ROWNUM + 1 AS
+		`rownum`
+		FROM
+		(
 		SELECT
 		a.`classId`,
 		a.`postId`,
@@ -189,7 +232,13 @@
 		a.`createdAt`,
 		a.`updatedAt`,
 		c.`firstName`,
-		c.`lastName`
+		c.`lastName`,
+		(SELECT `courseCode` FROM `course` WHERE
+		`courseCode` =
+		(SELECT
+		`courseCode` FROM `class` as d WHERE d.`id` =
+		a.`classId`)) as
+		`courseCode`
 		FROM
 		`post` as a
 		INNER JOIN
@@ -205,10 +254,46 @@
 		b.`email` = #{email}
 		ORDER BY
 		a.`updatedAt`
-		DESC;
+		DESC
+		) AS d,
+		(SELECT
+		@ROWNUM:=0) AS e) f
+		WHERE
+		`rownum` BETWEEN #{pageNum} * 10
+		- 9
+		AND
+		#{pageNum} * 10;
 	</select>
-	<select id="selectBoardListByEmailProf" parameterType="string"
+
+	<select id="selectCountBoardListByEmail" parameterType="string"
+		resultType="int">
+		SELECT
+		COUNT(*)
+		FROM
+		`post` as a
+		INNER JOIN
+		`registry` as b
+		ON
+		a.`classId` =
+		b.`classId`
+		INNER JOIN
+		`user` as c
+		ON
+		a.`writerEmail` =
+		c.`email`
+		WHERE
+		b.`email` = #{email}
+	</select>
+
+	<select id="selectBoardListByEmailProf" parameterType="map"
 		resultType="com.univ.board.model.PostUserCombined">
+		SELECT * FROM
+		(SELECT
+		d.*,
+		@ROWNUM := @ROWNUM + 1 AS
+		`rownum`
+		FROM
+		(
 		SELECT
 		a.`classId`,
 		a.`postId`,
@@ -234,6 +319,33 @@
 		b.`profEmail` = #{email}
 		ORDER BY
 		a.`updatedAt`
-		DESC;
+		DESC
+		) AS d,
+		(SELECT
+		@ROWNUM:=0) AS e) f
+		WHERE
+		`rownum` BETWEEN #{pageNum} * 10
+		- 9
+		AND
+		#{pageNum} * 10;
+	</select>
+
+	<select id="selectCountBoardListByEmailProf"
+		parameterType="string" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM
+		`post` as a
+		INNER
+		JOIN `class` as b
+		ON
+		a.`classId`=b.`id`
+		INNER JOIN
+		`user` as c
+		ON
+		a.`writerEmail` = c.`email`
+		WHERE
+		b.`profEmail` =
+		#{email}
 	</select>
 </mapper>

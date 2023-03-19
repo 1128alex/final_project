@@ -27,7 +27,8 @@ public class BoardController {
 	private BoardBO boardBO;
 
 	@GetMapping("/post_list")
-	public String postListView(@RequestParam("classId") int classId, Model model, HttpSession session) {
+	public String postListView(@RequestParam("classId") int classId,
+			@RequestParam(value = "pageNum", required = false) Integer pageNum, Model model, HttpSession session) {
 		User user = (User) session.getAttribute("user");
 		model.addAttribute("type", user.getType());
 
@@ -39,19 +40,32 @@ public class BoardController {
 			model.addAttribute("combinedList", combinedList);
 		}
 
+		if (pageNum == null) {
+			pageNum = 1;
+		}
 		if (classId == 0) {
 			if (user.getType().equals("student")) {
-				List<PostUserCombined> postList = boardBO.getBoardListByEmail(user.getEmail());
+				List<PostUserCombined> postList = boardBO.getBoardListByEmail(user.getEmail(), pageNum);
 				model.addAttribute("postList", postList);
+
+				int pageLength = (int) Math.ceil(boardBO.countGetBoardListByEmail(user.getEmail()) / 10.0);
+				model.addAttribute("pageLength", pageLength);
 			} else if (user.getType().equals("professor")) {
-				List<PostUserCombined> postList = boardBO.getBoardListByEmailProf(user.getEmail());
+				List<PostUserCombined> postList = boardBO.getBoardListByEmailProf(user.getEmail(), pageNum);
 				model.addAttribute("postList", postList);
+
+				int pageLength = (int) Math.ceil(boardBO.countGetBoardListByEmailProf(user.getEmail()) / 10.0);
+				model.addAttribute("pageLength", pageLength);
 			}
 		} else {
-			List<PostUserCombined> postList = boardBO.getBoardListByClassId(classId);
+			List<PostUserCombined> postList = boardBO.getBoardListByClassId(classId, pageNum);
 			model.addAttribute("postList", postList);
+
+			int pageLength = (int) Math.ceil(boardBO.countGetBoardListByClassId(classId) / 10.0);
+			model.addAttribute("pageLength", pageLength);
 		}
 
+		model.addAttribute("pageNum", pageNum);
 		model.addAttribute("classId", classId);
 		model.addAttribute("view", "board/postList");
 

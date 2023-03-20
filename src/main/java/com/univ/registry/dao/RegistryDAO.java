@@ -17,4 +17,8 @@ public interface RegistryDAO {
 
 	public int countRegistryByClassId(int classId);
 
+	public int checkTime(@Param("email") String email, @Param("monTime") int monTime,
+			@Param("tueTime") int tueTime, @Param("wedTime") int wedTime, @Param("thuTime") int thuTime,
+			@Param("friTime") int friTime);
+
 }

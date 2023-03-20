@@ -31,4 +31,12 @@ public class RegistryBO {
 		return registryDAO.countRegistryByClassId(classId);
 	}
 
+	public int checkTime(String email, int monTime, int tueTime, int wedTime, int thuTime, int friTime) {
+		return registryDAO.checkTime(email, monTime, tueTime, wedTime, thuTime, friTime);
+	}
+
+	public int dupCheck(int classId, String email) {
+		return registryDAO.selectDuplicatedClass(classId, email);
+	}
+
 }

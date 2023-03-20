@@ -21,17 +21,32 @@ public class RegistryRestController {
 	private RegistryBO registryBO;
 
 	@GetMapping("/register_class")
-	public Map<String, Object> registerClass(@RequestParam("classId") int classId, HttpSession session) {
+	public Map<String, Object> registerClass(@RequestParam("classId") int classId, @RequestParam("monTime") int monTime,
+			@RequestParam("tueTime") int tueTime, @RequestParam("wedTime") int wedTime,
+			@RequestParam("thuTime") int thuTime, @RequestParam("friTime") int friTime, HttpSession session) {
 		Map<String, Object> result = new HashMap<>();
 
 		User user = (User) session.getAttribute("user");
 
+		int dupCheck = registryBO.dupCheck(classId, user.getEmail());
+		if (dupCheck != 0) {
+			result.put("code", 2);
+			result.put("errorMessage", "You are already registered in this class.");
+
+			return result;
+		}
+
+		int timeRowCount = registryBO.checkTime(user.getEmail(), monTime, tueTime, wedTime, thuTime, friTime);
+		if (timeRowCount != 0) {
+			result.put("code", 3);
+			result.put("errorMessage",
+					"You already have a class in this time. Please choose a class with another time.");
+			return result;
+		}
+
 		int rowCount = registryBO.registerToClass(classId, user.getEmail());
 
-		if (rowCount == 2) {
-			result.put("code", 2);
-			result.put("errorMessage", "This class is registered already.");
-		} else if (rowCount > 0) {
+		if (rowCount > 0) {
 			result.put("code", 1);
 		} else {
 			result.put("code", 500);

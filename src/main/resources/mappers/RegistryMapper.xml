@@ -63,4 +63,34 @@
 		WHERE
 		`classId` = #{classId}
 	</select>
+
+	<select id="checkTime" parameterType="map" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM
+		(SELECT
+		b.`monStartTime`,
+		b.`tueStartTime`,
+		b.`wedStartTime`,
+		b.`thuStartTime`,
+		b.`friStartTime`
+		FROM
+		`registry` as a
+		INNER JOIN
+		`class` as b
+		ON
+		a.classId = b.id
+		WHERE
+		a.email = #{email}) as c
+		WHERE
+		c.monStartTime = #{monTime}
+		OR
+		c.tueStartTime = #{tueTime}
+		OR
+		c.wedStartTime = #{wedTime}
+		OR
+		c.thuStartTime = #{thuTime}
+		OR
+		c.friStartTime = #{friTime}
+	</select>
 </mapper>

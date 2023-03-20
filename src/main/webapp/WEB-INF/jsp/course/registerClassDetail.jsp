@@ -61,7 +61,7 @@
 			</thead>
 			<tbody>
 				<tr class="text-center">
-					<td><c:choose>
+					<td id="monTimeHolder" data-mon="${combined.monStartTime}"><c:choose>
 							<c:when test="${combined.monStartTime ne 0}">
 								<c:choose>
 									<c:when test="${combined.monStartTime > 12}">${combined.monStartTime-12 += ":00 PM"}</c:when>
@@ -71,7 +71,7 @@
 							</c:when>
 							<c:otherwise>No class</c:otherwise>
 						</c:choose></td>
-					<td><c:choose>
+					<td id="tueTimeHolder" data-tue="${combined.tueStartTime}"><c:choose>
 							<c:when test="${combined.tueStartTime ne 0}">
 								<c:choose>
 									<c:when test="${combined.tueStartTime > 12}">${combined.tueStartTime-12 += ":00 PM"}</c:when>
@@ -81,7 +81,7 @@
 							</c:when>
 							<c:otherwise>No class</c:otherwise>
 						</c:choose></td>
-					<td><c:choose>
+					<td id="wedTimeHolder" data-wed="${combined.wedStartTime}"><c:choose>
 							<c:when test="${combined.wedStartTime ne 0}">
 								<c:choose>
 									<c:when test="${combined.wedStartTime > 12}">${combined.wedStartTime-12 += ":00 PM"}</c:when>
@@ -91,7 +91,7 @@
 							</c:when>
 							<c:otherwise>No class</c:otherwise>
 						</c:choose></td>
-					<td><c:choose>
+					<td id="thuTimeHolder" data-thu="${combined.thuStartTime}"><c:choose>
 							<c:when test="${combined.thuStartTime ne 0}">
 								<c:choose>
 									<c:when test="${combined.thuStartTime > 12}">${combined.thuStartTime-12 += ":00 PM"}</c:when>
@@ -101,7 +101,7 @@
 							</c:when>
 							<c:otherwise>No class</c:otherwise>
 						</c:choose></td>
-					<td><c:choose>
+					<td id="friTimeHolder" data-fri="${combined.friStartTime}"><c:choose>
 							<c:when test="${combined.friStartTime ne 0}">
 								<c:choose>
 									<c:when test="${combined.friStartTime > 12}">${combined.friStartTime-12 += ":00 PM"}</c:when>
@@ -152,12 +152,29 @@
 
 											let classId = $('#classIdHolder')
 													.data('class-id');
+
+											let monTime = $('#monTimeHolder')
+													.data("mon");
+											let tueTime = $('#tueTimeHolder')
+													.data("tue");
+											let wedTime = $('#wedTimeHolder')
+													.data("wed");
+											let thuTime = $('#thuTimeHolder')
+													.data("thu");
+											let friTime = $('#friTimeHolder')
+													.data("fri");
+
 											$
 													.ajax({
 														type : "GET",
 														url : "/registry/register_class",
 														data : {
-															"classId" : classId
+															"classId" : classId,
+															"monTime" : monTime,
+															"tueTime" : tueTime,
+															"wedTime" : wedTime,
+															"thuTime" : thuTime,
+															"friTime" : friTime
 														},
 														success : function(data) {
 															if (data.code == 1) {
@@ -165,6 +182,9 @@
 																		+ classInfo
 																		+ "!");
 																location.href = "/univ/course/timetable";
+															} else if (data.code == 3) {
+																alert("error:"
+																		+ data.errorMessage);
 															} else {
 																alert("error "
 																		+ data.code
@@ -174,7 +194,6 @@
 														},
 														error : function(e) {
 															alert("error: " + e);
-															return;
 														}
 													});
 										});

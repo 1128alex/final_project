@@ -6,7 +6,7 @@
 <div class="d-flex">
 	<div class="col-3"></div>
 	<div class="col-6">
-		<h3 class="text-center">Make a Chat room with...</h3>
+		<h3 class="text-center">Open a Chat room with...</h3>
 		<div class="ml-2">
 			<h4>Selected</h4>
 			<hr>

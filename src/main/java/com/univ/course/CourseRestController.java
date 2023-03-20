@@ -96,7 +96,7 @@ public class CourseRestController {
 			result.put("code", 1);
 		} else {
 			result.put("code", 500);
-			result.put("errorMessage", "Error while deleting class.");
+			result.put("errorMessage", "Error while adding course.");
 		}
 
 		return result;
